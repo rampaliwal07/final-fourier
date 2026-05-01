@@ -903,54 +903,43 @@
         </div>
  
         <!-- 4. SIMULATION PAGE - MODIFIED: FOURIER SERIES SOLVER -->
-        <div id="page-simulation" class="content card-page">
-            <button class="back-btn" onclick="goBack()">
-                <i class="fas fa-arrow-left"></i> Back to Dashboard
-            </button>
-            <div class="card-page-header">
-                <i class="fas fa-desktop"></i>
-                <div>
-                    <h2>Fourier Series Simulator</h2>
-                    <p>Compute & verify Fourier coefficients | f(x) = a₀/2 + Σ [aₙ cos(nπx/L) + bₙ sin(nπx/L)]</p>
-                </div>
-            </div>
-            <div class="page-content-box">
-                <!-- Input parameters -->
-                <div class="sim-input-group">
-                    <label>Function f(x) : <i>(use x, ^ for power, sin, cos, e.g., x, x^2, sin(x))</i></label>
-                    <input type="text" id="funcInput" class="feedback-form" style="width:100%; margin-bottom:12px;" value="x" placeholder="e.g., x, x^2, sin(x)">
-                </div>
-                <div class="coeff-row">
-                    <div><label>L (half-interval):</label><input type="number" id="Lvalue" step="0.5" value="3.14"></div>
-                    <div><label>Number of terms (N):</label><input type="number" id="Nterms" min="1" max="8" value="3"></div>
-                </div>
-                <button id="calcSeriesBtn" class="submit-btn" style="margin-top:8px;"><i class="fas fa-calculator"></i> Calculate Series</button>
-                
-                <!-- Output: series expansion -->
-                <div id="seriesOutput" class="sim-output-box">
-                    <strong>📐 Fourier Series Expansion:</strong><br>
-                    <span id="seriesEquation">—</span>
-                    <div style="margin-top:12px;"><strong>Expanded form:</strong><br><span id="seriesExpanded">—</span></div>
-                </div>
-                
-                <!-- Check answer section : user inputs a0, an, bn for specific harmonic -->
-                <div style="margin-top: 24px; background: #f0f7fc; padding: 18px; border-radius: 10px;">
-                    <h4 style="margin-bottom: 14px;">✅ Verify your coefficients</h4>
-                    <div class="coeff-row">
-                        <div><label>Your computed a₀:</label><input type="text" id="userA0" placeholder="e.g., 0.5" class="feedback-form"></div>
-                        <div><label>Harmonic index n :</label><input type="number" id="checkN" min="1" value="1" class="feedback-form"></div>
-                    </div>
-                    <div class="coeff-row" style="margin-top:10px;">
-                        <div><label>Your aₙ :</label><input type="text" id="userAn" placeholder="coefficient aₙ" class="feedback-form"></div>
-                        <div><label>Your bₙ :</label><input type="text" id="userBn" placeholder="coefficient bₙ" class="feedback-form"></div>
-                    </div>
-                    <button id="checkAnswerBtn" class="submit-btn" style="margin-top:6px; background:#2c3e50;"><i class="fas fa-check-double"></i> Check Answer</button>
-                    <div id="checkMessage" style="margin-top: 12px;"></div>
-                </div>
-                <p style="font-size:13px; color:#7f8c8d; margin-top:12px;"><i class="fas fa-info-circle"></i> π = 3.14 used in all computations. Click "Calculate Series" first, then enter your derived coefficients and press Check.</p>
-            </div>
-        </div>
- 
+        <div class="sim-placeholder" style="border:none; background:#f8f9fa;">
+
+    <h3>Fourier Series Solver</h3>
+
+    <div style="width:100%; max-width:500px;">
+
+        <label>Enter Function f(x):</label>
+        <input id="func" placeholder="e.g. x*x, Math.sin(x), x" class="feedback-form input">
+
+        <label>Enter L:</label>
+        <input id="L" type="number" placeholder="e.g. 3" class="feedback-form input">
+
+        <label>Number of terms (n):</label>
+        <input id="terms" type="number" placeholder="e.g. 5" class="feedback-form input">
+
+        <hr>
+
+        <h4>Enter Your Answers</h4>
+
+        <label>a0:</label>
+        <input id="user_a0" type="number">
+
+        <label>a₁ (first coefficient):</label>
+        <input id="user_an" type="number">
+
+        <label>b₁ (first coefficient):</label>
+        <input id="user_bn" type="number">
+
+        <br><br>
+
+        <button class="submit-btn" onclick="calculateFourier()">Calculate</button>
+        <button class="submit-btn" onclick="checkAnswer()">Check Answer</button>
+
+        <div id="output" style="margin-top:20px;"></div>
+
+    </div>
+</div>
         <!-- 5. POSTTEST PAGE -->
         <div id="page-posttest" class="content card-page">
             <button class="back-btn" onclick="goBack()">
