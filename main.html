@@ -671,35 +671,48 @@
             color: #f39c12;
         }
  
-        /* Simulation iframe placeholder */
-        .sim-placeholder {
-            background: #e8f4fc;
+        /* Simulation specific extra styles (keep within design) */
+        .sim-input-group {
+            margin-bottom: 20px;
+        }
+        .sim-output-box {
+            background: #fff;
+            border: 1px solid #dce8f5;
             border-radius: 8px;
-            border: 2px dashed #3498db;
-            min-height: 300px;
+            padding: 20px;
+            margin-top: 20px;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+        .sim-message {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+        .sim-message.success {
+            background: #e3f7ec;
+            border-left: 4px solid #2ecc71;
+            color: #27ae60;
+        }
+        .sim-message.error {
+            background: #fee9e6;
+            border-left: 4px solid #e74c3c;
+            color: #c0392b;
+        }
+        .inline-label {
+            display: inline-block;
+            width: 120px;
+            font-weight: 500;
+        }
+        .coeff-row {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #2c3e50;
-            gap: 16px;
-            text-align: center;
-            padding: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: flex-end;
         }
- 
-        .sim-placeholder i {
-            font-size: 56px;
-            color: #3498db;
-            opacity: 0.6;
-        }
- 
-        .sim-placeholder h3 {
-            font-size: 20px;
-        }
- 
-        .sim-placeholder p {
-            color: #7f8c8d;
-            max-width: 400px;
+        .coeff-row > div {
+            flex: 1;
+            min-width: 130px;
         }
     </style>
 </head>
@@ -791,7 +804,7 @@
         </div>
  
         <!-- ============================================================
-             ✅ CARD PAGES — one per card, all hidden by default
+             ✅ CARD PAGES — simulation page with Fourier Series solver
              ============================================================ -->
  
         <!-- 1. AIM PAGE -->
@@ -834,17 +847,14 @@
             <div class="page-content-box">
                 <h4>What is Rank of a Matrix?</h4>
                 <p>The <strong>rank</strong> of a matrix is the maximum number of linearly independent row vectors (or column vectors) in the matrix. It indicates the dimension of the vector space spanned by its rows or columns.</p>
- 
                 <h4 style="margin-top: 20px;">Row Echelon Form (REF)</h4>
                 <p>A matrix is in Row Echelon Form if:</p>
                 <ul style="margin-left: 20px; color: #555; line-height: 2;">
                     <li>All zero rows are at the bottom.</li>
                     <li>The leading entry of each non-zero row is to the right of the leading entry of the row above it.</li>
                 </ul>
- 
                 <h4 style="margin-top: 20px;">Rank-Nullity Theorem</h4>
                 <p>For an m × n matrix A: <strong>Rank(A) + Nullity(A) = n</strong>, where n is the number of columns.</p>
- 
                 <h4 style="margin-top: 20px;">Key Properties</h4>
                 <ul style="margin-left: 20px; color: #555; line-height: 2;">
                     <li>Rank(A) = Rank(Aᵀ)</li>
@@ -866,7 +876,6 @@
                     <p>Answer before starting the experiment</p>
                 </div>
             </div>
- 
             <div class="mcq-question">
                 <p>Q1. The rank of a zero matrix of order 3×3 is:</p>
                 <label class="mcq-option"><input type="radio" name="q1" value="a"> 3</label>
@@ -874,7 +883,6 @@
                 <label class="mcq-option"><input type="radio" name="q1" value="c"> 0</label>
                 <label class="mcq-option"><input type="radio" name="q1" value="d"> Undefined</label>
             </div>
- 
             <div class="mcq-question">
                 <p>Q2. If A is a 4×5 matrix, the maximum possible rank of A is:</p>
                 <label class="mcq-option"><input type="radio" name="q2" value="a"> 5</label>
@@ -882,7 +890,6 @@
                 <label class="mcq-option"><input type="radio" name="q2" value="c"> 20</label>
                 <label class="mcq-option"><input type="radio" name="q2" value="d"> 9</label>
             </div>
- 
             <div class="mcq-question">
                 <p>Q3. Which operation does NOT change the rank of a matrix?</p>
                 <label class="mcq-option"><input type="radio" name="q3" value="a"> Adding a multiple of one row to another</label>
@@ -890,13 +897,12 @@
                 <label class="mcq-option"><input type="radio" name="q3" value="c"> Squaring the matrix</label>
                 <label class="mcq-option"><input type="radio" name="q3" value="d"> Replacing a row with zeros</label>
             </div>
- 
             <button class="submit-btn" onclick="submitTest('pretest')">
                 <i class="fas fa-paper-plane"></i> Submit Pretest
             </button>
         </div>
  
-        <!-- 4. SIMULATION PAGE -->
+        <!-- 4. SIMULATION PAGE - MODIFIED: FOURIER SERIES SOLVER -->
         <div id="page-simulation" class="content card-page">
             <button class="back-btn" onclick="goBack()">
                 <i class="fas fa-arrow-left"></i> Back to Dashboard
@@ -904,17 +910,44 @@
             <div class="card-page-header">
                 <i class="fas fa-desktop"></i>
                 <div>
-                    <h2>Simulation</h2>
-                    <p>Interactive matrix rank simulator</p>
+                    <h2>Fourier Series Simulator</h2>
+                    <p>Compute & verify Fourier coefficients | f(x) = a₀/2 + Σ [aₙ cos(nπx/L) + bₙ sin(nπx/L)]</p>
                 </div>
             </div>
-            <div class="sim-placeholder">
-                <i class="fas fa-cogs"></i>
-                <h3>Simulation Loading Area</h3>
-                <p>Your interactive simulation will appear here. Replace this block with your simulation iframe, canvas, or component.</p>
-                <p style="margin-top: 8px; font-size: 13px; background: #fff; padding: 10px 18px; border-radius: 6px; border: 1px solid #d1e7ff;">
-                    Example: <code>&lt;iframe src="simulation.html" width="100%" height="500px"&gt;&lt;/iframe&gt;</code>
-                </p>
+            <div class="page-content-box">
+                <!-- Input parameters -->
+                <div class="sim-input-group">
+                    <label>Function f(x) : <i>(use x, ^ for power, sin, cos, e.g., x, x^2, sin(x))</i></label>
+                    <input type="text" id="funcInput" class="feedback-form" style="width:100%; margin-bottom:12px;" value="x" placeholder="e.g., x, x^2, sin(x)">
+                </div>
+                <div class="coeff-row">
+                    <div><label>L (half-interval):</label><input type="number" id="Lvalue" step="0.5" value="3.14"></div>
+                    <div><label>Number of terms (N):</label><input type="number" id="Nterms" min="1" max="8" value="3"></div>
+                </div>
+                <button id="calcSeriesBtn" class="submit-btn" style="margin-top:8px;"><i class="fas fa-calculator"></i> Calculate Series</button>
+                
+                <!-- Output: series expansion -->
+                <div id="seriesOutput" class="sim-output-box">
+                    <strong>📐 Fourier Series Expansion:</strong><br>
+                    <span id="seriesEquation">—</span>
+                    <div style="margin-top:12px;"><strong>Expanded form:</strong><br><span id="seriesExpanded">—</span></div>
+                </div>
+                
+                <!-- Check answer section : user inputs a0, an, bn for specific harmonic -->
+                <div style="margin-top: 24px; background: #f0f7fc; padding: 18px; border-radius: 10px;">
+                    <h4 style="margin-bottom: 14px;">✅ Verify your coefficients</h4>
+                    <div class="coeff-row">
+                        <div><label>Your computed a₀:</label><input type="text" id="userA0" placeholder="e.g., 0.5" class="feedback-form"></div>
+                        <div><label>Harmonic index n :</label><input type="number" id="checkN" min="1" value="1" class="feedback-form"></div>
+                    </div>
+                    <div class="coeff-row" style="margin-top:10px;">
+                        <div><label>Your aₙ :</label><input type="text" id="userAn" placeholder="coefficient aₙ" class="feedback-form"></div>
+                        <div><label>Your bₙ :</label><input type="text" id="userBn" placeholder="coefficient bₙ" class="feedback-form"></div>
+                    </div>
+                    <button id="checkAnswerBtn" class="submit-btn" style="margin-top:6px; background:#2c3e50;"><i class="fas fa-check-double"></i> Check Answer</button>
+                    <div id="checkMessage" style="margin-top: 12px;"></div>
+                </div>
+                <p style="font-size:13px; color:#7f8c8d; margin-top:12px;"><i class="fas fa-info-circle"></i> π = 3.14 used in all computations. Click "Calculate Series" first, then enter your derived coefficients and press Check.</p>
             </div>
         </div>
  
@@ -930,7 +963,6 @@
                     <p>Answer after completing the experiment</p>
                 </div>
             </div>
- 
             <div class="mcq-question">
                 <p>Q1. The rank of an identity matrix of order n is:</p>
                 <label class="mcq-option"><input type="radio" name="pq1" value="a"> 0</label>
@@ -938,7 +970,6 @@
                 <label class="mcq-option"><input type="radio" name="pq1" value="c"> n</label>
                 <label class="mcq-option"><input type="radio" name="pq1" value="d"> 1</label>
             </div>
- 
             <div class="mcq-question">
                 <p>Q2. A system of linear equations AX = B is consistent if:</p>
                 <label class="mcq-option"><input type="radio" name="pq2" value="a"> Rank(A) ≠ Rank(A|B)</label>
@@ -946,7 +977,6 @@
                 <label class="mcq-option"><input type="radio" name="pq2" value="c"> Rank(A) = 0</label>
                 <label class="mcq-option"><input type="radio" name="pq2" value="d"> Det(A) = 0</label>
             </div>
- 
             <div class="mcq-question">
                 <p>Q3. If rank of a 3×3 matrix A is 2, then A is:</p>
                 <label class="mcq-option"><input type="radio" name="pq3" value="a"> Invertible</label>
@@ -954,7 +984,6 @@
                 <label class="mcq-option"><input type="radio" name="pq3" value="c"> Identity</label>
                 <label class="mcq-option"><input type="radio" name="pq3" value="d"> Symmetric</label>
             </div>
- 
             <button class="submit-btn" onclick="submitTest('posttest')">
                 <i class="fas fa-paper-plane"></i> Submit Posttest
             </button>
@@ -973,41 +1002,11 @@
                 </div>
             </div>
             <ul class="ref-list">
-                <li>
-                    <i class="fas fa-book"></i>
-                    <div>
-                        <strong>Higher Engineering Mathematics</strong> — B.S. Grewal, Khanna Publishers.
-                        <br><span style="font-size:13px; color:#7f8c8d;">Chapter 2: Matrices and Linear Systems</span>
-                    </div>
-                </li>
-                <li>
-                    <i class="fas fa-book"></i>
-                    <div>
-                        <strong>Linear Algebra and its Applications</strong> — Gilbert Strang, MIT Press.
-                        <br><span style="font-size:13px; color:#7f8c8d;">Chapter 3: Vector Spaces and Subspaces</span>
-                    </div>
-                </li>
-                <li>
-                    <i class="fas fa-globe"></i>
-                    <div>
-                        <strong>MIT OpenCourseWare — 18.06 Linear Algebra</strong>
-                        <br><a href="https://ocw.mit.edu/courses/mathematics/18-06-linear-algebra-spring-2010/" target="_blank" style="color:#3498db; font-size:13px;">ocw.mit.edu</a>
-                    </div>
-                </li>
-                <li>
-                    <i class="fas fa-globe"></i>
-                    <div>
-                        <strong>Khan Academy — Matrices</strong>
-                        <br><a href="https://www.khanacademy.org/math/algebra-home/alg-matrices" target="_blank" style="color:#3498db; font-size:13px;">khanacademy.org</a>
-                    </div>
-                </li>
-                <li>
-                    <i class="fas fa-globe"></i>
-                    <div>
-                        <strong>NPTEL — Mathematics I (IIT lectures)</strong>
-                        <br><a href="https://nptel.ac.in/courses/111/104/111104081/" target="_blank" style="color:#3498db; font-size:13px;">nptel.ac.in</a>
-                    </div>
-                </li>
+                <li><i class="fas fa-book"></i><div><strong>Higher Engineering Mathematics</strong> — B.S. Grewal, Khanna Publishers.<br><span style="font-size:13px; color:#7f8c8d;">Chapter 2: Matrices and Linear Systems</span></div></li>
+                <li><i class="fas fa-book"></i><div><strong>Linear Algebra and its Applications</strong> — Gilbert Strang, MIT Press.<br><span style="font-size:13px; color:#7f8c8d;">Chapter 3: Vector Spaces and Subspaces</span></div></li>
+                <li><i class="fas fa-globe"></i><div><strong>MIT OpenCourseWare — 18.06 Linear Algebra</strong><br><a href="https://ocw.mit.edu/courses/mathematics/18-06-linear-algebra-spring-2010/" target="_blank" style="color:#3498db; font-size:13px;">ocw.mit.edu</a></div></li>
+                <li><i class="fas fa-globe"></i><div><strong>Khan Academy — Matrices</strong><br><a href="https://www.khanacademy.org/math/algebra-home/alg-matrices" target="_blank" style="color:#3498db; font-size:13px;">khanacademy.org</a></div></li>
+                <li><i class="fas fa-globe"></i><div><strong>NPTEL — Mathematics I (IIT lectures)</strong><br><a href="https://nptel.ac.in/courses/111/104/111104081/" target="_blank" style="color:#3498db; font-size:13px;">nptel.ac.in</a></div></li>
             </ul>
         </div>
  
@@ -1024,31 +1023,12 @@
                 </div>
             </div>
             <div class="contributors-grid">
-                <div class="contributor-card">
-                    <i class="fas fa-user-tie"></i>
-                    <h4>Dr. Faculty Name</h4>
-                    <p>Principal Investigator</p>
-                </div>
-                <div class="contributor-card">
-                    <i class="fas fa-chalkboard-teacher"></i>
-                    <h4>Prof. Faculty Name</h4>
-                    <p>Content Developer</p>
-                </div>
-                <div class="contributor-card">
-                    <i class="fas fa-user-graduate"></i>
-                    <h4>Student Name</h4>
-                    <p>Web Developer</p>
-                </div>
-                <div class="contributor-card">
-                    <i class="fas fa-user-graduate"></i>
-                    <h4>Student Name</h4>
-                    <p>UI/UX Designer</p>
-                </div>
+                <div class="contributor-card"><i class="fas fa-user-tie"></i><h4>Dr. Faculty Name</h4><p>Principal Investigator</p></div>
+                <div class="contributor-card"><i class="fas fa-chalkboard-teacher"></i><h4>Prof. Faculty Name</h4><p>Content Developer</p></div>
+                <div class="contributor-card"><i class="fas fa-user-graduate"></i><h4>Student Name</h4><p>Web Developer</p></div>
+                <div class="contributor-card"><i class="fas fa-user-graduate"></i><h4>Student Name</h4><p>UI/UX Designer</p></div>
             </div>
-            <p style="margin-top: 24px; color: #7f8c8d; font-size: 14px;">
-                <i class="fas fa-university" style="color:#3498db;"></i>
-                &nbsp;Applied Sciences &amp; Humanities Department, Pimpri Chinchwad College of Engineering.
-            </p>
+            <p style="margin-top: 24px; color: #7f8c8d; font-size: 14px;"><i class="fas fa-university" style="color:#3498db;"></i> &nbsp;Applied Sciences &amp; Humanities Department, Pimpri Chinchwad College of Engineering.</p>
         </div>
  
         <!-- 8. FEEDBACK PAGE -->
@@ -1064,141 +1044,151 @@
                 </div>
             </div>
             <div class="feedback-form">
-                <label>Your Name</label>
-                <input type="text" placeholder="Enter your name">
- 
+                <label>Your Name</label><input type="text" placeholder="Enter your name">
                 <label>Your Rating</label>
-                <div class="star-rating" id="starRating">
-                    <i class="fas fa-star" data-val="1"></i>
-                    <i class="fas fa-star" data-val="2"></i>
-                    <i class="fas fa-star" data-val="3"></i>
-                    <i class="fas fa-star" data-val="4"></i>
-                    <i class="fas fa-star" data-val="5"></i>
-                </div>
- 
-                <label>How was the simulation?</label>
-                <select>
-                    <option value="">-- Select --</option>
-                    <option>Excellent</option>
-                    <option>Good</option>
-                    <option>Average</option>
-                    <option>Needs Improvement</option>
-                </select>
- 
-                <label>Comments / Suggestions</label>
-                <textarea rows="4" placeholder="Write your feedback here..."></textarea>
- 
-                <button class="submit-btn" onclick="submitFeedback()">
-                    <i class="fas fa-paper-plane"></i> Submit Feedback
-                </button>
+                <div class="star-rating" id="starRating"><i class="fas fa-star" data-val="1"></i><i class="fas fa-star" data-val="2"></i><i class="fas fa-star" data-val="3"></i><i class="fas fa-star" data-val="4"></i><i class="fas fa-star" data-val="5"></i></div>
+                <label>How was the simulation?</label><select><option value="">-- Select --</option><option>Excellent</option><option>Good</option><option>Average</option><option>Needs Improvement</option></select>
+                <label>Comments / Suggestions</label><textarea rows="4" placeholder="Write your feedback here..."></textarea>
+                <button class="submit-btn" onclick="submitFeedback()"><i class="fas fa-paper-plane"></i> Submit Feedback</button>
             </div>
         </div>
- 
     </main>
  
-    <!-- Footer (unchanged) -->
     <footer class="container">
         <p>Virtual Labs &copy; 2025 | Applied Sciences &amp; Humanities Department |
            <span class="footer-logo">Pimpri Chinchwad College of Engineering</span>
         </p>
     </footer>
  
- 
     <script>
         // ============================================================
-        // ✅ ADDITIONS ONLY — Card Navigation Logic
-        // ============================================================
- 
-        // Open a card page and hide the main dashboard
+        // CARD NAVIGATION (unchanged)
         function openPage(targetId) {
-            // Hide main dashboard
             document.getElementById('main-dashboard').classList.add('hidden');
- 
-            // Hide all card pages
-            document.querySelectorAll('.card-page').forEach(function(page) {
-                page.classList.remove('active-page');
-            });
- 
-            // Show the requested page
-            var target = document.getElementById(targetId);
-            if (target) {
-                target.classList.add('active-page');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+            document.querySelectorAll('.card-page').forEach(page => page.classList.remove('active-page'));
+            const target = document.getElementById(targetId);
+            if (target) { target.classList.add('active-page'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
         }
- 
-        // Go back: hide all card pages, show main dashboard
         function goBack() {
-            document.querySelectorAll('.card-page').forEach(function(page) {
-                page.classList.remove('active-page');
-            });
+            document.querySelectorAll('.card-page').forEach(page => page.classList.remove('active-page'));
             document.getElementById('main-dashboard').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
- 
-        // Attach click listeners to all section cards
-        document.querySelectorAll('.section-card').forEach(function(card) {
+        document.querySelectorAll('.section-card').forEach(card => {
             card.addEventListener('click', function() {
-                // Update active state on cards
-                document.querySelectorAll('.section-card').forEach(function(c) {
-                    c.classList.remove('active');
-                });
+                document.querySelectorAll('.section-card').forEach(c => c.classList.remove('active'));
                 card.classList.add('active');
- 
-                // Open the corresponding page
-                var target = card.getAttribute('data-target');
-                if (target) {
-                    openPage(target);
+                const target = card.getAttribute('data-target');
+                if (target) openPage(target);
+            });
+        });
+        function submitTest(type) { alert(`Your ${type === 'pretest' ? 'Pretest' : 'Posttest'} has been submitted successfully! Thank you.`); }
+        function submitFeedback() { alert('Thank you for your feedback! It has been recorded.'); goBack(); }
+        document.addEventListener('DOMContentLoaded', function () { const img = document.getElementById('pcceLogo'); if(img && img.complete && img.naturalWidth===0) img.src='https://via.placeholder.com/60x60/2c3e50/ffffff?text=PCOE'; });
+        
+        // ============================================================
+        // FOURIER SERIES SIMULATION LOGIC (π = 3.14 strictly)
+        const PI = 3.14;
+        let computedCoeffs = { a0: 0, an: [], bn: [] };
+        let lastL = 1, lastFunc = "", computedUpToN = 0;
+
+        function evaluateFunction(expr, xVal, Lval) {
+            try {
+                let cleanExpr = expr.replace(/\^/g, '**').replace(/pi(?![a-z])/gi, PI.toString());
+                const fn = new Function('x', 'L', 'PI', 'return (' + cleanExpr + ')');
+                return fn(xVal, Lval, PI);
+            } catch(e) { throw new Error("Invalid function"); }
+        }
+
+        function simpsonIntegrate(expr, a, b, Lval, extraFactor = null) {
+            const n = 400; if (a === b) return 0;
+            let h = (b - a) / n;
+            let sum = evaluateFunction(expr, a, Lval) + evaluateFunction(expr, b, Lval);
+            for(let i = 1; i < n; i++) {
+                let x = a + i * h;
+                let val = evaluateFunction(expr, x, Lval);
+                if(extraFactor) {
+                    let factorVal;
+                    if(extraFactor.type === 'cos') factorVal = Math.cos(extraFactor.n * PI * x / Lval);
+                    else if(extraFactor.type === 'sin') factorVal = Math.sin(extraFactor.n * PI * x / Lval);
+                    else factorVal = 1;
+                    val *= factorVal;
                 }
-            });
-        });
- 
-        // Star rating interaction (Feedback page)
-        var stars = document.querySelectorAll('#starRating .fa-star');
-        var selectedRating = 0;
- 
-        stars.forEach(function(star) {
-            star.addEventListener('mouseover', function() {
-                var val = parseInt(star.getAttribute('data-val'));
-                stars.forEach(function(s, idx) {
-                    s.classList.toggle('active', idx < val);
-                });
-            });
- 
-            star.addEventListener('mouseout', function() {
-                stars.forEach(function(s, idx) {
-                    s.classList.toggle('active', idx < selectedRating);
-                });
-            });
- 
-            star.addEventListener('click', function() {
-                selectedRating = parseInt(star.getAttribute('data-val'));
-                stars.forEach(function(s, idx) {
-                    s.classList.toggle('active', idx < selectedRating);
-                });
-            });
-        });
- 
-        // Submit handlers
-        function submitTest(type) {
-            alert('Your ' + (type === 'pretest' ? 'Pretest' : 'Posttest') + ' has been submitted successfully! Thank you.');
+                sum += (i % 2 === 0 ? 2 : 4) * val;
+            }
+            return (h / 3) * sum;
         }
- 
-        function submitFeedback() {
-            alert('Thank you for your feedback! It has been recorded.');
-            goBack();
+
+        function computeCoefficients(funcStr, L, N) {
+            if(!funcStr) throw new Error("Enter function");
+            const coeffs = { a0: 0, an: [], bn: [] };
+            const integrandBase = funcStr;
+            const a0_integral = simpsonIntegrate(integrandBase, -L, L, L, null);
+            coeffs.a0 = a0_integral / L;
+            for(let n=1; n<=N; n++) {
+                const an_integral = simpsonIntegrate(integrandBase, -L, L, L, { type: 'cos', n: n });
+                coeffs.an[n] = an_integral / L;
+                const bn_integral = simpsonIntegrate(integrandBase, -L, L, L, { type: 'sin', n: n });
+                coeffs.bn[n] = bn_integral / L;
+            }
+            return coeffs;
         }
- 
-        // ============================================================
-        // Original JS (unchanged)
-        // ============================================================
-        document.addEventListener('DOMContentLoaded', function () {
-            var logoImg = document.getElementById('pcceLogo');
-            if (logoImg) {
-                logoImg.onerror = function () {
-                    this.onerror = null;
-                    this.src = 'https://via.placeholder.com/60x60/2c3e50/ffffff?text=PCOE';
-                };
+
+        function formatSeries(coeffs, L, N) {
+            let eq = `f(x) ≈ ${(coeffs.a0/2).toFixed(4)}`;
+            let expanded = `${(coeffs.a0/2).toFixed(4)}`;
+            for(let i=1; i<=N; i++) {
+                let an = coeffs.an[i] || 0, bn = coeffs.bn[i] || 0;
+                if(Math.abs(an) > 1e-6) {
+                    let term = ` + ${an.toFixed(4)}·cos(${i}πx/${L.toFixed(2)})`;
+                    eq += term; expanded += term;
+                }
+                if(Math.abs(bn) > 1e-6) {
+                    let term = ` + ${bn.toFixed(4)}·sin(${i}πx/${L.toFixed(2)})`;
+                    eq += term; expanded += term;
+                }
+            }
+            eq = eq.replace(/\+ -/g, '- ');
+            expanded = expanded.replace(/\+ -/g, '- ');
+            return { eq, expanded };
+        }
+
+        let globalCoeffs = null, globalL = null, globalN = null;
+
+        document.getElementById('calcSeriesBtn').addEventListener('click', () => {
+            const func = document.getElementById('funcInput').value.trim();
+            const L = parseFloat(document.getElementById('Lvalue').value);
+            const N = parseInt(document.getElementById('Nterms').value);
+            if(isNaN(L) || L<=0) { alert("L must be >0"); return; }
+            if(isNaN(N) || N<1) { alert("Number of terms >=1"); return; }
+            try {
+                const coeffs = computeCoefficients(func, L, N);
+                globalCoeffs = coeffs; globalL = L; globalN = N;
+                const { eq, expanded } = formatSeries(coeffs, L, N);
+                document.getElementById('seriesEquation').innerHTML = eq;
+                document.getElementById('seriesExpanded').innerHTML = expanded;
+                document.getElementById('checkMessage').innerHTML = "";
+            } catch(err) { alert("Error: Invalid function or syntax. Use x, sin(x), cos(x), x^2, etc."); }
+        });
+
+        document.getElementById('checkAnswerBtn').addEventListener('click', () => {
+            if(!globalCoeffs) { document.getElementById('checkMessage').innerHTML = '<div class="sim-message error">⚠️ Please calculate the series first!</div>'; return; }
+            const userA0 = parseFloat(document.getElementById('userA0').value);
+            const nIdx = parseInt(document.getElementById('checkN').value);
+            const userAn = parseFloat(document.getElementById('userAn').value);
+            const userBn = parseFloat(document.getElementById('userBn').value);
+            if(isNaN(userA0) || isNaN(nIdx) || isNaN(userAn) || isNaN(userBn)) { document.getElementById('checkMessage').innerHTML = '<div class="sim-message error">❌ Please fill all coefficient fields.</div>'; return; }
+            const tol = 1e-4;
+            const actualA0 = globalCoeffs.a0;
+            const actualAn = (globalCoeffs.an[nIdx] !== undefined) ? globalCoeffs.an[nIdx] : 0;
+            const actualBn = (globalCoeffs.bn[nIdx] !== undefined) ? globalCoeffs.bn[nIdx] : 0;
+            const a0Ok = Math.abs(userA0 - actualA0) < tol;
+            const anOk = Math.abs(userAn - actualAn) < tol;
+            const bnOk = Math.abs(userBn - actualBn) < tol;
+            if(a0Ok && anOk && bnOk) {
+                document.getElementById('checkMessage').innerHTML = `<div class="sim-message success">✔ Correct! You scored 1 point. ✅ Fourier series verified.<br><strong>Equation:</strong> a₀ = ${actualA0.toFixed(4)}, a₍${nIdx}₎ = ${actualAn.toFixed(4)}, b₍${nIdx}₎ = ${actualBn.toFixed(4)}</div>`;
+            } else {
+                document.getElementById('checkMessage').innerHTML = `<div class="sim-message error">❌ Incorrect. Your values do not match computed coefficients. Try again! (Hint: recompute a₀, aₙ, bₙ using integration)</div>`;
             }
         });
     </script>
