@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Labs - LAUC</title>
+    <title>Virtual Labs - Fourier Series</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -671,7 +671,7 @@
             color: #f39c12;
         }
  
-        /* Simulation specific extra styles (keep within design) */
+        /* Simulation specific extra styles */
         .sim-input-group {
             margin-bottom: 20px;
         }
@@ -714,11 +714,19 @@
             flex: 1;
             min-width: 130px;
         }
+        .formula-box {
+            background: #eef2f7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 14px;
+            text-align: center;
+            font-family: monospace;
+        }
     </style>
 </head>
 <body>
  
-    <!-- Header (unchanged) -->
     <header>
         <div class="container header-container">
             <div class="logo-section">
@@ -745,19 +753,15 @@
         </div>
     </header>
  
-    <!-- ============================================================
-         MAIN DASHBOARD (original cards view)
-         ============================================================ -->
     <main class="container" style="padding-top: 30px; padding-bottom: 10px;">
  
         <div id="main-dashboard">
             <div class="content">
                 <div class="content-header">
-                    <h2>Fourier Series</h2>
+                    <h2>Fourier Series Virtual Lab</h2>
                     <p>Engineering Mathematics Experiment</p>
                 </div>
  
-                <!-- 8 Section Cards -->
                 <div class="aim-sections">
                     <div class="section-card active" data-target="page-aim">
                         <i class="fas fa-bullseye"></i>
@@ -803,11 +807,7 @@
             </div>
         </div>
  
-        <!-- ============================================================
-             ✅ CARD PAGES — simulation page with Fourier Series solver
-             ============================================================ -->
- 
-        <!-- 1. AIM PAGE -->
+        <!-- AIM PAGE - Fourier Series -->
         <div id="page-aim" class="content card-page">
             <button class="back-btn" onclick="goBack()">
                 <i class="fas fa-arrow-left"></i> Back to Dashboard
@@ -821,18 +821,18 @@
             </div>
             <div class="page-content-box">
                 <h4>Experiment Objective</h4>
-                <p>The aim of this virtual lab experiment is to understand the concept of <strong>Rank of a Matrix</strong> through interactive tools and visual demonstrations.</p>
+                <p>The aim of this virtual lab is to understand the <strong>Fourier Series</strong> representation of periodic functions and to compute Fourier coefficients numerically.</p>
                 <p>By the end of this experiment, students will be able to:</p>
                 <ul style="margin-left: 20px; margin-top: 8px; color: #555; line-height: 2;">
-                    <li>Define and explain the rank of a matrix.</li>
-                    <li>Compute the rank using row reduction (Echelon Form).</li>
-                    <li>Identify the relationship between rank, nullity, and the dimensions of a matrix.</li>
-                    <li>Apply the concept of rank to solve systems of linear equations.</li>
+                    <li>Define Fourier Series for a periodic function f(x) with period 2L.</li>
+                    <li>Compute the coefficients a₀, aₙ, bₙ using Euler's formulas.</li>
+                    <li>Approximate a given function using finite number of terms.</li>
+                    <li>Verify correctness of coefficients through interactive checks.</li>
                 </ul>
             </div>
         </div>
  
-        <!-- 2. THEORY PAGE -->
+        <!-- THEORY PAGE - Fourier Series -->
         <div id="page-theory" class="content card-page">
             <button class="back-btn" onclick="goBack()">
                 <i class="fas fa-arrow-left"></i> Back to Dashboard
@@ -841,30 +841,32 @@
                 <i class="fas fa-book"></i>
                 <div>
                     <h2>Theory</h2>
-                    <p>Background concepts &amp; definitions</p>
+                    <p>Background concepts & definitions</p>
                 </div>
             </div>
             <div class="page-content-box">
-                <h4>What is Rank of a Matrix?</h4>
-                <p>The <strong>rank</strong> of a matrix is the maximum number of linearly independent row vectors (or column vectors) in the matrix. It indicates the dimension of the vector space spanned by its rows or columns.</p>
-                <h4 style="margin-top: 20px;">Row Echelon Form (REF)</h4>
-                <p>A matrix is in Row Echelon Form if:</p>
+                <h4>Fourier Series</h4>
+                <p>Any periodic function f(x) with period 2L can be represented as an infinite sum of sines and cosines:</p>
+                <div class="formula-box">
+                    f(x) = a₀/2 + Σ[ aₙ cos(nπx/L) + bₙ sin(nπx/L) ] &nbsp;&nbsp; (n=1 to ∞)
+                </div>
+                <h4>Euler's Formulas (π = 3.14 used in simulation)</h4>
+                <div class="formula-box">
+                    a₀ = (1/L) ∫₋ᴸᴸ f(x) dx &nbsp;&nbsp;&nbsp;
+                    aₙ = (1/L) ∫₋ᴸᴸ f(x) cos(nπx/L) dx &nbsp;&nbsp;&nbsp;
+                    bₙ = (1/L) ∫₋ᴸᴸ f(x) sin(nπx/L) dx
+                </div>
+                <p><strong>Key Properties:</strong></p>
                 <ul style="margin-left: 20px; color: #555; line-height: 2;">
-                    <li>All zero rows are at the bottom.</li>
-                    <li>The leading entry of each non-zero row is to the right of the leading entry of the row above it.</li>
+                    <li>For even functions, bₙ = 0.</li>
+                    <li>For odd functions, a₀ = 0 and aₙ = 0.</li>
+                    <li>The series converges to f(x) at points of continuity.</li>
                 </ul>
-                <h4 style="margin-top: 20px;">Rank-Nullity Theorem</h4>
-                <p>For an m × n matrix A: <strong>Rank(A) + Nullity(A) = n</strong>, where n is the number of columns.</p>
-                <h4 style="margin-top: 20px;">Key Properties</h4>
-                <ul style="margin-left: 20px; color: #555; line-height: 2;">
-                    <li>Rank(A) = Rank(Aᵀ)</li>
-                    <li>Rank(A) ≤ min(m, n)</li>
-                    <li>A square matrix is invertible if and only if its rank equals its order.</li>
-                </ul>
+                <p>In this simulation, we numerically integrate using Simpson's rule with π = 3.14.</p>
             </div>
         </div>
  
-        <!-- 3. PRETEST PAGE -->
+        <!-- PRETEST - Fourier Series MCQ -->
         <div id="page-pretest" class="content card-page">
             <button class="back-btn" onclick="goBack()">
                 <i class="fas fa-arrow-left"></i> Back to Dashboard
@@ -877,70 +879,90 @@
                 </div>
             </div>
             <div class="mcq-question">
-                <p>Q1. The rank of a zero matrix of order 3×3 is:</p>
-                <label class="mcq-option"><input type="radio" name="q1" value="a"> 3</label>
-                <label class="mcq-option"><input type="radio" name="q1" value="b"> 1</label>
-                <label class="mcq-option"><input type="radio" name="q1" value="c"> 0</label>
-                <label class="mcq-option"><input type="radio" name="q1" value="d"> Undefined</label>
+                <p>Q1. The Fourier series of a periodic function with period 2L contains:</p>
+                <label class="mcq-option"><input type="radio" name="q1" value="a"> Only sine terms</label>
+                <label class="mcq-option"><input type="radio" name="q1" value="b"> Only cosine terms</label>
+                <label class="mcq-option"><input type="radio" name="q1" value="c"> Both sine and cosine terms (in general)</label>
+                <label class="mcq-option"><input type="radio" name="q1" value="d"> Exponential terms only</label>
             </div>
             <div class="mcq-question">
-                <p>Q2. If A is a 4×5 matrix, the maximum possible rank of A is:</p>
-                <label class="mcq-option"><input type="radio" name="q2" value="a"> 5</label>
-                <label class="mcq-option"><input type="radio" name="q2" value="b"> 4</label>
-                <label class="mcq-option"><input type="radio" name="q2" value="c"> 20</label>
-                <label class="mcq-option"><input type="radio" name="q2" value="d"> 9</label>
+                <p>Q2. The coefficient a₀ in Fourier series is given by:</p>
+                <label class="mcq-option"><input type="radio" name="q2" value="a"> (1/L)∫₋ᴸᴸ f(x) dx</label>
+                <label class="mcq-option"><input type="radio" name="q2" value="b"> (2/L)∫₀ᴸ f(x) dx</label>
+                <label class="mcq-option"><input type="radio" name="q2" value="c"> (1/π)∫₋πᴾ f(x) dx</label>
+                <label class="mcq-option"><input type="radio" name="q2" value="d"> ∫₋ᴸᴸ f(x) dx</label>
             </div>
             <div class="mcq-question">
-                <p>Q3. Which operation does NOT change the rank of a matrix?</p>
-                <label class="mcq-option"><input type="radio" name="q3" value="a"> Adding a multiple of one row to another</label>
-                <label class="mcq-option"><input type="radio" name="q3" value="b"> Multiplying the entire matrix by a scalar</label>
-                <label class="mcq-option"><input type="radio" name="q3" value="c"> Squaring the matrix</label>
-                <label class="mcq-option"><input type="radio" name="q3" value="d"> Replacing a row with zeros</label>
+                <p>Q3. For an odd function f(x), which coefficients are zero?</p>
+                <label class="mcq-option"><input type="radio" name="q3" value="a"> a₀ and aₙ</label>
+                <label class="mcq-option"><input type="radio" name="q3" value="b"> bₙ only</label>
+                <label class="mcq-option"><input type="radio" name="q3" value="c"> a₀ and bₙ</label>
+                <label class="mcq-option"><input type="radio" name="q3" value="d"> None</label>
             </div>
             <button class="submit-btn" onclick="submitTest('pretest')">
                 <i class="fas fa-paper-plane"></i> Submit Pretest
             </button>
         </div>
  
-        <!-- 4. SIMULATION PAGE - MODIFIED: FOURIER SERIES SOLVER -->
-        <div class="sim-placeholder" style="border:none; background:#f8f9fa;">
-
-    <h3>Fourier Series Solver</h3>
-
-    <div style="width:100%; max-width:500px;">
-
-        <label>Enter Function f(x):</label>
-        <input id="func" placeholder="e.g. x*x, Math.sin(x), x" class="feedback-form input">
-
-        <label>Enter L:</label>
-        <input id="L" type="number" placeholder="e.g. 3" class="feedback-form input">
-
-        <label>Number of terms (n):</label>
-        <input id="terms" type="number" placeholder="e.g. 5" class="feedback-form input">
-
-        <hr>
-
-        <h4>Enter Your Answers</h4>
-
-        <label>a0:</label>
-        <input id="user_a0" type="number">
-
-        <label>a₁ (first coefficient):</label>
-        <input id="user_an" type="number">
-
-        <label>b₁ (first coefficient):</label>
-        <input id="user_bn" type="number">
-
-        <br><br>
-
-        <button class="submit-btn" onclick="calculateFourier()">Calculate</button>
-        <button class="submit-btn" onclick="checkAnswer()">Check Answer</button>
-
-        <div id="output" style="margin-top:20px;"></div>
-
-    </div>
-</div>
-        <!-- 5. POSTTEST PAGE -->
+        <!-- SIMULATION PAGE - Enhanced Fourier Series with L verification -->
+        <div id="page-simulation" class="content card-page">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </button>
+            <div class="card-page-header">
+                <i class="fas fa-desktop"></i>
+                <div>
+                    <h2>Fourier Series Simulator</h2>
+                    <p>Compute & verify Fourier coefficients | f(x) = a₀/2 + Σ [aₙ cos(nπx/L) + bₙ sin(nπx/L)]</p>
+                </div>
+            </div>
+            <div class="page-content-box">
+                <!-- Formulas displayed clearly -->
+                <div class="formula-box">
+                    <strong>📐 Formulas (using π = 3.14):</strong><br>
+                    a₀ = (1/L) ∫₋ᴸᴸ f(x) dx &nbsp;&nbsp; 
+                    aₙ = (1/L) ∫₋ᴸᴸ f(x) cos(nπx/L) dx &nbsp;&nbsp; 
+                    bₙ = (1/L) ∫₋ᴸᴸ f(x) sin(nπx/L) dx
+                </div>
+                
+                <!-- Input Section -->
+                <div class="sim-input-group">
+                    <label>Function f(x) : <i>(use x, ^ for power, sin, cos, e.g., x, x^2, sin(x))</i></label>
+                    <input type="text" id="funcInput" style="width:100%; padding:10px; margin-bottom:12px; border:1px solid #cde3f5; border-radius:6px;" value="x" placeholder="e.g., x, x^2, sin(x)">
+                </div>
+                <div class="coeff-row">
+                    <div><label>L (half-period, interval [-L, L]):</label><input type="number" id="Lvalue" step="0.5" value="3.14"></div>
+                    <div><label>Number of terms (N):</label><input type="number" id="Nterms" min="1" max="8" value="3"></div>
+                </div>
+                <button id="calcSeriesBtn" class="submit-btn" style="margin-top:8px;"><i class="fas fa-calculator"></i> Calculate Series</button>
+                
+                <!-- Output Section -->
+                <div id="seriesOutput" class="sim-output-box">
+                    <strong>📐 Fourier Series Expansion:</strong><br>
+                    <span id="seriesEquation">—</span>
+                    <div style="margin-top:12px;"><strong>Expanded form (up to N terms):</strong><br><span id="seriesExpanded">—</span></div>
+                </div>
+                
+                <!-- Verification Section: Now includes L check -->
+                <div style="margin-top: 24px; background: #f0f7fc; padding: 18px; border-radius: 10px;">
+                    <h4 style="margin-bottom: 14px;">✅ Verify your coefficients</h4>
+                    <div class="coeff-row">
+                        <div><label>Your L value:</label><input type="text" id="userL" placeholder="e.g., 3.14" class="feedback-form"></div>
+                        <div><label>Your a₀:</label><input type="text" id="userA0" placeholder="e.g., 0.5" class="feedback-form"></div>
+                    </div>
+                    <div class="coeff-row">
+                        <div><label>Harmonic index n :</label><input type="number" id="checkN" min="1" value="1" class="feedback-form"></div>
+                        <div><label>Your aₙ :</label><input type="text" id="userAn" placeholder="coeff aₙ" class="feedback-form"></div>
+                        <div><label>Your bₙ :</label><input type="text" id="userBn" placeholder="coeff bₙ" class="feedback-form"></div>
+                    </div>
+                    <button id="checkAnswerBtn" class="submit-btn" style="margin-top:6px; background:#2c3e50;"><i class="fas fa-check-double"></i> Check Answer (incl. L)</button>
+                    <div id="checkMessage" style="margin-top: 12px;"></div>
+                    <p class="sim-message" style="font-size:13px; margin-top:12px;"><i class="fas fa-info-circle"></i> π = 3.14 in all integrations. Click "Calculate Series" first, then enter your derived L, a₀, aₙ, bₙ and click Check. All values must match within tolerance.</p>
+                </div>
+            </div>
+        </div>
+ 
+        <!-- POSTTEST - Fourier Series MCQ -->
         <div id="page-posttest" class="content card-page">
             <button class="back-btn" onclick="goBack()">
                 <i class="fas fa-arrow-left"></i> Back to Dashboard
@@ -953,32 +975,32 @@
                 </div>
             </div>
             <div class="mcq-question">
-                <p>Q1. The rank of an identity matrix of order n is:</p>
-                <label class="mcq-option"><input type="radio" name="pq1" value="a"> 0</label>
-                <label class="mcq-option"><input type="radio" name="pq1" value="b"> n−1</label>
-                <label class="mcq-option"><input type="radio" name="pq1" value="c"> n</label>
-                <label class="mcq-option"><input type="radio" name="pq1" value="d"> 1</label>
+                <p>Q1. For a function f(x)=x defined on (-π, π) (L=π), the coefficient a₀ is:</p>
+                <label class="mcq-option"><input type="radio" name="pq1" value="a"> π</label>
+                <label class="mcq-option"><input type="radio" name="pq1" value="b"> 0</label>
+                <label class="mcq-option"><input type="radio" name="pq1" value="c"> 1</label>
+                <label class="mcq-option"><input type="radio" name="pq1" value="d"> 2π</label>
             </div>
             <div class="mcq-question">
-                <p>Q2. A system of linear equations AX = B is consistent if:</p>
-                <label class="mcq-option"><input type="radio" name="pq2" value="a"> Rank(A) ≠ Rank(A|B)</label>
-                <label class="mcq-option"><input type="radio" name="pq2" value="b"> Rank(A) = Rank(A|B)</label>
-                <label class="mcq-option"><input type="radio" name="pq2" value="c"> Rank(A) = 0</label>
-                <label class="mcq-option"><input type="radio" name="pq2" value="d"> Det(A) = 0</label>
+                <p>Q2. If f(x) is even, which statement is true?</p>
+                <label class="mcq-option"><input type="radio" name="pq2" value="a"> bₙ = 0 for all n</label>
+                <label class="mcq-option"><input type="radio" name="pq2" value="b"> a₀ = 0</label>
+                <label class="mcq-option"><input type="radio" name="pq2" value="c"> aₙ = 0 for all n</label>
+                <label class="mcq-option"><input type="radio" name="pq2" value="d"> Only sine terms exist</label>
             </div>
             <div class="mcq-question">
-                <p>Q3. If rank of a 3×3 matrix A is 2, then A is:</p>
-                <label class="mcq-option"><input type="radio" name="pq3" value="a"> Invertible</label>
-                <label class="mcq-option"><input type="radio" name="pq3" value="b"> Singular</label>
-                <label class="mcq-option"><input type="radio" name="pq3" value="c"> Identity</label>
-                <label class="mcq-option"><input type="radio" name="pq3" value="d"> Symmetric</label>
+                <p>Q3. The Fourier series of f(x)=sin(x) on (-π, π) has:</p>
+                <label class="mcq-option"><input type="radio" name="pq3" value="a"> Only a₀ non-zero</label>
+                <label class="mcq-option"><input type="radio" name="pq3" value="b"> Only b₁ = 1, rest zero</label>
+                <label class="mcq-option"><input type="radio" name="pq3" value="c"> Only a₁ = 1</label>
+                <label class="mcq-option"><input type="radio" name="pq3" value="d"> Infinite non-zero terms</label>
             </div>
             <button class="submit-btn" onclick="submitTest('posttest')">
                 <i class="fas fa-paper-plane"></i> Submit Posttest
             </button>
         </div>
  
-        <!-- 6. REFERENCES PAGE -->
+        <!-- REFERENCES - Fourier Series -->
         <div id="page-references" class="content card-page">
             <button class="back-btn" onclick="goBack()">
                 <i class="fas fa-arrow-left"></i> Back to Dashboard
@@ -987,19 +1009,19 @@
                 <i class="fas fa-book-open"></i>
                 <div>
                     <h2>References</h2>
-                    <p>Further reading &amp; resources</p>
+                    <p>Further reading & resources</p>
                 </div>
             </div>
             <ul class="ref-list">
-                <li><i class="fas fa-book"></i><div><strong>Higher Engineering Mathematics</strong> — B.S. Grewal, Khanna Publishers.<br><span style="font-size:13px; color:#7f8c8d;">Chapter 2: Matrices and Linear Systems</span></div></li>
-                <li><i class="fas fa-book"></i><div><strong>Linear Algebra and its Applications</strong> — Gilbert Strang, MIT Press.<br><span style="font-size:13px; color:#7f8c8d;">Chapter 3: Vector Spaces and Subspaces</span></div></li>
-                <li><i class="fas fa-globe"></i><div><strong>MIT OpenCourseWare — 18.06 Linear Algebra</strong><br><a href="https://ocw.mit.edu/courses/mathematics/18-06-linear-algebra-spring-2010/" target="_blank" style="color:#3498db; font-size:13px;">ocw.mit.edu</a></div></li>
-                <li><i class="fas fa-globe"></i><div><strong>Khan Academy — Matrices</strong><br><a href="https://www.khanacademy.org/math/algebra-home/alg-matrices" target="_blank" style="color:#3498db; font-size:13px;">khanacademy.org</a></div></li>
-                <li><i class="fas fa-globe"></i><div><strong>NPTEL — Mathematics I (IIT lectures)</strong><br><a href="https://nptel.ac.in/courses/111/104/111104081/" target="_blank" style="color:#3498db; font-size:13px;">nptel.ac.in</a></div></li>
+                <li><i class="fas fa-book"></i><div><strong>Higher Engineering Mathematics</strong> — B.S. Grewal, Khanna Publishers. (Chapter: Fourier Series)</div></li>
+                <li><i class="fas fa-book"></i><div><strong>Advanced Engineering Mathematics</strong> — Erwin Kreyszig, Wiley. (Fourier Analysis)</div></li>
+                <li><i class="fas fa-globe"></i><div><strong>MIT OpenCourseWare - 18.03 Differential Equations</strong> (Fourier Series)<br><a href="https://ocw.mit.edu/courses/18-03-differential-equations-spring-2010/" target="_blank" style="color:#3498db;">ocw.mit.edu</a></div></li>
+                <li><i class="fas fa-globe"></i><div><strong>Khan Academy - Fourier Series</strong><br><a href="https://www.khanacademy.org/science/electrical-engineering/ee-signals/ee-fourier-series" target="_blank" style="color:#3498db;">khanacademy.org</a></div></li>
+                <li><i class="fas fa-globe"></i><div><strong>NPTEL - Mathematics - Fourier Series</strong><br><a href="https://nptel.ac.in/courses/111/105/111105121/" target="_blank" style="color:#3498db;">nptel.ac.in</a></div></li>
             </ul>
         </div>
  
-        <!-- 7. CONTRIBUTORS PAGE -->
+        <!-- CONTRIBUTORS page unchanged -->
         <div id="page-contributors" class="content card-page">
             <button class="back-btn" onclick="goBack()">
                 <i class="fas fa-arrow-left"></i> Back to Dashboard
@@ -1017,10 +1039,10 @@
                 <div class="contributor-card"><i class="fas fa-user-graduate"></i><h4>Student Name</h4><p>Web Developer</p></div>
                 <div class="contributor-card"><i class="fas fa-user-graduate"></i><h4>Student Name</h4><p>UI/UX Designer</p></div>
             </div>
-            <p style="margin-top: 24px; color: #7f8c8d; font-size: 14px;"><i class="fas fa-university" style="color:#3498db;"></i> &nbsp;Applied Sciences &amp; Humanities Department, Pimpri Chinchwad College of Engineering.</p>
+            <p style="margin-top: 24px; color: #7f8c8d; font-size: 14px;"><i class="fas fa-university" style="color:#3498db;"></i> &nbsp;Applied Sciences & Humanities Department, Pimpri Chinchwad College of Engineering.</p>
         </div>
  
-        <!-- 8. FEEDBACK PAGE -->
+        <!-- FEEDBACK page unchanged -->
         <div id="page-feedback" class="content card-page">
             <button class="back-btn" onclick="goBack()">
                 <i class="fas fa-arrow-left"></i> Back to Dashboard
@@ -1050,8 +1072,7 @@
     </footer>
  
     <script>
-        // ============================================================
-        // CARD NAVIGATION (unchanged)
+        // Navigation functions (unchanged)
         function openPage(targetId) {
             document.getElementById('main-dashboard').classList.add('hidden');
             document.querySelectorAll('.card-page').forEach(page => page.classList.remove('active-page'));
@@ -1071,24 +1092,26 @@
                 if (target) openPage(target);
             });
         });
-        function submitTest(type) { alert(`Your ${type === 'pretest' ? 'Pretest' : 'Posttest'} has been submitted successfully! Thank you.`); }
-        function submitFeedback() { alert('Thank you for your feedback! It has been recorded.'); goBack(); }
-        document.addEventListener('DOMContentLoaded', function () { const img = document.getElementById('pcceLogo'); if(img && img.complete && img.naturalWidth===0) img.src='https://via.placeholder.com/60x60/2c3e50/ffffff?text=PCOE'; });
+        function submitTest(type) { alert(`Your ${type === 'pretest' ? 'Pretest' : 'Posttest'} has been submitted!`); }
+        function submitFeedback() { alert('Thank you for your feedback!'); goBack(); }
+        document.addEventListener('DOMContentLoaded', function () { 
+            const img = document.getElementById('pcceLogo'); 
+            if(img && img.complete && img.naturalWidth===0) img.src='https://via.placeholder.com/60x60/2c3e50/ffffff?text=PCOE'; 
+        });
         
         // ============================================================
-        // FOURIER SERIES SIMULATION LOGIC (π = 3.14 strictly)
+        // FOURIER SERIES SIMULATION LOGIC (π = 3.14 strict)
         const PI = 3.14;
-        let computedCoeffs = { a0: 0, an: [], bn: [] };
-        let lastL = 1, lastFunc = "", computedUpToN = 0;
-
+        let globalCoeffs = null, globalL = null, globalN = null;
+        
         function evaluateFunction(expr, xVal, Lval) {
             try {
                 let cleanExpr = expr.replace(/\^/g, '**').replace(/pi(?![a-z])/gi, PI.toString());
                 const fn = new Function('x', 'L', 'PI', 'return (' + cleanExpr + ')');
                 return fn(xVal, Lval, PI);
-            } catch(e) { throw new Error("Invalid function"); }
+            } catch(e) { throw new Error("Invalid function format"); }
         }
-
+        
         function simpsonIntegrate(expr, a, b, Lval, extraFactor = null) {
             const n = 400; if (a === b) return 0;
             let h = (b - a) / n;
@@ -1107,7 +1130,7 @@
             }
             return (h / 3) * sum;
         }
-
+        
         function computeCoefficients(funcStr, L, N) {
             if(!funcStr) throw new Error("Enter function");
             const coeffs = { a0: 0, an: [], bn: [] };
@@ -1122,7 +1145,7 @@
             }
             return coeffs;
         }
-
+        
         function formatSeries(coeffs, L, N) {
             let eq = `f(x) ≈ ${(coeffs.a0/2).toFixed(4)}`;
             let expanded = `${(coeffs.a0/2).toFixed(4)}`;
@@ -1141,9 +1164,7 @@
             expanded = expanded.replace(/\+ -/g, '- ');
             return { eq, expanded };
         }
-
-        let globalCoeffs = null, globalL = null, globalN = null;
-
+        
         document.getElementById('calcSeriesBtn').addEventListener('click', () => {
             const func = document.getElementById('funcInput').value.trim();
             const L = parseFloat(document.getElementById('Lvalue').value);
@@ -1157,28 +1178,49 @@
                 document.getElementById('seriesEquation').innerHTML = eq;
                 document.getElementById('seriesExpanded').innerHTML = expanded;
                 document.getElementById('checkMessage').innerHTML = "";
-            } catch(err) { alert("Error: Invalid function or syntax. Use x, sin(x), cos(x), x^2, etc."); }
+            } catch(err) { alert("Error: Invalid function syntax. Use x, sin(x), cos(x), x^2, etc."); }
         });
-
+        
         document.getElementById('checkAnswerBtn').addEventListener('click', () => {
             if(!globalCoeffs) { document.getElementById('checkMessage').innerHTML = '<div class="sim-message error">⚠️ Please calculate the series first!</div>'; return; }
+            const userL = parseFloat(document.getElementById('userL').value);
             const userA0 = parseFloat(document.getElementById('userA0').value);
             const nIdx = parseInt(document.getElementById('checkN').value);
             const userAn = parseFloat(document.getElementById('userAn').value);
             const userBn = parseFloat(document.getElementById('userBn').value);
-            if(isNaN(userA0) || isNaN(nIdx) || isNaN(userAn) || isNaN(userBn)) { document.getElementById('checkMessage').innerHTML = '<div class="sim-message error">❌ Please fill all coefficient fields.</div>'; return; }
+            if(isNaN(userL) || isNaN(userA0) || isNaN(nIdx) || isNaN(userAn) || isNaN(userBn)) {
+                document.getElementById('checkMessage').innerHTML = '<div class="sim-message error">❌ Please fill all fields (L, a₀, n, aₙ, bₙ).</div>';
+                return;
+            }
             const tol = 1e-4;
+            const actualL = globalL;
             const actualA0 = globalCoeffs.a0;
             const actualAn = (globalCoeffs.an[nIdx] !== undefined) ? globalCoeffs.an[nIdx] : 0;
             const actualBn = (globalCoeffs.bn[nIdx] !== undefined) ? globalCoeffs.bn[nIdx] : 0;
+            const lOk = Math.abs(userL - actualL) < tol;
             const a0Ok = Math.abs(userA0 - actualA0) < tol;
             const anOk = Math.abs(userAn - actualAn) < tol;
             const bnOk = Math.abs(userBn - actualBn) < tol;
-            if(a0Ok && anOk && bnOk) {
-                document.getElementById('checkMessage').innerHTML = `<div class="sim-message success">✔ Correct! You scored 1 point. ✅ Fourier series verified.<br><strong>Equation:</strong> a₀ = ${actualA0.toFixed(4)}, a₍${nIdx}₎ = ${actualAn.toFixed(4)}, b₍${nIdx}₎ = ${actualBn.toFixed(4)}</div>`;
+            if(lOk && a0Ok && anOk && bnOk) {
+                document.getElementById('checkMessage').innerHTML = `<div class="sim-message success">✔ Correct! You scored 1 point. ✅ All values match.<br>L = ${actualL.toFixed(4)}, a₀ = ${actualA0.toFixed(4)}, a₍${nIdx}₎ = ${actualAn.toFixed(4)}, b₍${nIdx}₎ = ${actualBn.toFixed(4)}</div>`;
             } else {
-                document.getElementById('checkMessage').innerHTML = `<div class="sim-message error">❌ Incorrect. Your values do not match computed coefficients. Try again! (Hint: recompute a₀, aₙ, bₙ using integration)</div>`;
+                let errMsg = "❌ Incorrect. ";
+                if(!lOk) errMsg += `L mismatch (yours ${userL}, actual ${actualL.toFixed(4)}). `;
+                if(!a0Ok) errMsg += `a₀ mismatch. `;
+                if(!anOk) errMsg += `aₙ mismatch. `;
+                if(!bnOk) errMsg += `bₙ mismatch. `;
+                errMsg += "Try again!";
+                document.getElementById('checkMessage').innerHTML = `<div class="sim-message error">${errMsg}</div>`;
             }
+        });
+        
+        // Star rating for feedback
+        let stars = document.querySelectorAll('#starRating .fa-star');
+        let selectedRating = 0;
+        stars.forEach(star => {
+            star.addEventListener('mouseover', function() { let val = parseInt(star.getAttribute('data-val')); stars.forEach((s, idx) => s.classList.toggle('active', idx < val)); });
+            star.addEventListener('mouseout', function() { stars.forEach((s, idx) => s.classList.toggle('active', idx < selectedRating)); });
+            star.addEventListener('click', function() { selectedRating = parseInt(star.getAttribute('data-val')); stars.forEach((s, idx) => s.classList.toggle('active', idx < selectedRating)); });
         });
     </script>
 </body>
