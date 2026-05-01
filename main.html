@@ -12,385 +12,911 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        body { background-color: #f8f9fa; color: #333; line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+ 
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+ 
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+ 
+        /* Header Styles */
         header {
             background: linear-gradient(135deg, #2c3e50, #1a2530);
             color: white;
             padding: 15px 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        .header-container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
-        .logo-section { display: flex; align-items: center; gap: 25px; flex-wrap: wrap; }
-        .pcce-logo-container { display: flex; align-items: center; gap: 15px; padding-right: 25px; border-right: 2px solid rgba(255,255,255,0.2); }
-        .pcce-logo-img { width: 60px; height: 60px; object-fit: contain; border-radius: 8px; background: white; padding: 5px; }
-        .pcce-logo-text .main { font-size: 20px; font-weight: 700; }
-        .pcce-logo-text .sub { font-size: 12px; opacity: 0.9; }
-        .virtual-labs-logo { display: flex; align-items: center; gap: 15px; }
-        .virtual-labs-logo i { font-size: 32px; color: #3498db; }
-        .virtual-labs-logo h1 { font-size: 26px; font-weight: 600; }
-        .virtual-labs-logo span { color: #3498db; }
-        .user-info { display: flex; align-items: center; gap: 10px; }
-        .main-content { display: flex; margin-top: 30px; gap: 30px; }
-        .sidebar { flex: 0 0 280px; background: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); padding: 20px 0; height: fit-content; }
-        .sidebar h3 { padding: 0 20px 15px; border-bottom: 1px solid #eee; }
-        .nav-menu { list-style: none; }
-        .nav-item { padding: 12px 25px; border-left: 4px solid transparent; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
-        .nav-item:hover { background: #f8f9fa; border-left-color: #3498db; }
-        .nav-item.active { background: #f0f7ff; border-left-color: #3498db; color: #3498db; font-weight: 500; }
-        .content { flex: 1; background: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); padding: 30px; min-height: 600px; }
-        .content-header { margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
-        .content-header h2 { font-size: 28px; color: #2c3e50; }
-        .aim-sections { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 20px; margin-bottom: 40px; }
-        .section-card { background: #f8f9fa; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; border: 2px solid transparent; }
-        .section-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); border-color: #3498db; }
-        .section-card.active { background: #e8f4fc; border-color: #3498db; }
-        .section-card i { font-size: 32px; color: #3498db; margin-bottom: 15px; }
-        .section-card h3 { font-size: 18px; margin-bottom: 8px; }
-        .card-page { display: none; animation: fadeInPage 0.3s ease; }
-        .card-page.active-page { display: block; }
-        #main-dashboard.hidden { display: none; }
-        @keyframes fadeInPage { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-        .back-btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(to right, #2c3e50, #3d566e); color: #fff; border: none; padding: 10px 22px; border-radius: 6px; cursor: pointer; margin-bottom: 24px; transition: 0.25s; }
-        .back-btn:hover { transform: translateX(-3px); box-shadow: 0 4px 12px rgba(44,62,80,0.3); }
-        .card-page-header { display: flex; align-items: center; gap: 14px; padding-bottom: 18px; margin-bottom: 24px; border-bottom: 2px solid #e8f4fc; }
-        .card-page-header i { font-size: 36px; color: #3498db; }
-        .card-page-header h2 { font-size: 26px; color: #2c3e50; }
-        .page-content-box { background: #f8f9fa; border-radius: 8px; padding: 28px; border-left: 5px solid #3498db; }
-        .mcq-question { background: #fff; border: 1px solid #dce8f5; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px; }
-        .mcq-option { display: flex; align-items: center; gap: 10px; padding: 8px 12px; cursor: pointer; }
-        .mcq-option:hover { background: #e8f4fc; }
-        .submit-btn { background: linear-gradient(to right, #3498db, #2c80b9); color: white; border: none; padding: 11px 28px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: 0.25s; margin-top: 10px; }
-        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(52,152,219,0.3); }
-        .ref-list { list-style: none; padding: 0; }
-        .ref-list li { display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid #eee; }
-        .ref-list li i { color: #3498db; margin-top: 3px; }
-        .contributors-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: 20px; }
-        .contributor-card { background: #f0f7ff; border-radius: 10px; padding: 22px 16px; text-align: center; border: 1px solid #d1e7ff; }
-        .feedback-form label { font-weight: 600; display: block; margin-bottom: 6px; }
-        .feedback-form input, .feedback-form select, .feedback-form textarea { width: 100%; padding: 10px 14px; border: 1px solid #cde3f5; border-radius: 6px; margin-bottom: 18px; }
-        .star-rating { display: flex; gap: 8px; margin-bottom: 18px; }
-        .star-rating i { font-size: 28px; color: #ccc; cursor: pointer; transition: 0.2s; }
-        .star-rating i.active, .star-rating i:hover { color: #f39c12; }
-        .sim-input-group { margin-bottom: 20px; }
-        .sim-output-box { background: #fff; border: 1px solid #dce8f5; border-radius: 8px; padding: 20px; margin-top: 20px; overflow-x: auto; }
-        .sim-message { padding: 12px 16px; border-radius: 6px; margin-top: 15px; }
-        .sim-message.success { background: #e3f7ec; border-left: 4px solid #2ecc71; color: #27ae60; }
-        .sim-message.error { background: #fee9e6; border-left: 4px solid #e74c3c; color: #c0392b; }
-        .coeff-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-end; }
-        .coeff-row > div { flex: 1; min-width: 130px; }
-        .formula-box { background: #eef2f7; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: center; font-family: monospace; }
-        .interval-note { background: #eaf7ff; font-size: 13px; padding: 8px 12px; border-radius: 6px; margin-top: 8px; }
-        .solution-panel { background: #fff9e0; border-left: 5px solid #f39c12; padding: 20px; margin-top: 20px; border-radius: 8px; display: none; }
-        .solution-panel.show { display: block; }
-        hr { margin: 20px 0; border-color: #e8f4fc; }
-        @media (max-width: 768px) { .header-container { flex-direction: column; text-align: center; } .pcce-logo-container { border-right: none; border-bottom: 2px solid rgba(255,255,255,0.2); } }
+ 
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+ 
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+ 
+        .pcce-logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-right: 25px;
+            border-right: 2px solid rgba(255, 255, 255, 0.2);
+        }
+ 
+        .pcce-logo-img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 8px;
+            background-color: white;
+            padding: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+ 
+        .pcce-logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+ 
+        .pcce-logo-text .main {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+        }
+ 
+        .pcce-logo-text .sub {
+            font-size: 12px;
+            color: #ecf0f1;
+            opacity: 0.9;
+            margin-top: 2px;
+        }
+ 
+        .virtual-labs-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+ 
+        .virtual-labs-logo i {
+            font-size: 32px;
+            color: #3498db;
+        }
+ 
+        .virtual-labs-logo h1 {
+            font-size: 26px;
+            font-weight: 600;
+        }
+ 
+        .virtual-labs-logo span {
+            color: #3498db;
+        }
+ 
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+ 
+        .user-info i {
+            font-size: 20px;
+            color: #3498db;
+        }
+ 
+        /* Main Content Layout */
+        .main-content {
+            display: flex;
+            margin-top: 30px;
+            gap: 30px;
+        }
+ 
+        /* Sidebar Navigation */
+        .sidebar {
+            flex: 0 0 280px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            padding: 20px 0;
+            height: fit-content;
+        }
+ 
+        .sidebar h3 {
+            padding: 0 20px 15px;
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+        }
+ 
+        .nav-menu {
+            list-style: none;
+        }
+ 
+        .nav-item {
+            padding: 12px 25px;
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+ 
+        .nav-item:hover {
+            background-color: #f8f9fa;
+            border-left-color: #3498db;
+        }
+ 
+        .nav-item.active {
+            background-color: #f0f7ff;
+            border-left-color: #3498db;
+            color: #3498db;
+            font-weight: 500;
+        }
+ 
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+        }
+ 
+        /* Content Area */
+        .content {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            min-height: 600px;
+        }
+ 
+        .content-header {
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+ 
+        .breadcrumb {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 8px;
+        }
+ 
+        .breadcrumb a {
+            color: #3498db;
+            text-decoration: none;
+        }
+ 
+        .content-header h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+ 
+        .content-header p {
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+ 
+        /* Aim Sections */
+        .aim-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+ 
+        .section-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+ 
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            border-color: #3498db;
+        }
+ 
+        .section-card.active {
+            background-color: #e8f4fc;
+            border-color: #3498db;
+        }
+ 
+        .section-card i {
+            font-size: 32px;
+            color: #3498db;
+            margin-bottom: 15px;
+        }
+ 
+        .section-card h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+ 
+        .section-card p {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+ 
+        /* Question Section */
+        .question-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #3498db;
+        }
+ 
+        .question-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+ 
+        .question-text {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+ 
+        /* Feedback Section */
+        .feedback-section {
+            background-color: #e8f4fc;
+            border-radius: 8px;
+            padding: 25px;
+            border: 1px solid #d1e7ff;
+        }
+ 
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+ 
+        .feedback-header i {
+            font-size: 28px;
+            color: #3498db;
+        }
+ 
+        .feedback-header h3 {
+            color: #2c3e50;
+            font-size: 22px;
+        }
+ 
+        .feedback-content {
+            margin-bottom: 25px;
+        }
+ 
+        .feedback-content p {
+            margin-bottom: 15px;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+ 
+        .feedback-button {
+            background: linear-gradient(to right, #3498db, #2c80b9);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+ 
+        .feedback-button:hover {
+            background: linear-gradient(to right, #2c80b9, #216794);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+ 
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            padding: 20px 0;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+        }
+ 
+        .footer-logo {
+            display: inline-block;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+ 
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+            
+            .aim-sections {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+        }
+ 
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .logo-section {
+                flex-direction: column;
+                gap: 20px;
+                width: 100%;
+            }
+            
+            .pcce-logo-container {
+                border-right: none;
+                padding-right: 0;
+                border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+                padding-bottom: 20px;
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .virtual-labs-logo {
+                justify-content: center;
+            }
+            
+            .aim-sections {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+ 
+        @media (max-width: 576px) {
+            .aim-sections {
+                grid-template-columns: 1fr;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .pcce-logo-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .pcce-logo-img {
+                width: 70px;
+                height: 70px;
+            }
+        }
+ 
+        /* ============================================================
+           ✅ ADDITIONS — Card Page Navigation & Coefficient Table
+           ============================================================ */
+ 
+        .card-page {
+            display: none;
+            animation: fadeInPage 0.3s ease;
+        }
+ 
+        .card-page.active-page {
+            display: block;
+        }
+ 
+        #main-dashboard.hidden {
+            display: none;
+        }
+ 
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+ 
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(to right, #2c3e50, #3d566e);
+            color: #fff;
+            border: none;
+            padding: 10px 22px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 24px;
+            transition: all 0.25s ease;
+            letter-spacing: 0.4px;
+        }
+ 
+        .back-btn:hover {
+            background: linear-gradient(to right, #1a252f, #2c3e50);
+            transform: translateX(-3px);
+            box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
+        }
+ 
+        .card-page-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding-bottom: 18px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #e8f4fc;
+        }
+ 
+        .card-page-header i {
+            font-size: 36px;
+            color: #3498db;
+        }
+ 
+        .card-page-header h2 {
+            font-size: 26px;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+ 
+        .page-content-box {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 28px;
+            border-left: 5px solid #3498db;
+            color: #2c3e50;
+            line-height: 1.8;
+        }
+ 
+        /* Coefficient Table Styles */
+        .coeff-table-wrapper {
+            margin-top: 20px;
+            overflow-x: auto;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2edf7;
+            padding: 5px;
+        }
+        .coeff-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            font-family: monospace;
+        }
+        .coeff-table th, .coeff-table td {
+            padding: 10px 12px;
+            text-align: center;
+            border-bottom: 1px solid #e2edf7;
+        }
+        .coeff-table th {
+            background-color: #eef4fc;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        .coeff-table tr:hover {
+            background: #f8fdff;
+        }
+        .coeff-badge {
+            display: inline-block;
+            background: #e8f4fc;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+        .summation-note {
+            background: #eef2f9;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin: 16px 0 12px 0;
+            font-family: monospace;
+            font-size: 15px;
+            text-align: center;
+            font-weight: 500;
+        }
+        .sim-input-group input, .coeff-row input {
+            border: 1px solid #cde3f5;
+            border-radius: 6px;
+            padding: 8px 10px;
+        }
+        .submit-btn {
+            background: linear-gradient(to right, #3498db, #2c80b9);
+            color: white;
+            border: none;
+            padding: 11px 28px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .submit-btn:hover {
+            background: linear-gradient(to right, #2c80b9, #216794);
+            transform: translateY(-2px);
+        }
+        .sim-output-box {
+            background: #fff;
+            border: 1px solid #dce8f5;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .sim-message.success {
+            background: #e3f7ec;
+            border-left: 4px solid #2ecc71;
+        }
+        .sim-message.error {
+            background: #fee9e6;
+            border-left: 4px solid #e74c3c;
+        }
+        .formula-box {
+            background: #eef2f7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: center;
+            font-family: monospace;
+        }
     </style>
 </head>
 <body>
-<header>
-    <div class="container header-container">
-        <div class="logo-section">
-            <div class="pcce-logo-container">
-                <img src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png" class="pcce-logo-img" id="pcceLogo" onerror="this.src='https://via.placeholder.com/60x60/2c3e50/ffffff?text=PCOE';">
-                <div class="pcce-logo-text"><div class="main">APPLIED SCIENCES & HUMANITIES</div><div class="sub">Pimpri Chinchwad College of Engineering</div></div>
-            </div>
-            <div class="virtual-labs-logo"><i class="fas fa-flask"></i><h1>Virtual <span>Labs</span></h1></div>
-        </div>
-        <div class="user-info"><i class="fas fa-user-circle"></i><span>Welcome, Student</span></div>
-    </div>
-</header>
-<main class="container" style="padding-top:30px;">
-    <div id="main-dashboard">
-        <div class="content">
-            <div class="content-header"><h2>Fourier Series Virtual Lab</h2><p>Engineering Mathematics Experiment</p></div>
-            <div class="aim-sections">
-                <div class="section-card active" data-target="page-aim"><i class="fas fa-bullseye"></i><h3>Aim</h3><p>Objective</p></div>
-                <div class="section-card" data-target="page-theory"><i class="fas fa-book"></i><h3>Theory</h3><p>Concepts</p></div>
-                <div class="section-card" data-target="page-pretest"><i class="fas fa-question-circle"></i><h3>Pretest</h3><p>Pre-assessment</p></div>
-                <div class="section-card" data-target="page-simulation"><i class="fas fa-desktop"></i><h3>Simulation</h3><p>Interactive</p></div>
-                <div class="section-card" data-target="page-posttest"><i class="fas fa-clipboard-check"></i><h3>Posttest</h3><p>Post-assessment</p></div>
-                <div class="section-card" data-target="page-references"><i class="fas fa-book-open"></i><h3>References</h3><p>Resources</p></div>
-                <div class="section-card" data-target="page-contributors"><i class="fas fa-users"></i><h3>Contributors</h3><p>Team</p></div>
-                <div class="section-card" data-target="page-feedback"><i class="fas fa-comment-alt"></i><h3>Feedback</h3><p>Share experience</p></div>
-            </div>
-        </div>
-    </div>
-    <!-- AIM PAGE -->
-    <div id="page-aim" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-bullseye"></i><div><h2>Aim</h2><p>Objective</p></div></div><div class="page-content-box"><h4>Experiment Objective</h4><p>Understand Fourier Series representation and compute coefficients over any interval [a, b].</p><ul style="margin-left:20px"><li>Define Fourier Series for periodic function with period T = b−a.</li><li>Compute a₀, aₙ, bₙ using Euler's formulas.</li><li>Verify coefficients with L = (b−a)/2.</li></ul></div></div>
-    <!-- THEORY PAGE -->
-    <div id="page-theory" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-book"></i><div><h2>Theory</h2><p>Background</p></div></div><div class="page-content-box"><h4>Fourier Series on [a, b]</h4><div class="formula-box">f(x) = a₀/2 + Σ[ aₙ cos(nπx/L) + bₙ sin(nπx/L) ] &nbsp;&nbsp; where L = (b−a)/2</div><div class="formula-box">a₀ = (1/L) ∫ₐᵇ f(x) dx &nbsp;&nbsp; aₙ = (1/L) ∫ₐᵇ f(x) cos(nπx/L) dx &nbsp;&nbsp; bₙ = (1/L) ∫ₐᵇ f(x) sin(nπx/L) dx</div><p><strong>π = 3.14</strong> in simulation.</p></div></div>
-    <!-- PRETEST -->
-    <div id="page-pretest" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-question-circle"></i><div><h2>Pretest</h2><p>Pre-assessment</p></div></div><div class="mcq-question"><p>Q1. Fourier series of periodic function contains:</p><label class="mcq-option"><input type="radio" name="q1" value="c"> Both sine and cosine terms</label></div><div class="mcq-question"><p>Q2. a₀ coefficient is:</p><label class="mcq-option"><input type="radio" name="q2" value="a"> (1/L)∫₋ᴸᴸ f(x) dx</label></div><div class="mcq-question"><p>Q3. For odd function, zero coefficients:</p><label class="mcq-option"><input type="radio" name="q3" value="a"> a₀ and aₙ</label></div><button class="submit-btn" onclick="submitTest('pretest')">Submit Pretest</button></div>
-
-    <!-- ==================== SIMULATION PAGE (RESTRUCTURED) ==================== -->
-    <div id="page-simulation" class="content card-page">
-        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
-        <div class="card-page-header">
-            <i class="fas fa-desktop"></i>
-            <div><h2>Fourier Series Simulator</h2><p>Arbitrary interval [a,b] | Verification first, Output last</p></div>
-        </div>
-        <div class="page-content-box">
-            <!-- Formula reminder -->
-            <div class="formula-box">
-                <strong>📐 General Fourier Series (π = 3.14)</strong><br>
-                L = (b - a)/2 &nbsp;&nbsp; a₀ = (1/L) ∫ₐᵇ f(x) dx &nbsp;&nbsp;
-                aₙ = (1/L) ∫ₐᵇ f(x) cos(nπx/L) dx &nbsp;&nbsp;
-                bₙ = (1/L) ∫ₐᵇ f(x) sin(nπx/L) dx
-            </div>
-            
-            <!-- Step 1: Input Section -->
-            <div class="sim-input-group">
-                <label>✏️ Function f(x) : <i>(x, ^ for power, sin, cos, e.g., x, x^2, sin(x))</i></label>
-                <input type="text" id="funcInput" style="width:100%; padding:10px; margin-bottom:12px; border:1px solid #cde3f5; border-radius:6px;" value="x" placeholder="e.g., x, x^2, sin(x)">
-            </div>
-            <div class="coeff-row">
-                <div><label>📌 Start point (a):</label><input type="number" id="startPoint" step="any" value="-3.14"></div>
-                <div><label>📌 End point (b):</label><input type="number" id="endPoint" step="any" value="3.14"></div>
-                <div><label>🔢 Number of terms (N):</label><input type="number" id="Nterms" min="1" max="8" value="3"></div>
-            </div>
-            <div class="interval-note"><i class="fas fa-info-circle"></i> Period T = b−a → L = (b−a)/2. Integration from a to b.</div>
-            <button id="calcSeriesBtn" class="submit-btn" style="margin-top:12px;"><i class="fas fa-calculator"></i> Compute Coefficients</button>
-            <hr>
-
-            <!-- Step 2: VERIFICATION SECTION (Second part) -->
-            <div style="background: #f0f7fc; padding: 18px; border-radius: 10px; margin: 20px 0;">
-                <h4 style="margin-bottom: 14px;">✅ Step 2: Verify your computed coefficients (including L)</h4>
-                <div class="coeff-row">
-                    <div><label>Your L value (half-period):</label><input type="text" id="userL" placeholder="e.g., 3.14"></div>
-                    <div><label>Your a₀:</label><input type="text" id="userA0" placeholder="e.g., 0.0"></div>
+ 
+    <header>
+        <div class="container header-container">
+            <div class="logo-section">
+                <div class="pcce-logo-container">
+                    <img src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png"
+                         alt="PCOE Logo"
+                         class="pcce-logo-img"
+                         id="pcceLogo"
+                         onerror="this.onerror=null; this.src='https://via.placeholder.com/60x60/2c3e50/ffffff?text=PCOE';">
+                    <div class="pcce-logo-text">
+                        <div class="main">APPLIED SCIENCES & HUMANITIES</div>
+                        <div class="sub">Pimpri Chinchwad College of Engineering</div>
+                    </div>
                 </div>
-                <div class="coeff-row">
-                    <div><label>Harmonic index n :</label><input type="number" id="checkN" min="1" value="1"></div>
-                    <div><label>Your aₙ :</label><input type="text" id="userAn" placeholder="coeff aₙ"></div>
-                    <div><label>Your bₙ :</label><input type="text" id="userBn" placeholder="coeff bₙ"></div>
+                <div class="virtual-labs-logo">
+                    <i class="fas fa-flask"></i>
+                    <h1>Virtual <span>Labs</span></h1>
                 </div>
-                <button id="checkAnswerBtn" class="submit-btn" style="margin-top:6px; background:#2c3e50;"><i class="fas fa-check-double"></i> Check Answer (L, a₀, aₙ, bₙ)</button>
-                <div id="checkMessage" style="margin-top: 12px;"></div>
+            </div>
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span>Welcome, Student</span>
+            </div>
+        </div>
+    </header>
+ 
+    <main class="container" style="padding-top: 30px; padding-bottom: 10px;">
+        <div id="main-dashboard">
+            <div class="content">
+                <div class="content-header">
+                    <h2>Fourier Series Virtual Lab</h2>
+                    <p>Engineering Mathematics Experiment</p>
+                </div>
+                <div class="aim-sections">
+                    <div class="section-card active" data-target="page-aim"><i class="fas fa-bullseye"></i><h3>Aim</h3><p>Objective</p></div>
+                    <div class="section-card" data-target="page-theory"><i class="fas fa-book"></i><h3>Theory</h3><p>Concepts</p></div>
+                    <div class="section-card" data-target="page-pretest"><i class="fas fa-question-circle"></i><h3>Pretest</h3><p>Pre-assessment</p></div>
+                    <div class="section-card" data-target="page-simulation"><i class="fas fa-desktop"></i><h3>Simulation</h3><p>Interactive</p></div>
+                    <div class="section-card" data-target="page-posttest"><i class="fas fa-clipboard-check"></i><h3>Posttest</h3><p>Post-assessment</p></div>
+                    <div class="section-card" data-target="page-references"><i class="fas fa-book-open"></i><h3>References</h3><p>Resources</p></div>
+                    <div class="section-card" data-target="page-contributors"><i class="fas fa-users"></i><h3>Contributors</h3><p>Team</p></div>
+                    <div class="section-card" data-target="page-feedback"><i class="fas fa-comment-alt"></i><h3>Feedback</h3><p>Share experience</p></div>
+                </div>
+            </div>
+        </div>
+ 
+        <!-- AIM -->
+        <div id="page-aim" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-bullseye"></i><div><h2>Aim</h2><p>Objective</p></div></div><div class="page-content-box"><h4>Experiment Objective</h4><p>Understand Fourier Series representation and compute coefficients over any interval [a, b].</p><ul style="margin-left:20px"><li>Define Fourier Series for periodic function with period T = b−a.</li><li>Compute a₀, aₙ, bₙ using Euler's formulas.</li><li>Verify coefficients with L = (b−a)/2.</li></ul></div></div>
+ 
+        <!-- THEORY -->
+        <div id="page-theory" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-book"></i><div><h2>Theory</h2><p>Background</p></div></div><div class="page-content-box"><h4>Fourier Series on [a, b]</h4><div class="formula-box">f(x) = a₀/2 + Σ[ aₙ cos(nπx/L) + bₙ sin(nπx/L) ] &nbsp;&nbsp; where L = (b−a)/2</div><div class="formula-box">a₀ = (1/L) ∫ₐᵇ f(x) dx &nbsp;&nbsp; aₙ = (1/L) ∫ₐᵇ f(x) cos(nπx/L) dx &nbsp;&nbsp; bₙ = (1/L) ∫ₐᵇ f(x) sin(nπx/L) dx</div><p><strong>π = 3.14</strong> in simulation.</p></div></div>
+ 
+        <!-- PRETEST -->
+        <div id="page-pretest" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-question-circle"></i><div><h2>Pretest</h2><p>Pre-assessment</p></div></div><div class="mcq-question"><p>Q1. Fourier series of periodic function contains:</p><label class="mcq-option"><input type="radio" name="q1" value="c"> Both sine and cosine terms</label></div><div class="mcq-question"><p>Q2. a₀ coefficient is:</p><label class="mcq-option"><input type="radio" name="q2" value="a"> (1/L)∫₋ᴸᴸ f(x) dx</label></div><div class="mcq-question"><p>Q3. For odd function, zero coefficients:</p><label class="mcq-option"><input type="radio" name="q3" value="a"> a₀ and aₙ</label></div><button class="submit-btn" onclick="submitTest('pretest')">Submit Pretest</button></div>
+ 
+        <!-- ============= SIMULATION (ENHANCED: SHOW SERIES COEFFICIENTS FOR VARIABLE n) ============= -->
+        <div id="page-simulation" class="content card-page">
+            <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
+            <div class="card-page-header">
+                <i class="fas fa-desktop"></i>
+                <div>
+                    <h2>Fourier Series Simulator</h2>
+                    <p>General interval [a,b] | Series with variable harmonic index n</p>
+                </div>
+            </div>
+            <div class="page-content-box">
+                <div class="formula-box">
+                    <strong>📐 General Fourier Series (π = 3.14)</strong><br>
+                    L = (b - a)/2 &nbsp;&nbsp; a₀ = (1/L) ∫ₐᵇ f(x) dx &nbsp;&nbsp;
+                    aₙ = (1/L) ∫ₐᵇ f(x) cos(nπx/L) dx &nbsp;&nbsp;
+                    bₙ = (1/L) ∫ₐᵇ f(x) sin(nπx/L) dx
+                </div>
                 
-                <!-- View Solution Button (opens detailed solution) -->
-                <button id="viewSolutionBtn" class="submit-btn" style="margin-top:12px; background: #e67e22;"><i class="fas fa-lightbulb"></i> View Detailed Solution</button>
-                <div id="solutionPanel" class="solution-panel">
-                    <h4><i class="fas fa-graduation-cap"></i> Detailed Solution</h4>
-                    <div id="solutionContent">Click "Compute Coefficients" first, then solution will appear here with step-by-step explanation and correct values.</div>
+                <div class="sim-input-group">
+                    <label>✏️ Function f(x) : <i>(use x, ^ for power, sin, cos, e.g., x, x^2, sin(x))</i></label>
+                    <input type="text" id="funcInput" style="width:100%; padding:10px; margin-bottom:12px; border:1px solid #cde3f5; border-radius:6px;" value="x" placeholder="e.g., x, x^2, sin(x)">
+                </div>
+                <div class="coeff-row">
+                    <div><label>📌 Start point (a):</label><input type="number" id="startPoint" step="any" value="-3.14" style="width:100%"></div>
+                    <div><label>📌 End point (b):</label><input type="number" id="endPoint" step="any" value="3.14" style="width:100%"></div>
+                    <div><label>🔢 Number of terms (N):</label><input type="number" id="Nterms" min="1" max="8" value="3" style="width:100%"></div>
+                </div>
+                <div class="interval-note" style="background:#eaf7ff; padding:8px; border-radius:6px; margin-top:8px;">
+                    <i class="fas fa-info-circle"></i> Period T = b−a &nbsp; → &nbsp; L = (b−a)/2 . Integration from a to b.
+                </div>
+                <button id="calcSeriesBtn" class="submit-btn" style="margin-top:12px;"><i class="fas fa-calculator"></i> Calculate Fourier Series</button>
+                
+                <!-- Series Output Block -->
+                <div id="seriesOutput" class="sim-output-box">
+                    <strong>📐 Fourier Series Expansion (numeric form):</strong><br>
+                    <span id="seriesEquation">—</span>
+                    <div style="margin-top:12px;"><strong>Expanded form (up to N terms):</strong><br><span id="seriesExpanded">—</span></div>
+                    <div style="margin-top:8px; font-size:13px; color:#2c80b9;"><i class="fas fa-chart-line"></i> Interval: [<span id="displayStart">-3.14</span>, <span id="displayEnd">3.14</span>] &nbsp; | L = <span id="displayL">3.14</span></div>
+                </div>
+
+                <!-- ⭐ NEW SECTION: Series representation with variable n + Coefficient table (per harmonic term) -->
+                <div id="variableNRepresentation" style="margin-top: 24px;">
+                    <div class="summation-note">
+                        <i class="fas fa-sigma" style="margin-right: 8px;"></i> 
+                        <strong>Fourier series with variable harmonic index n :</strong><br>
+                        f(x) ≈ a₀/2 + Σ_{n=1}^{N} [ aₙ · cos(nπx/L) + bₙ · sin(nπx/L) ]
+                        <span style="display:inline-block; font-size:13px; background:#fff; border-radius:20px; padding:2px 8px; margin-left:8px;">Each aₙ, bₙ depends on n</span>
+                    </div>
+                    <div id="coeffDynamicArea" style="margin: 15px 0 10px 0;">
+                        <!-- Coefficient table will be injected here dynamically -->
+                    </div>
+                    <p style="font-size:13px; color:#2c3e50;"><i class="fas fa-table"></i> Table above shows Fourier coefficients for each harmonic n = 1,…,N. See how aₙ and bₙ vary with index n.</p>
+                </div>
+                
+                <!-- Verification Panel unchanged -->
+                <div style="margin-top: 24px; background: #f0f7fc; padding: 18px; border-radius: 10px;">
+                    <h4 style="margin-bottom: 14px;">✅ Verify your coefficients (including L)</h4>
+                    <div class="coeff-row">
+                        <div><label>Your L value (half-period):</label><input type="text" id="userL" placeholder="e.g., 3.14" class="feedback-form"></div>
+                        <div><label>Your a₀:</label><input type="text" id="userA0" placeholder="e.g., 0.0" class="feedback-form"></div>
+                    </div>
+                    <div class="coeff-row">
+                        <div><label>Harmonic index n :</label><input type="number" id="checkN" min="1" value="1" class="feedback-form"></div>
+                        <div><label>Your aₙ :</label><input type="text" id="userAn" placeholder="coeff aₙ" class="feedback-form"></div>
+                        <div><label>Your bₙ :</label><input type="text" id="userBn" placeholder="coeff bₙ" class="feedback-form"></div>
+                    </div>
+                    <button id="checkAnswerBtn" class="submit-btn" style="margin-top:6px; background:#2c3e50;"><i class="fas fa-check-double"></i> Check Answer (L, a₀, aₙ, bₙ)</button>
+                    <div id="checkMessage" style="margin-top: 12px;"></div>
+                    <p class="sim-message" style="font-size:13px; margin-top:12px;"><i class="fas fa-info-circle"></i> π = 3.14. Click "Calculate Series" first, then enter your derived L, a₀, aₙ, bₙ. L must match (b−a)/2.</p>
                 </div>
             </div>
-            <hr>
-
-            <!-- Step 3: OUTPUT SECTION (Last part) - Fourier Series Expansion -->
-            <div id="seriesOutput" class="sim-output-box">
-                <strong>📐 Step 3: Fourier Series Expansion (Output)</strong><br>
-                <span id="seriesEquation">—</span>
-                <div style="margin-top:12px;"><strong>Expanded form (up to N terms):</strong><br><span id="seriesExpanded">—</span></div>
-                <div style="margin-top:8px; font-size:13px; color:#2c80b9;"><i class="fas fa-chart-line"></i> Interval: [<span id="displayStart">-3.14</span>, <span id="displayEnd">3.14</span>] &nbsp; | L = <span id="displayL">3.14</span></div>
-            </div>
         </div>
-    </div>
-
-    <!-- POSTTEST, REFERENCES, CONTRIBUTORS, FEEDBACK unchanged but kept -->
-    <div id="page-posttest" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-clipboard-check"></i><div><h2>Posttest</h2><p>Assessment</p></div></div><div class="mcq-question"><p>Q1. For f(x)=x on (-π, π) (L=π), a₀ is:</p><label class="mcq-option"><input type="radio" name="pq1" value="b"> 0</label></div><div class="mcq-question"><p>Q2. If f(x) is even, which is true?</p><label class="mcq-option"><input type="radio" name="pq2" value="a"> bₙ = 0</label></div><div class="mcq-question"><p>Q3. Fourier series of sin(x) on (-π, π) has:</p><label class="mcq-option"><input type="radio" name="pq3" value="b"> Only b₁ = 1</label></div><button class="submit-btn" onclick="submitTest('posttest')">Submit Posttest</button></div>
-    <div id="page-references" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-book-open"></i><div><h2>References</h2></div></div><ul class="ref-list"><li><i class="fas fa-book"></i><div><strong>Higher Engg. Mathematics</strong> — B.S. Grewal</div></li><li><i class="fas fa-book"></i><div><strong>Advanced Engg. Mathematics</strong> — Erwin Kreyszig</div></li></ul></div>
-    <div id="page-contributors" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-users"></i><div><h2>Contributors</h2></div></div><div class="contributors-grid"><div class="contributor-card"><i class="fas fa-user-tie"></i><h4>Dr. Faculty</h4><p>PI</p></div><div class="contributor-card"><i class="fas fa-chalkboard-teacher"></i><h4>Prof. Developer</h4><p>Content</p></div></div></div>
-    <div id="page-feedback" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-comment-alt"></i><div><h2>Feedback</h2></div></div><div class="feedback-form"><label>Name</label><input type="text"><label>Rating</label><div class="star-rating" id="starRating"><i class="fas fa-star" data-val="1"></i><i class="fas fa-star" data-val="2"></i><i class="fas fa-star" data-val="3"></i><i class="fas fa-star" data-val="4"></i><i class="fas fa-star" data-val="5"></i></div><label>Comments</label><textarea rows="4"></textarea><button class="submit-btn" onclick="submitFeedback()">Submit Feedback</button></div></div>
-</main>
-<footer class="container"><p>Virtual Labs © 2025 | Applied Sciences & Humanities | Pimpri Chinchwad College of Engineering</p></footer>
-
-<script>
-    // Navigation
-    function openPage(targetId) {
-        document.getElementById('main-dashboard').classList.add('hidden');
-        document.querySelectorAll('.card-page').forEach(p => p.classList.remove('active-page'));
-        document.getElementById(targetId).classList.add('active-page');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    function goBack() {
-        document.querySelectorAll('.card-page').forEach(p => p.classList.remove('active-page'));
-        document.getElementById('main-dashboard').classList.remove('hidden');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    document.querySelectorAll('.section-card').forEach(card => {
-        card.addEventListener('click', function() {
-            document.querySelectorAll('.section-card').forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-            const target = card.getAttribute('data-target');
-            if (target) openPage(target);
+ 
+        <!-- POSTTEST, REFERENCES, CONTRIBUTORS, FEEDBACK unchanged -->
+        <div id="page-posttest" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-clipboard-check"></i><div><h2>Posttest</h2><p>Assessment</p></div></div><div class="mcq-question"><p>Q1. For f(x)=x on (-π, π) (L=π), a₀ is:</p><label class="mcq-option"><input type="radio" name="pq1" value="b"> 0</label></div><div class="mcq-question"><p>Q2. If f(x) is even, which is true?</p><label class="mcq-option"><input type="radio" name="pq2" value="a"> bₙ = 0</label></div><div class="mcq-question"><p>Q3. Fourier series of sin(x) on (-π, π) has:</p><label class="mcq-option"><input type="radio" name="pq3" value="b"> Only b₁ = 1</label></div><button class="submit-btn" onclick="submitTest('posttest')">Submit Posttest</button></div>
+        <div id="page-references" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-book-open"></i><div><h2>References</h2><p>Resources</p></div></div><ul class="ref-list"><li><i class="fas fa-book"></i><div><strong>Higher Engg. Mathematics</strong> — B.S. Grewal</div></li><li><i class="fas fa-book"></i><div><strong>Advanced Engg. Mathematics</strong> — Erwin Kreyszig</div></li><li><i class="fas fa-globe"></i><div><a href="#">MIT OCW 18.03</a></div></li></ul></div>
+        <div id="page-contributors" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-users"></i><div><h2>Contributors</h2><p>Team</p></div></div><div class="contributors-grid"><div class="contributor-card"><i class="fas fa-user-tie"></i><h4>Dr. Faculty</h4><p>Principal Investigator</p></div><div class="contributor-card"><i class="fas fa-chalkboard-teacher"></i><h4>Prof. Developer</h4><p>Content Developer</p></div></div></div>
+        <div id="page-feedback" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-comment-alt"></i><div><h2>Feedback</h2><p>Your experience</p></div></div><div class="feedback-form"><label>Name</label><input type="text"><label>Rating</label><div class="star-rating" id="starRating"><i class="fas fa-star" data-val="1"></i><i class="fas fa-star" data-val="2"></i><i class="fas fa-star" data-val="3"></i><i class="fas fa-star" data-val="4"></i><i class="fas fa-star" data-val="5"></i></div><label>Comments</label><textarea rows="4"></textarea><button class="submit-btn" onclick="submitFeedback()">Submit Feedback</button></div></div>
+    </main>
+ 
+    <footer class="container"><p>Virtual Labs © 2025 | Applied Sciences & Humanities | Pimpri Chinchwad College of Engineering</p></footer>
+ 
+    <script>
+        // Navigation & helpers (unchanged)
+        function openPage(targetId) {
+            document.getElementById('main-dashboard').classList.add('hidden');
+            document.querySelectorAll('.card-page').forEach(p => p.classList.remove('active-page'));
+            document.getElementById(targetId).classList.add('active-page');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function goBack() {
+            document.querySelectorAll('.card-page').forEach(p => p.classList.remove('active-page'));
+            document.getElementById('main-dashboard').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        document.querySelectorAll('.section-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.section-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                const target = card.getAttribute('data-target');
+                if (target) openPage(target);
+            });
         });
-    });
-    function submitTest(type) { alert(`${type === 'pretest' ? 'Pretest' : 'Posttest'} submitted!`); }
-    function submitFeedback() { alert('Thank you for feedback!'); goBack(); }
-    document.addEventListener('DOMContentLoaded', () => { 
-        const img = document.getElementById('pcceLogo');
-        if(img && img.complete && img.naturalWidth===0) img.src='https://via.placeholder.com/60x60/2c3e50/ffffff?text=PCOE';
-    });
-    
-    // ========== FOURIER SIMULATION (with verification then output, and solution) ==========
-    const PI = 3.14;
-    let globalCoeffs = null, globalL = null, globalStart = null, globalEnd = null, globalFuncStr = "";
-
-    function evaluateFunction(expr, xVal, Lval) {
-        try {
-            let cleanExpr = expr.replace(/\^/g, '**').replace(/pi(?![a-z])/gi, PI.toString());
-            const fn = new Function('x', 'L', 'PI', 'return (' + cleanExpr + ')');
-            return fn(xVal, Lval, PI);
-        } catch(e) { throw new Error("Invalid function"); }
-    }
-    
-    function simpsonIntegrate(expr, a, b, Lval, extraFactor = null) {
-        if (a === b) return 0;
-        const n = 400;
-        let h = (b - a) / n;
-        let sum = evaluateFunction(expr, a, Lval) + evaluateFunction(expr, b, Lval);
-        for(let i = 1; i < n; i++) {
-            let x = a + i * h;
-            let val = evaluateFunction(expr, x, Lval);
-            if(extraFactor) {
-                if(extraFactor.type === 'cos') val *= Math.cos(extraFactor.n * PI * x / Lval);
-                else if(extraFactor.type === 'sin') val *= Math.sin(extraFactor.n * PI * x / Lval);
+        function submitTest(type) { alert(`${type === 'pretest' ? 'Pretest' : 'Posttest'} submitted!`); }
+        function submitFeedback() { alert('Thank you for feedback!'); goBack(); }
+        document.addEventListener('DOMContentLoaded', () => { 
+            const img = document.getElementById('pcceLogo');
+            if(img && img.complete && img.naturalWidth===0) img.src='https://via.placeholder.com/60x60/2c3e50/ffffff?text=PCOE';
+        });
+        
+        // ============================================================
+        // ENHANCED SIMULATION: Series coefficients for variable n
+        const PI = 3.14;
+        let globalCoeffs = null, globalL = null, globalStart = null, globalEnd = null, globalN = null;
+        
+        function evaluateFunction(expr, xVal, Lval) {
+            try {
+                let cleanExpr = expr.replace(/\^/g, '**').replace(/pi(?![a-z])/gi, PI.toString());
+                const fn = new Function('x', 'L', 'PI', 'return (' + cleanExpr + ')');
+                return fn(xVal, Lval, PI);
+            } catch(e) { throw new Error("Invalid function"); }
+        }
+        
+        function simpsonIntegrate(expr, a, b, Lval, extraFactor = null) {
+            if (a === b) return 0;
+            const n = 400;
+            let h = (b - a) / n;
+            let sum = evaluateFunction(expr, a, Lval) + evaluateFunction(expr, b, Lval);
+            for(let i = 1; i < n; i++) {
+                let x = a + i * h;
+                let val = evaluateFunction(expr, x, Lval);
+                if(extraFactor) {
+                    if(extraFactor.type === 'cos') val *= Math.cos(extraFactor.n * PI * x / Lval);
+                    else if(extraFactor.type === 'sin') val *= Math.sin(extraFactor.n * PI * x / Lval);
+                }
+                sum += (i % 2 === 0 ? 2 : 4) * val;
             }
-            sum += (i % 2 === 0 ? 2 : 4) * val;
+            return (h / 3) * sum;
         }
-        return (h / 3) * sum;
-    }
-    
-    function computeCoefficients(funcStr, start, end, L, N) {
-        const coeffs = { a0: 0, an: [], bn: [] };
-        const a0_int = simpsonIntegrate(funcStr, start, end, L, null);
-        coeffs.a0 = a0_int / L;
-        for(let n=1; n<=N; n++) {
-            const an_int = simpsonIntegrate(funcStr, start, end, L, { type: 'cos', n: n });
-            coeffs.an[n] = an_int / L;
-            const bn_int = simpsonIntegrate(funcStr, start, end, L, { type: 'sin', n: n });
-            coeffs.bn[n] = bn_int / L;
-        }
-        return coeffs;
-    }
-    
-    function formatSeries(coeffs, L, N) {
-        let eq = `f(x) ≈ ${(coeffs.a0/2).toFixed(4)}`;
-        let expanded = `${(coeffs.a0/2).toFixed(4)}`;
-        for(let i=1; i<=N; i++) {
-            let an = coeffs.an[i] || 0, bn = coeffs.bn[i] || 0;
-            if(Math.abs(an) > 1e-6) {
-                let term = ` + ${an.toFixed(4)}·cos(${i}πx/${L.toFixed(4)})`;
-                eq += term; expanded += term;
+        
+        function computeCoefficients(funcStr, start, end, L, N) {
+            const coeffs = { a0: 0, an: [], bn: [] };
+            const a0_int = simpsonIntegrate(funcStr, start, end, L, null);
+            coeffs.a0 = a0_int / L;
+            for(let n=1; n<=N; n++) {
+                const an_int = simpsonIntegrate(funcStr, start, end, L, { type: 'cos', n: n });
+                coeffs.an[n] = an_int / L;
+                const bn_int = simpsonIntegrate(funcStr, start, end, L, { type: 'sin', n: n });
+                coeffs.bn[n] = bn_int / L;
             }
-            if(Math.abs(bn) > 1e-6) {
-                let term = ` + ${bn.toFixed(4)}·sin(${i}πx/${L.toFixed(4)})`;
-                eq += term; expanded += term;
+            return coeffs;
+        }
+        
+        function formatSeries(coeffs, L, N) {
+            let eq = `f(x) ≈ ${(coeffs.a0/2).toFixed(4)}`;
+            let expanded = `${(coeffs.a0/2).toFixed(4)}`;
+            for(let i=1; i<=N; i++) {
+                let an = coeffs.an[i] || 0, bn = coeffs.bn[i] || 0;
+                if(Math.abs(an) > 1e-6) {
+                    let term = ` + ${an.toFixed(4)}·cos(${i}πx/${L.toFixed(4)})`;
+                    eq += term; expanded += term;
+                }
+                if(Math.abs(bn) > 1e-6) {
+                    let term = ` + ${bn.toFixed(4)}·sin(${i}πx/${L.toFixed(4)})`;
+                    eq += term; expanded += term;
+                }
             }
+            eq = eq.replace(/\+ -/g, '- ').replace(/\+\s+-/g, '- ');
+            expanded = expanded.replace(/\+ -/g, '- ').replace(/\+\s+-/g, '- ');
+            return { eq, expanded };
         }
-        eq = eq.replace(/\+ -/g, '- ').replace(/\+\s+-/g, '- ');
-        expanded = expanded.replace(/\+ -/g, '- ').replace(/\+\s+-/g, '- ');
-        return { eq, expanded };
-    }
-    
-    // Generate detailed solution text
-    function generateSolution(funcStr, start, end, L, coeffs, N) {
-        let solutionHtml = `<p><strong>Function:</strong> f(x) = ${funcStr}</p>`;
-        solutionHtml += `<p><strong>Interval:</strong> [${start}, ${end}] &nbsp;&nbsp; <strong>Period T =</strong> ${(end-start).toFixed(4)} &nbsp;&nbsp; <strong>L = (b-a)/2 =</strong> ${L.toFixed(4)}</p>`;
-        solutionHtml += `<p><strong>Step 1: Compute a₀</strong><br> a₀ = (1/L) ∫ₐᵇ f(x) dx = (1/${L.toFixed(4)}) × (numerical integration) = ${coeffs.a0.toFixed(6)}</p>`;
-        solutionHtml += `<p><strong>Step 2: Compute aₙ and bₙ for n = 1 to ${N}</strong><br>`;
-        for(let n=1; n<=N; n++) {
-            let an = coeffs.an[n] || 0;
-            let bn = coeffs.bn[n] || 0;
-            solutionHtml += `n = ${n}: aₙ = ${an.toFixed(6)}, bₙ = ${bn.toFixed(6)}<br>`;
+        
+        // NEW: render coefficient table for n = 1..N (shows aₙ and bₙ per harmonic)
+        function renderCoefficientTable(coeffs, N) {
+            const container = document.getElementById('coeffDynamicArea');
+            if(!container) return;
+            if(!coeffs) {
+                container.innerHTML = '<div class="sim-message" style="background:#f0f2f5; padding:12px;">⚙️ Click "Calculate Series" to see coefficients for each harmonic n.</div>';
+                return;
+            }
+            let tableHtml = `<div class="coeff-table-wrapper">
+                <table class="coeff-table">
+                    <thead>
+                        <tr><th>Harmonic index <strong>n</strong></th><th>aₙ (cosine coefficient)</th><th>bₙ (sine coefficient)</th></tr>
+                    </thead>
+                    <tbody>`;
+            for(let n=1; n<=N; n++) {
+                let anVal = (coeffs.an[n] !== undefined) ? coeffs.an[n] : 0;
+                let bnVal = (coeffs.bn[n] !== undefined) ? coeffs.bn[n] : 0;
+                let anDisplay = Math.abs(anVal) < 1e-6 ? "0.0000" : anVal.toFixed(5);
+                let bnDisplay = Math.abs(bnVal) < 1e-6 ? "0.0000" : bnVal.toFixed(5);
+                tableHtml += `<tr><td style="font-weight:600;">n = ${n}</td><td>${anDisplay}</td><td>${bnDisplay}</td></tr>`;
+            }
+            tableHtml += `</tbody></table><div style="font-size:12px; padding:6px; text-align:center; background:#f8fafd;">⚡ a₀/2 = ${(coeffs.a0/2).toFixed(5)} &nbsp;&nbsp;| L = ${globalL.toFixed(5)}</div></div>`;
+            container.innerHTML = tableHtml;
         }
-        solutionHtml += `</p><p><strong>Step 3: Fourier Series:</strong><br> f(x) ≈ ${(coeffs.a0/2).toFixed(6)} + Σ [ `;
-        let terms = [];
-        for(let n=1; n<=N; n++) {
-            let an = coeffs.an[n] || 0;
-            let bn = coeffs.bn[n] || 0;
-            if(Math.abs(an)>1e-6) terms.push(`${an.toFixed(6)} cos(${n}πx/${L.toFixed(4)})`);
-            if(Math.abs(bn)>1e-6) terms.push(`${bn.toFixed(6)} sin(${n}πx/${L.toFixed(4)})`);
-        }
-        solutionHtml += terms.join(" + ") + " ]</p>";
-        solutionHtml += `<p class="sim-message success"><i class="fas fa-check-circle"></i> Use these values to verify your answers. Tolerance = 1e-4.</p>`;
-        return solutionHtml;
-    }
-    
-    // Calculate button event
-    document.getElementById('calcSeriesBtn').addEventListener('click', () => {
-        const func = document.getElementById('funcInput').value.trim();
-        const start = parseFloat(document.getElementById('startPoint').value);
-        const end = parseFloat(document.getElementById('endPoint').value);
-        const N = parseInt(document.getElementById('Nterms').value);
-        if(isNaN(start) || isNaN(end)) { alert("Enter valid start/end."); return; }
-        if(end <= start) { alert("End must be > start."); return; }
-        if(isNaN(N) || N<1) { alert("N must be >=1"); return; }
-        const L = (end - start) / 2;
-        if(L <= 0) { alert("Invalid L."); return; }
-        try {
-            const coeffs = computeCoefficients(func, start, end, L, N);
-            globalCoeffs = coeffs; globalL = L; globalStart = start; globalEnd = end; globalFuncStr = func;
-            const { eq, expanded } = formatSeries(coeffs, L, N);
-            document.getElementById('seriesEquation').innerHTML = eq;
-            document.getElementById('seriesExpanded').innerHTML = expanded;
-            document.getElementById('displayStart').innerText = start.toFixed(4);
-            document.getElementById('displayEnd').innerText = end.toFixed(4);
-            document.getElementById('displayL').innerText = L.toFixed(4);
-            document.getElementById('checkMessage').innerHTML = "";
-            // also update solution panel if it's visible later
-            const solutionDiv = document.getElementById('solutionContent');
-            solutionDiv.innerHTML = generateSolution(func, start, end, L, coeffs, N);
-        } catch(err) { alert("Invalid function syntax. Use x, sin(x), cos(x), x^2, etc."); }
-    });
-    
-    // Check Answer (Verification)
-    document.getElementById('checkAnswerBtn').addEventListener('click', () => {
-        if(!globalCoeffs) { document.getElementById('checkMessage').innerHTML = '<div class="sim-message error">⚠️ Please compute coefficients first (Click "Compute Coefficients").</div>'; return; }
-        const userL = parseFloat(document.getElementById('userL').value);
-        const userA0 = parseFloat(document.getElementById('userA0').value);
-        const nIdx = parseInt(document.getElementById('checkN').value);
-        const userAn = parseFloat(document.getElementById('userAn').value);
-        const userBn = parseFloat(document.getElementById('userBn').value);
-        if(isNaN(userL) || isNaN(userA0) || isNaN(nIdx) || isNaN(userAn) || isNaN(userBn)) {
-            document.getElementById('checkMessage').innerHTML = '<div class="sim-message error">❌ Fill all fields (L, a₀, n, aₙ, bₙ).</div>';
-            return;
-        }
-        const tol = 1e-4;
-        const actualL = globalL;
-        const actualA0 = globalCoeffs.a0;
-        const actualAn = globalCoeffs.an[nIdx] !== undefined ? globalCoeffs.an[nIdx] : 0;
-        const actualBn = globalCoeffs.bn[nIdx] !== undefined ? globalCoeffs.bn[nIdx] : 0;
-        const lOk = Math.abs(userL - actualL) < tol;
-        const a0Ok = Math.abs(userA0 - actualA0) < tol;
-        const anOk = Math.abs(userAn - actualAn) < tol;
-        const bnOk = Math.abs(userBn - actualBn) < tol;
-        if(lOk && a0Ok && anOk && bnOk) {
-            document.getElementById('checkMessage').innerHTML = `<div class="sim-message success">✔ Perfect! All correct.<br>L = ${actualL.toFixed(4)}, a₀ = ${actualA0.toFixed(4)}, a₍${nIdx}₎ = ${actualAn.toFixed(4)}, b₍${nIdx}₎ = ${actualBn.toFixed(4)}</div>`;
-        } else {
-            let err = "❌ Incorrect. ";
-            if(!lOk) err += `L mismatch (yours=${userL}, actual=${actualL.toFixed(4)}). `;
-            if(!a0Ok) err += `a₀ mismatch. `;
-            if(!anOk) err += `aₙ mismatch. `;
-            if(!bnOk) err += `bₙ mismatch. `;
-            document.getElementById('checkMessage').innerHTML = `<div class="sim-message error">${err} Try again! Use "View Detailed Solution".</div>`;
-        }
-    });
-    
-    // View Solution Button: show solution panel and populate with current coefficients (if computed)
-    document.getElementById('viewSolutionBtn').addEventListener('click', () => {
-        const panel = document.getElementById('solutionPanel');
-        if(!globalCoeffs) {
-            document.getElementById('solutionContent').innerHTML = '<p class="sim-message error">⚠️ No coefficients computed yet. Please click "Compute Coefficients" first.</p>';
-            panel.classList.add('show');
-            return;
-        }
-        // refresh solution content
-        const solutionHtml = generateSolution(globalFuncStr, globalStart, globalEnd, globalL, globalCoeffs, parseInt(document.getElementById('Nterms').value));
-        document.getElementById('solutionContent').innerHTML = solutionHtml;
-        panel.classList.add('show');
-        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    });
-    
-    // Star rating for feedback
-    let stars = document.querySelectorAll('#starRating .fa-star');
-    let selectedRating = 0;
-    stars.forEach(star => {
-        star.addEventListener('mouseover', function() { let val = parseInt(star.getAttribute('data-val')); stars.forEach((s, idx) => s.classList.toggle('active', idx < val)); });
-        star.addEventListener('mouseout', function() { stars.forEach((s, idx) => s.classList.toggle('active', idx < selectedRating)); });
-        star.addEventListener('click', function() { selectedRating = parseInt(star.getAttribute('data-val')); stars.forEach((s, idx) => s.classList.toggle('active', idx < selectedRating)); });
-    });
-</script>
+        
+        // Calculate series and update all parts (including coefficient table for variable n)
+        document.getElementById('calcSeriesBtn').addEventListener('click', () => {
+            const func = document.getElementById('funcInput').value.trim();
+            const start = parseFloat(document.getElementById('startPoint').value);
+            const end = parseFloat(document.getElementById('endPoint').value);
+            const N = parseInt(document.getElementById('Nterms').value);
+            
+            if(isNaN(start) || isNaN(end)) { alert("Please enter valid start and end points."); return; }
+            if(end <= start) { alert("End point must be greater than start point."); return; }
+            if(isNaN(N) || N<1) { alert("Number of terms must be >=1"); return; }
+            
+            const L = (end - start) / 2;
+            if(L <= 0) { alert("Invalid L (half-period). Ensure end > start."); return; }
+            
+            try {
+                const coeffs = computeCoefficients(func, start, end, L, N);
+                globalCoeffs = coeffs;
+                globalL = L;
+                globalStart = start;
+                globalEnd = end;
+                globalN = N;
+                
+                const { eq, expanded } = formatSeries(coeffs, L, N);
+                document.getElementById('seriesEquation').innerHTML = eq;
+                document.getElementById('seriesExpanded').innerHTML = expanded;
+                document.getElementById('displayStart').innerText = start.toFixed(4);
+                document.getElementById('displayEnd').innerText = end.toFixed(4);
+                document.getElementById('displayL').innerText = L.toFixed(4);
+                document.getElementById('checkMessage').innerHTML = "";
+                
+                // ⭐ Show coefficient table with per‑n values (variable harmonic index)
+                renderCoefficientTable(coeffs, N);
+            } catch(err) {
+                alert("Error evaluating function. Use valid syntax (x, sin(x), cos(x), x^2, etc.)");
+                console.error(err);
+            }
+        });
+        
+        // Verification block
+        document.getElementById('checkAnswerBtn').addEventListener('click', () => {
+            if(!globalCoeffs) {
+                document.getElementById('checkMessage').innerHTML = '<div class="sim-message error">⚠️ Please calculate the series first (click "Calculate Series").</div>';
+                return;
+            }
+            const userL = parseFloat(document.getElementById('userL').value);
+            const userA0 = parseFloat(document.getElementById('userA0').value);
+            const nIdx = parseInt(document.getElementById('checkN').value);
+            const userAn = parseFloat(document.getElementById('userAn').value);
+            const userBn = parseFloat(document.getElementById('userBn').value);
+            
+            if(isNaN(userL) || isNaN(userA0) || isNaN(nIdx) || isNaN(userAn) || isNaN(userBn)) {
+                document.getElementById('checkMessage').innerHTML = '<div class="sim-message error">❌ Please fill all fields (L, a₀, n, aₙ, bₙ).</div>';
+                return;
+            }
+            const tol = 1e-4;
+            const actualL = globalL;
+            const actualA0 = globalCoeffs.a0;
+            const actualAn = globalCoeffs.an[nIdx] !== undefined ? globalCoeffs.an[nIdx] : 0;
+            const actualBn = globalCoeffs.bn[nIdx] !== undefined ? globalCoeffs.bn[nIdx] : 0;
+            
+            const lOk = Math.abs(userL - actualL) < tol;
+            const a0Ok = Math.abs(userA0 - actualA0) < tol;
+            const anOk = Math.abs(userAn - actualAn) < tol;
+            const bnOk = Math.abs(userBn - actualBn) < tol;
+            
+            if(lOk && a0Ok && anOk && bnOk) {
+                document.getElementById('checkMessage').innerHTML = `<div class="sim-message success">✔ Perfect! All correct.<br>L = ${actualL.toFixed(4)}, a₀ = ${actualA0.toFixed(4)}, a₍${nIdx}₎ = ${actualAn.toFixed(4)}, b₍${nIdx}₎ = ${actualBn.toFixed(4)}</div>`;
+            } else {
+                let err = "❌ Incorrect. ";
+                if(!lOk) err += `L mismatch (yours=${userL}, actual=${actualL.toFixed(4)}). `;
+                if(!a0Ok) err += `a₀ mismatch. `;
+                if(!anOk) err += `aₙ mismatch. `;
+                if(!bnOk) err += `bₙ mismatch. `;
+                document.getElementById('checkMessage').innerHTML = `<div class="sim-message error">${err} Try again!</div>`;
+            }
+        });
+        
+        // Star rating
+        let stars = document.querySelectorAll('#starRating .fa-star');
+        let selectedRating = 0;
+        stars.forEach(star => {
+            star.addEventListener('mouseover', function() { let val = parseInt(star.getAttribute('data-val')); stars.forEach((s, idx) => s.classList.toggle('active', idx < val)); });
+            star.addEventListener('mouseout', function() { stars.forEach((s, idx) => s.classList.toggle('active', idx < selectedRating)); });
+            star.addEventListener('click', function() { selectedRating = parseInt(star.getAttribute('data-val')); stars.forEach((s, idx) => s.classList.toggle('active', idx < selectedRating)); });
+        });
+    </script>
 </body>
 </html>
