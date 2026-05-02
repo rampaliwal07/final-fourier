@@ -781,10 +781,10 @@
             </div>
         </div>
  
-        <!-- AIM (unchanged) -->
+        <!-- AIM unchanged -->
         <div id="page-aim" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-bullseye"></i><div><h2>Aim</h2><p>Objective</p></div></div><div class="page-content-box"><h4>Experiment Objective</h4><p>Understand Fourier Series representation and compute coefficients over any interval [a, b].</p><ul style="margin-left:20px"><li>Define Fourier Series for periodic function with period T = b−a.</li><li>Compute a₀, aₙ, bₙ using Euler's formulas.</li><li>Verify coefficients with L = (b−a)/2.</li></ul></div></div>
  
-        <!-- THEORY (unchanged) -->
+        <!-- THEORY unchanged -->
         <div id="page-theory" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-book"></i><div><h2>Theory</h2><p>Background</p></div></div><div class="page-content-box"><h4>Fourier Series on [a, b]</h4><div class="formula-box">f(x) = a₀/2 + Σ[ aₙ cos(nπx/L) + bₙ sin(nπx/L) ] &nbsp;&nbsp; where L = (b−a)/2</div><div class="formula-box">a₀ = (1/L) ∫ₐᵇ f(x) dx &nbsp;&nbsp; aₙ = (1/L) ∫ₐᵇ f(x) cos(nπx/L) dx &nbsp;&nbsp; bₙ = (1/L) ∫ₐᵇ f(x) sin(nπx/L) dx</div><p><strong>π = 3.14</strong> in simulation.</p></div></div>
  
         <!-- PRETEST unchanged -->
@@ -831,7 +831,7 @@
                     <div style="margin-top:8px; font-size:13px; color:#2c80b9;"><i class="fas fa-chart-line"></i> Interval: [<span id="displayStart">-3.14</span>, <span id="displayEnd">3.14</span>] &nbsp; | L = <span id="displayL">3.14</span></div>
                 </div>
                 
-                <!-- Verification Section: now includes L check (explicitly) -->
+                <!-- Verification Section: now includes L check and additional Fourier series answer in summation form -->
                 <div style="margin-top: 24px; background: #f0f7fc; padding: 18px; border-radius: 10px;">
                     <h4 style="margin-bottom: 14px;">✅ Verify your coefficients (including L)</h4>
                     <div class="coeff-row">
@@ -845,12 +845,14 @@
                     </div>
                     <button id="checkAnswerBtn" class="submit-btn" style="margin-top:6px; background:#2c3e50;"><i class="fas fa-check-double"></i> Check Answer (L, a₀, aₙ, bₙ)</button>
                     <div id="checkMessage" style="margin-top: 12px;"></div>
+                    <!-- NEW: Fourier Series answer displayed after verification (summation notation in terms of n) -->
+                    <div id="seriesSummationAnswer" style="margin-top: 20px; background: #fef9e6; padding: 16px; border-radius: 10px; border-left: 5px solid #f39c12; font-size: 14px;"></div>
                     <p class="sim-message" style="font-size:13px; margin-top:12px;"><i class="fas fa-info-circle"></i> π = 3.14. Click "Calculate Series" first, then enter your derived L, a₀, aₙ, bₙ. L must match (b−a)/2 from your interval.</p>
                 </div>
             </div>
         </div>
  
-        <!-- POSTTEST (unchanged) -->
+        <!-- POSTTEST unchanged -->
         <div id="page-posttest" class="content card-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button><div class="card-page-header"><i class="fas fa-clipboard-check"></i><div><h2>Posttest</h2><p>Assessment</p></div></div><div class="mcq-question"><p>Q1. For f(x)=x on (-π, π) (L=π), a₀ is:</p><label class="mcq-option"><input type="radio" name="pq1" value="b"> 0</label></div><div class="mcq-question"><p>Q2. If f(x) is even, which is true?</p><label class="mcq-option"><input type="radio" name="pq2" value="a"> bₙ = 0</label></div><div class="mcq-question"><p>Q3. Fourier series of sin(x) on (-π, π) has:</p><label class="mcq-option"><input type="radio" name="pq3" value="b"> Only b₁ = 1</label></div><button class="submit-btn" onclick="submitTest('posttest')">Submit Posttest</button></div>
  
         <!-- REFERENCES, CONTRIBUTORS, FEEDBACK unchanged -->
@@ -892,7 +894,7 @@
         // ============================================================
         // MODIFIED SIMULATION LOGIC: start & end points, L = (b-a)/2
         const PI = 3.14;
-        let globalCoeffs = null, globalL = null, globalStart = null, globalEnd = null;
+        let globalCoeffs = null, globalL = null, globalStart = null, globalEnd = null, globalN = 0;
         
         function evaluateFunction(expr, xVal, Lval) {
             try {
@@ -921,7 +923,6 @@
         
         function computeCoefficients(funcStr, start, end, L, N) {
             const coeffs = { a0: 0, an: [], bn: [] };
-            // a0 = (1/L) ∫_start^end f(x) dx
             const a0_int = simpsonIntegrate(funcStr, start, end, L, null);
             coeffs.a0 = a0_int / L;
             for(let n=1; n<=N; n++) {
@@ -952,7 +953,30 @@
             return { eq, expanded };
         }
         
-        // Event: Calculate Series based on start, end
+        // NEW: Display Fourier Series in summation form with terms of n (after verification)
+        function displaySeriesSummation() {
+            const container = document.getElementById('seriesSummationAnswer');
+            if (!globalCoeffs || globalL === null || globalN === 0) {
+                container.innerHTML = `<i class="fas fa-info-circle"></i> Click "Calculate Series" first, then verify to see Fourier series in summation form.`;
+                return;
+            }
+            const a0_half = globalCoeffs.a0 / 2;
+            const Lval = globalL;
+            let coefTable = `<div style="margin-top: 12px; font-family: monospace;"><strong>📖 Fourier Series Answer (∑ notation — in terms of n):</strong><br>
+            <span style="font-size: 15px;">f(x) = ${a0_half.toFixed(5)} + Σ_{n=1}^{∞} [ aₙ·cos(nπx/${Lval.toFixed(4)}) + bₙ·sin(nπx/${Lval.toFixed(4)}) ]</span><br>
+            <span style="font-size: 13px; color:#2c3e50;">with L = ${Lval.toFixed(5)},  a₀ = ${globalCoeffs.a0.toFixed(5)}</span><br>
+            <strong>Computed coefficients (n = 1 to ${globalN}):</strong></div>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px;">`;
+            for (let n = 1; n <= globalN; n++) {
+                let anVal = (globalCoeffs.an[n] || 0).toFixed(5);
+                let bnVal = (globalCoeffs.bn[n] || 0).toFixed(5);
+                coefTable += `<div style="background:#fff; border-radius:8px; padding:6px 12px; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><strong>n = ${n}</strong> &nbsp; aₙ = ${anVal} &nbsp; bₙ = ${bnVal}</div>`;
+            }
+            coefTable += `</div><div style="margin-top: 12px; font-size:12px; color:#7f8c8d;"><i class="fas fa-chart-line"></i> Representation uses n as summation index. Terms beyond N are truncated in expansion but theoretically infinite.</div>`;
+            container.innerHTML = coefTable;
+        }
+        
+        // Event: Calculate Series
         document.getElementById('calcSeriesBtn').addEventListener('click', () => {
             const func = document.getElementById('funcInput').value.trim();
             const start = parseFloat(document.getElementById('startPoint').value);
@@ -972,6 +996,7 @@
                 globalL = L;
                 globalStart = start;
                 globalEnd = end;
+                globalN = N;
                 
                 const { eq, expanded } = formatSeries(coeffs, L, N);
                 document.getElementById('seriesEquation').innerHTML = eq;
@@ -980,16 +1005,19 @@
                 document.getElementById('displayEnd').innerText = end.toFixed(4);
                 document.getElementById('displayL').innerText = L.toFixed(4);
                 document.getElementById('checkMessage').innerHTML = "";
+                // Reset summation answer until verification
+                document.getElementById('seriesSummationAnswer').innerHTML = `<i class="fas fa-info-circle"></i> Series calculated. Click "Check Answer" after entering coefficients to see the Fourier series in summation form.`;
             } catch(err) {
                 alert("Error evaluating function. Use valid syntax (x, sin(x), cos(x), x^2, etc.)");
                 console.error(err);
             }
         });
         
-        // Verification: Checks L, a0, an, bn
+        // Verification: Checks L, a0, an, bn AND displays summation answer after verification
         document.getElementById('checkAnswerBtn').addEventListener('click', () => {
             if(!globalCoeffs) {
                 document.getElementById('checkMessage').innerHTML = '<div class="sim-message error">⚠️ Please calculate the series first (click "Calculate Series").</div>';
+                document.getElementById('seriesSummationAnswer').innerHTML = `<i class="fas fa-exclamation-triangle"></i> No series data. Calculate the series first.`;
                 return;
             }
             const userL = parseFloat(document.getElementById('userL').value);
@@ -1023,6 +1051,8 @@
                 if(!bnOk) err += `bₙ mismatch. `;
                 document.getElementById('checkMessage').innerHTML = `<div class="sim-message error">${err} Try again!</div>`;
             }
+            // After verification (whether correct or not), display the Fourier series in summation notation
+            displaySeriesSummation();
         });
         
         // Star rating for feedback (kept)
