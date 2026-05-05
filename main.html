@@ -334,6 +334,28 @@
             margin-top: 20px;
             border-left: 4px solid #f39c12;
         }
+        .formula-card {
+            background: #eaf7f0;
+            border-left: 6px solid #2ecc71;
+            padding: 18px 22px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        .formula-card h3 {
+            color: #27ae60;
+            margin-bottom: 12px;
+        }
+        .formula-card p {
+            font-family: monospace;
+            font-size: 1rem;
+        }
+        .verify-item {
+            background: #fff6e5;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ffe0b2;
+        }
         @media (max-width: 768px) {
             .header-container { flex-direction: column; text-align: center; gap: 15px; }
             .logo-section { flex-direction: column; }
@@ -402,7 +424,7 @@
             <p>For a periodic function f(x) with period 2L, the Fourier series is: <br><strong>f(x) = a₀/2 + Σ[ aₙ cos(nπx/L) + bₙ sin(nπx/L) ]</strong> (n=1 to ∞).</p>
             <h4>📏 Fourier Coefficients (Euler formulas)</h4>
             <p>a₀ = (1/L) ∫₋ˡˡ f(x) dx &nbsp;&nbsp; aₙ = (1/L) ∫₋ˡˡ f(x) cos(nπx/L) dx &nbsp;&nbsp; bₙ = (1/L) ∫₋ˡˡ f(x) sin(nπx/L) dx</p>
-            <p>For discrete data (numerical harmonic analysis): <br>a₀ ≈ (2∑y)/(4L) &nbsp; aₙ ≈ (2/L)∑ y·cos(nπx/L), &nbsp; bₙ ≈ (2/L)∑ y·sin(nπx/L).</p>
+            <p>For discrete data (numerical harmonic analysis): <br>a₀ ≈ (2∑y)/(4L) &nbsp; aₙ ≈ (2/L)∑ y·cos(nπx/L), &nbsp; bₙ ≈ (1/L)∑ y·sin(nπx/L).</p>
             <h4>🎵 Harmonic Concept</h4>
             <p>First harmonic (fundamental) has frequency ω, second harmonic 2ω, etc. Fourier series extracts amplitude of each harmonic from given samples, crucial in signal processing and vibrations.</p>
         </div>
@@ -422,10 +444,23 @@
         <button class="submit-btn" onclick="gradePretest()"><i class="fas fa-pen-alt"></i> Submit Pretest</button>
     </div>
 
-    <!-- SIMULATION PAGE : Harmonic Analysis (updated: display to 2 decimals, answer template 2 decimals) -->
+    <!-- SIMULATION PAGE : includes formula template & verification for a0, a1, b1 -->
     <div id="page-simulation" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
-        <div class="card-page-header"><i class="fas fa-desktop"></i><div><h2>Harmonic Simulator</h2><p>Compute Fourier series & verify a₀</p></div></div>
+        <div class="card-page-header"><i class="fas fa-desktop"></i><div><h2>Harmonic Simulator</h2><p>Compute Fourier series & verify coefficients</p></div></div>
+        
+        <!-- Formula reference card (good template) -->
+        <div class="formula-card">
+            <h3><i class="fas fa-chalkboard"></i> Fourier Coefficient Formulas (Discrete Data)</h3>
+            <p>Given tabulated points \( (x_i, y_i) \) with period \( 2L \):</p>
+            <p>\[
+            a_0 = \frac{2\sum y_i}{4L}, \qquad
+            a_n = \frac{2}{L}\sum_{i} y_i \cos\left(\frac{n\pi x_i}{L}\right), \qquad
+            b_n = \frac{2}{L}\sum_{i} y_i \sin\left(\frac{n\pi x_i}{L}\right)
+            \]</p>
+            <p style="font-size:0.9rem; margin-top:8px;">Where \( L \) is the half‑period. For a full period symmetric data \( L = (x_{\text{last}} - x_{\text{first}})/2 \).</p>
+        </div>
+
         <div class="harmonic-calc-card">
             <h3><i class="fas fa-chart-line"></i> Fourier Series Calculator</h3>
             <label>Values of x (comma separated):</label>
@@ -438,15 +473,34 @@
             <div id="fourierOutput" class="fourier-output" style="margin-top:15px;"><strong>Fourier expression:</strong> (click calculate)</div>
         </div>
 
-        <!-- Verification Block : answer template upto 2 decimals, detailed solution option remains -->
+        <!-- Verification block: a0, a1, b1 -->
         <div class="verify-section">
             <h4><i class="fas fa-check-circle"></i> ✅ Verify Your Understanding</h4>
-            <p>Based on the Fourier series computed above, <strong>what is the constant term a₀</strong> (DC component)? Enter numeric value (rounded to 2 decimals).</p>
-            <input type="text" id="userA0" placeholder="e.g., 2.50" style="width:200px; display:inline-block; margin-right:10px;">
-            <button class="submit-btn" onclick="checkA0Answer()" style="background:#27ae60;">Check Answer & Get Marks</button>
-            <div id="verifyResult" style="margin-top:12px; font-weight:500;"></div>
-            <!-- "View Detailed Solution" button remains at last as required -->
-            <button class="submit-btn" onclick="showDetailedSolution()" style="background:#e67e22; margin-top:12px;"><i class="fas fa-lightbulb"></i> View Detailed Solution</button>
+            <p>Based on the computed Fourier series (first harmonic n=1), enter the coefficients rounded to <strong>2 decimals</strong>.</p>
+            
+            <div class="verify-item">
+                <label><strong>📊 Constant term a₀ (DC component):</strong></label>
+                <input type="text" id="userA0" placeholder="e.g., 2.50" style="width:180px; margin:8px 10px 0 0; display:inline-block;">
+                <button class="submit-btn" onclick="checkA0Answer()" style="background:#27ae60; padding:8px 16px;">Check a₀</button>
+                <div id="verifyResultA0" style="margin-top:8px; font-weight:500;"></div>
+            </div>
+            
+            <div class="verify-item">
+                <label><strong>🔷 Cosine coefficient a₁ (first harmonic):</strong></label>
+                <input type="text" id="userA1" placeholder="e.g., 0.75" style="width:180px; margin:8px 10px 0 0; display:inline-block;">
+                <button class="submit-btn" onclick="checkA1Answer()" style="background:#2980b9; padding:8px 16px;">Check a₁</button>
+                <div id="verifyResultA1" style="margin-top:8px; font-weight:500;"></div>
+            </div>
+            
+            <div class="verify-item">
+                <label><strong>🔶 Sine coefficient b₁ (first harmonic):</strong></label>
+                <input type="text" id="userB1" placeholder="e.g., -0.45" style="width:180px; margin:8px 10px 0 0; display:inline-block;">
+                <button class="submit-btn" onclick="checkB1Answer()" style="background:#2980b9; padding:8px 16px;">Check b₁</button>
+                <div id="verifyResultB1" style="margin-top:8px; font-weight:500;"></div>
+            </div>
+
+            <!-- Detailed solution remains -->
+            <button class="submit-btn" onclick="showDetailedSolution()" style="background:#e67e22; margin-top:8px;"><i class="fas fa-lightbulb"></i> View Detailed Solution</button>
             <div id="detailedSolution" style="margin-top:18px; background:#fff; padding:14px; border-radius:8px; display:none;"></div>
         </div>
     </div>
@@ -482,8 +536,8 @@
     let selectedRating=0; const stars=document.querySelectorAll('#starRating .fa-star');
     stars.forEach(star=>{ star.addEventListener('mouseover',function(){ let v=parseInt(this.dataset.val); stars.forEach((s,i)=>s.classList.toggle('active',i<v)); }); star.addEventListener('mouseout',()=>{ stars.forEach((s,i)=>s.classList.toggle('active',i<selectedRating)); }); star.addEventListener('click',function(){ selectedRating=parseInt(this.dataset.val); stars.forEach((s,i)=>s.classList.toggle('active',i<selectedRating)); }); });
 
-    // --------------------- HARMONIC ANALYSIS LOGIC (UPDATED: 2-decimal display & answer template) ------------------
-    let currentFourierData = { a0: 0, Lval: 1, coeffs: [] };
+    // --------------------- HARMONIC ANALYSIS (Updated with a1, b1 verification) ------------------
+    let currentFourierData = { a0: 0, Lval: 1, coeffs: [], a1:0, b1:0 };
     
     function computeHarmonicSeries() {
         const x = document.getElementById('xInput').value.split(',').map(Number);
@@ -500,7 +554,6 @@
             A.push(sumCos); B.push(sumSin);
         }
         let a0 = (2*sum_y)/(4*L);
-        // display with exactly 2 decimals for clean answer template
         let a0_display = a0.toFixed(2);
         let f_string = `f(x) = ${a0_display}`;
         for(let i=0;i<n;i++){ let harm=i+1; 
@@ -512,40 +565,70 @@
             f_string += ` + (${coeffA_disp})·cos(${harm}πx/${L_disp}) + (${coeffB_disp})·sin(${harm}πx/${L_disp})`;
         }
         document.getElementById('fourierOutput').innerHTML = `<strong>📐 Fourier Series (coefficients rounded to 2 decimals):</strong><br>${f_string}`;
-        currentFourierData = { a0: a0, Lval: L, xVals:x, yVals:y, harmonics:n, Acoeffs:A, Bcoeffs:B, sum_y };
+        
+        // store computed a1 and b1 (first harmonic) for verification
+        let a1 = (A[0] / L);
+        let b1 = (B[0] / L);
+        currentFourierData = { a0: a0, Lval: L, xVals:x, yVals:y, harmonics:n, Acoeffs:A, Bcoeffs:B, sum_y, a1:a1, b1:b1 };
     }
 
-    // verification with answer rounded to 2 decimals in message
     function checkA0Answer() {
         if(currentFourierData.a0 === undefined){ alert("Please calculate Fourier series first."); return; }
         const userVal = parseFloat(document.getElementById('userA0').value);
-        if(isNaN(userVal)){ document.getElementById('verifyResult').innerHTML="❌ Please enter a numeric a₀ value (e.g., 2.50)."; return; }
+        if(isNaN(userVal)){ document.getElementById('verifyResultA0').innerHTML="❌ Enter numeric a₀."; return; }
         const diff = Math.abs(userVal - currentFourierData.a0);
-        const correctA0_2dec = currentFourierData.a0.toFixed(2);
-        if(diff < 0.001) { 
-            document.getElementById('verifyResult').innerHTML=`✅ Perfect! Correct a₀ = ${correctA0_2dec}. You earned +10 marks! Excellent understanding of DC component.`; 
+        const correctVal = currentFourierData.a0.toFixed(2);
+        if(diff < 0.01) { 
+            document.getElementById('verifyResultA0').innerHTML=`✅ Correct! a₀ = ${correctVal}. +5 marks.`; 
         }
         else { 
-            document.getElementById('verifyResult').innerHTML=`❌ Incorrect. The correct a₀ = ${correctA0_2dec}. Try again by recomputing or reviewing theory.`; 
+            document.getElementById('verifyResultA0').innerHTML=`❌ Incorrect. Correct a₀ = ${correctVal}.`; 
         }
     }
 
-    // detailed solution: all numeric values presented with 2 decimals as per requirement
+    function checkA1Answer() {
+        if(currentFourierData.a1 === undefined){ alert("Compute series first (ensure n>=1)."); return; }
+        const userVal = parseFloat(document.getElementById('userA1').value);
+        if(isNaN(userVal)){ document.getElementById('verifyResultA1').innerHTML="❌ Enter numeric a₁."; return; }
+        const actual = currentFourierData.a1;
+        const diff = Math.abs(userVal - actual);
+        const correctStr = actual.toFixed(2);
+        if(diff < 0.01) {
+            document.getElementById('verifyResultA1').innerHTML=`✅ Correct! a₁ = ${correctStr}. +5 marks.`;
+        } else {
+            document.getElementById('verifyResultA1').innerHTML=`❌ Incorrect. a₁ = ${correctStr}. Review cosine summation.`;
+        }
+    }
+
+    function checkB1Answer() {
+        if(currentFourierData.b1 === undefined){ alert("Compute series first (ensure n>=1)."); return; }
+        const userVal = parseFloat(document.getElementById('userB1').value);
+        if(isNaN(userVal)){ document.getElementById('verifyResultB1').innerHTML="❌ Enter numeric b₁."; return; }
+        const actual = currentFourierData.b1;
+        const diff = Math.abs(userVal - actual);
+        const correctStr = actual.toFixed(2);
+        if(diff < 0.01) {
+            document.getElementById('verifyResultB1').innerHTML=`✅ Correct! b₁ = ${correctStr}. +5 marks.`;
+        } else {
+            document.getElementById('verifyResultB1').innerHTML=`❌ Incorrect. b₁ = ${correctStr}. Check sine term calculation.`;
+        }
+    }
+
     function showDetailedSolution() {
-        if(!currentFourierData.xVals){ alert("First calculate Fourier series using the button."); return; }
+        if(!currentFourierData.xVals){ alert("First calculate Fourier series."); return; }
         let Lv = currentFourierData.Lval, sumy=currentFourierData.sum_y, a0val=currentFourierData.a0;
-        let solHtml = `<b>📖 Detailed Step-by-Step Solution (values to 2 decimals):</b><br><br>`;
+        let solHtml = `<b>📖 Detailed Step-by-Step Solution (2‑decimal precision):</b><br><br>`;
         solHtml += `Given points: x = [${currentFourierData.xVals}], y = [${currentFourierData.yVals}]<br>`;
-        solHtml += `Step 1: Determine L (half period). Since y[0] ${currentFourierData.yVals[0]} == y[last] ${currentFourierData.yVals[currentFourierData.yVals.length-1]} ? L = (x_last - x_first)/2 = (${currentFourierData.xVals[currentFourierData.xVals.length-1]} - ${currentFourierData.xVals[0]})/2 = ${Lv.toFixed(4)} ≈ ${Lv.toFixed(2)}<br>`;
-        solHtml += `Step 2: Compute constant term a₀ = (2·∑y)/(4L) = (2×${sumy})/(4×${Lv.toFixed(2)}) = ${a0val.toFixed(6)} => <strong>a₀ = ${a0val.toFixed(2)}</strong><br>`;
-        solHtml += `Step 3: For each harmonic n, aₙ = (1/L)∑ y·cos(nπx/L) , bₙ = (1/L)∑ y·sin(nπx/L).<br>`;
-        for(let i=0;i<currentFourierData.harmonics;i++){ let harm=i+1; 
+        solHtml += `Step 1: Determine L (half period). L = ${Lv.toFixed(2)}<br>`;
+        solHtml += `Step 2: Compute a₀ = (2·∑y)/(4L) = (2×${sumy})/(4×${Lv.toFixed(2)}) = ${a0val.toFixed(2)}<br>`;
+        solHtml += `Step 3: For first harmonic: a₁ = (2/L)∑ y·cos(πx/L) = ${currentFourierData.a1.toFixed(2)} <br>`;
+        solHtml += `b₁ = (2/L)∑ y·sin(πx/L) = ${currentFourierData.b1.toFixed(2)}<br>`;
+        for(let i=1;i<currentFourierData.harmonics;i++){ let harm=i+1; 
             let an= (currentFourierData.Acoeffs[i]/Lv).toFixed(2); 
             let bn= (currentFourierData.Bcoeffs[i]/Lv).toFixed(2);
-            solHtml += `🔹 Harmonic ${harm}: a${harm} = ${an}, b${harm} = ${bn}<br>`;
+            solHtml += `Harmonic ${harm}: a${harm} = ${an}, b${harm} = ${bn}<br>`;
         }
-        solHtml += `<br><strong>Final Fourier expression (2‑decimal precision):</strong> f(x) = ${a0val.toFixed(2)} + Σ (aₙ cos(nπx/${Lv.toFixed(2)}) + bₙ sin(nπx/${Lv.toFixed(2)})).<br>`;
-        solHtml += `<i>Tip: a₀ represents average value / DC offset — verify using the simulation.</i>`;
+        solHtml += `<br><strong>Final expression:</strong> f(x) = ${a0val.toFixed(2)} + (${currentFourierData.a1.toFixed(2)})·cos(πx/${Lv.toFixed(2)}) + (${currentFourierData.b1.toFixed(2)})·sin(πx/${Lv.toFixed(2)}) + ... `;
         document.getElementById('detailedSolution').innerHTML = solHtml;
         document.getElementById('detailedSolution').style.display = 'block';
     }
@@ -564,7 +647,6 @@
         alert(`Posttest Score: ${score}/5. ${score>=4?"Excellent harmonic analysis skills!":"Revisit harmonic extraction concepts."}`);
     }
 
-    // initial load with example (2-decimal friendly)
     window.addEventListener('DOMContentLoaded',()=>{ computeHarmonicSeries(); });
 </script>
 </body>
