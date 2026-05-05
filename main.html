@@ -243,6 +243,18 @@
             padding: 28px;
             border-left: 5px solid #3498db;
         }
+        .video-container {
+            margin-top: 25px;
+            text-align: center;
+            background: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .video-container iframe {
+            max-width: 100%;
+            border-radius: 8px;
+        }
         .mcq-question {
             background: #fff;
             border: 1px solid #dce8f5;
@@ -404,7 +416,7 @@
         </div>
     </div>
 
-    <!-- AIM PAGE -->
+    <!-- AIM PAGE (unchanged) -->
     <div id="page-aim" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
         <div class="card-page-header"><i class="fas fa-bullseye"></i><div><h2>Aim</h2><p>Objective of harmonic analysis</p></div></div>
@@ -415,7 +427,7 @@
         </div>
     </div>
 
-    <!-- THEORY PAGE -->
+    <!-- THEORY PAGE (with embedded YouTube video) -->
     <div id="page-theory" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-book"></i><div><h2>Theory: Fourier Series & Harmonics</h2></div></div>
@@ -424,9 +436,16 @@
             <p>For a periodic function f(x) with period 2L, the Fourier series is: <br><strong>f(x) = a₀/2 + Σ[ aₙ cos(nπx/L) + bₙ sin(nπx/L) ]</strong> (n=1 to ∞).</p>
             <h4>📏 Fourier Coefficients (Euler formulas)</h4>
             <p>a₀ = (1/L) ∫₋ˡˡ f(x) dx &nbsp;&nbsp; aₙ = (1/L) ∫₋ˡˡ f(x) cos(nπx/L) dx &nbsp;&nbsp; bₙ = (1/L) ∫₋ˡˡ f(x) sin(nπx/L) dx</p>
-            <p>For discrete data (numerical harmonic analysis): <br>a₀ ≈ (2∑y)/(4L) &nbsp; aₙ ≈ (2/L)∑ y·cos(nπx/L), &nbsp; bₙ ≈ (1/L)∑ y·sin(nπx/L).</p>
+            <p>For discrete data (numerical harmonic analysis): <br>a₀ ≈ (2∑y)/(4L) &nbsp; aₙ ≈ (2/L)∑ y·cos(nπx/L), &nbsp; bₙ ≈ (2/L)∑ y·sin(nπx/L).</p>
             <h4>🎵 Harmonic Concept</h4>
             <p>First harmonic (fundamental) has frequency ω, second harmonic 2ω, etc. Fourier series extracts amplitude of each harmonic from given samples, crucial in signal processing and vibrations.</p>
+            
+            <!-- Embedded video below theory -->
+            <div class="video-container">
+                <p><strong>📺 Watch this explanatory video on Fourier Series:</strong></p>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/Gx1P3u-5y_A" title="Fourier Series Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p style="font-size:0.85rem; margin-top:8px;"><a href="https://www.youtube.com/watch?v=Gx1P3u-5y_A" target="_blank">Click here if video doesn't load</a></p>
+            </div>
         </div>
     </div>
 
@@ -444,21 +463,21 @@
         <button class="submit-btn" onclick="gradePretest()"><i class="fas fa-pen-alt"></i> Submit Pretest</button>
     </div>
 
-    <!-- SIMULATION PAGE : includes formula template & verification for a0, a1, b1 -->
+    <!-- SIMULATION PAGE : formulas clear, detailed solution at bottom -->
     <div id="page-simulation" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-desktop"></i><div><h2>Harmonic Simulator</h2><p>Compute Fourier series & verify coefficients</p></div></div>
         
-        <!-- Formula reference card (good template) -->
+        <!-- Clear Formula Card -->
         <div class="formula-card">
-            <h3><i class="fas fa-chalkboard"></i> Fourier Coefficient Formulas (Discrete Data)</h3>
+            <h3><i class="fas fa-chalkboard"></i> 📐 Fourier Coefficient Formulas (Discrete Data)</h3>
             <p>Given tabulated points \( (x_i, y_i) \) with period \( 2L \):</p>
-            <p>\[
+            <p style="font-size:1.1rem; font-weight:500;">\[
             a_0 = \frac{2\sum y_i}{4L}, \qquad
             a_n = \frac{2}{L}\sum_{i} y_i \cos\left(\frac{n\pi x_i}{L}\right), \qquad
             b_n = \frac{2}{L}\sum_{i} y_i \sin\left(\frac{n\pi x_i}{L}\right)
             \]</p>
-            <p style="font-size:0.9rem; margin-top:8px;">Where \( L \) is the half‑period. For a full period symmetric data \( L = (x_{\text{last}} - x_{\text{first}})/2 \).</p>
+            <p style="font-size:0.9rem; margin-top:8px;"><strong>Note:</strong> L is half‑period. If \( y_0 = y_{\text{last}} \), \( L = (x_{\text{last}} - x_0)/2 \). Otherwise extend symmetrically.</p>
         </div>
 
         <div class="harmonic-calc-card">
@@ -499,7 +518,7 @@
                 <div id="verifyResultB1" style="margin-top:8px; font-weight:500;"></div>
             </div>
 
-            <!-- Detailed solution remains -->
+            <!-- Detailed Solution button - appears at the bottom of verify section -->
             <button class="submit-btn" onclick="showDetailedSolution()" style="background:#e67e22; margin-top:8px;"><i class="fas fa-lightbulb"></i> View Detailed Solution</button>
             <div id="detailedSolution" style="margin-top:18px; background:#fff; padding:14px; border-radius:8px; display:none;"></div>
         </div>
@@ -536,7 +555,7 @@
     let selectedRating=0; const stars=document.querySelectorAll('#starRating .fa-star');
     stars.forEach(star=>{ star.addEventListener('mouseover',function(){ let v=parseInt(this.dataset.val); stars.forEach((s,i)=>s.classList.toggle('active',i<v)); }); star.addEventListener('mouseout',()=>{ stars.forEach((s,i)=>s.classList.toggle('active',i<selectedRating)); }); star.addEventListener('click',function(){ selectedRating=parseInt(this.dataset.val); stars.forEach((s,i)=>s.classList.toggle('active',i<selectedRating)); }); });
 
-    // --------------------- HARMONIC ANALYSIS (Updated with a1, b1 verification) ------------------
+    // --------------------- HARMONIC ANALYSIS (with a1, b1) ------------------
     let currentFourierData = { a0: 0, Lval: 1, coeffs: [], a1:0, b1:0 };
     
     function computeHarmonicSeries() {
@@ -565,8 +584,6 @@
             f_string += ` + (${coeffA_disp})·cos(${harm}πx/${L_disp}) + (${coeffB_disp})·sin(${harm}πx/${L_disp})`;
         }
         document.getElementById('fourierOutput').innerHTML = `<strong>📐 Fourier Series (coefficients rounded to 2 decimals):</strong><br>${f_string}`;
-        
-        // store computed a1 and b1 (first harmonic) for verification
         let a1 = (A[0] / L);
         let b1 = (B[0] / L);
         currentFourierData = { a0: a0, Lval: L, xVals:x, yVals:y, harmonics:n, Acoeffs:A, Bcoeffs:B, sum_y, a1:a1, b1:b1 };
@@ -614,6 +631,7 @@
         }
     }
 
+    // Detailed solution with full step-by-step, placed at the bottom
     function showDetailedSolution() {
         if(!currentFourierData.xVals){ alert("First calculate Fourier series."); return; }
         let Lv = currentFourierData.Lval, sumy=currentFourierData.sum_y, a0val=currentFourierData.a0;
@@ -628,7 +646,8 @@
             let bn= (currentFourierData.Bcoeffs[i]/Lv).toFixed(2);
             solHtml += `Harmonic ${harm}: a${harm} = ${an}, b${harm} = ${bn}<br>`;
         }
-        solHtml += `<br><strong>Final expression:</strong> f(x) = ${a0val.toFixed(2)} + (${currentFourierData.a1.toFixed(2)})·cos(πx/${Lv.toFixed(2)}) + (${currentFourierData.b1.toFixed(2)})·sin(πx/${Lv.toFixed(2)}) + ... `;
+        solHtml += `<br><strong>Final Fourier expression:</strong> f(x) = ${a0val.toFixed(2)} + (${currentFourierData.a1.toFixed(2)})·cos(πx/${Lv.toFixed(2)}) + (${currentFourierData.b1.toFixed(2)})·sin(πx/${Lv.toFixed(2)}) + ... `;
+        solHtml += `<br><br><i>✨ The above steps follow the discrete harmonic analysis formulas shown at the top of the simulation.</i>`;
         document.getElementById('detailedSolution').innerHTML = solHtml;
         document.getElementById('detailedSolution').style.display = 'block';
     }
