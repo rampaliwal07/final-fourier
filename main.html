@@ -1,555 +1,406 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Labs - Harmonic Analysis | Fourier Series</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
- 
-        body {
-            background-color: #f8f9fa;
-            color: #333;
-            line-height: 1.6;
-        }
- 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
- 
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, #2c3e50, #1a2530);
-            color: white;
-            padding: 15px 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
- 
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
- 
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
- 
-        .pcce-logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding-right: 25px;
-            border-right: 2px solid rgba(255, 255, 255, 0.2);
-        }
- 
-        .pcce-logo-img {
-            width: 60px;
-            height: 60px;
-            object-fit: contain;
-            border-radius: 8px;
-            background-color: white;
-            padding: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
- 
-        .pcce-logo-text {
-            display: flex;
-            flex-direction: column;
-        }
- 
-        .pcce-logo-text .main {
-            font-size: 20px;
-            font-weight: 700;
-            color: #fff;
-            line-height: 1.2;
-        }
- 
-        .pcce-logo-text .sub {
-            font-size: 12px;
-            color: #ecf0f1;
-            opacity: 0.9;
-            margin-top: 2px;
-        }
- 
-        .virtual-labs-logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
- 
-        .virtual-labs-logo i {
-            font-size: 32px;
-            color: #3498db;
-        }
- 
-        .virtual-labs-logo h1 {
-            font-size: 26px;
-            font-weight: 600;
-        }
- 
-        .virtual-labs-logo span {
-            color: #3498db;
-        }
- 
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
- 
-        .main-content {
-            display: flex;
-            margin-top: 30px;
-            gap: 30px;
-        }
- 
-        .sidebar {
-            flex: 0 0 280px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            padding: 20px 0;
-            height: fit-content;
-        }
- 
-        .content {
-            flex: 1;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            padding: 30px;
-            min-height: 600px;
-        }
- 
-        .content-header {
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
- 
-        .content-header h2 {
-            font-size: 28px;
-            color: #2c3e50;
-            font-weight: 600;
-        }
- 
-        .aim-sections {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
- 
-        .section-card {
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
- 
-        .section-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-            border-color: #3498db;
-        }
- 
-        .section-card.active {
-            background-color: #e8f4fc;
-            border-color: #3498db;
-        }
- 
-        .section-card i {
-            font-size: 32px;
-            color: #3498db;
-            margin-bottom: 15px;
-        }
- 
-        .section-card h3 {
-            font-size: 18px;
-            margin-bottom: 8px;
-            color: #2c3e50;
-        }
- 
-        footer {
-            margin-top: 40px;
-            padding: 20px 0;
-            text-align: center;
-            color: #7f8c8d;
-            border-top: 1px solid #eee;
-        }
- 
-        /* Card page navigation */
-        .card-page {
-            display: none;
-            animation: fadeInPage 0.3s ease;
-        }
-        .card-page.active-page {
-            display: block;
-        }
-        #main-dashboard.hidden {
-            display: none;
-        }
-        @keyframes fadeInPage {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(to right, #2c3e50, #3d566e);
-            color: #fff;
-            border: none;
-            padding: 10px 22px;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-bottom: 24px;
-        }
-        .back-btn:hover {
-            background: linear-gradient(to right, #1a252f, #2c3e50);
-            transform: translateX(-3px);
-        }
-        .card-page-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding-bottom: 18px;
-            margin-bottom: 24px;
-            border-bottom: 2px solid #e8f4fc;
-        }
-        .card-page-header i {
-            font-size: 36px;
-            color: #3498db;
-        }
-        .page-content-box {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 28px;
-            border-left: 5px solid #3498db;
-        }
-        .mcq-question {
-            background: #fff;
-            border: 1px solid #dce8f5;
-            border-radius: 8px;
-            padding: 20px 24px;
-            margin-bottom: 20px;
-        }
-        .mcq-option {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 12px;
-            cursor: pointer;
-        }
-        .submit-btn {
-            background: linear-gradient(to right, #3498db, #2c80b9);
-            color: white;
-            border: none;
-            padding: 11px 28px;
-            font-size: 15px;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        .ref-list {
-            list-style: none;
-        }
-        .ref-list li {
-            display: flex;
-            gap: 12px;
-            padding: 14px 0;
-            border-bottom: 1px solid #eee;
-        }
-        .contributors-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 20px;
-        }
-        .contributor-card {
-            background: #f0f7ff;
-            border-radius: 10px;
-            padding: 22px 16px;
-            text-align: center;
-        }
-        .star-rating i {
-            font-size: 28px;
-            color: #ccc;
-            cursor: pointer;
-        }
-        .star-rating i.active { color: #f39c12; }
-        .feedback-form input, .feedback-form select, .feedback-form textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 18px;
-            border: 1px solid #cde3f5;
-            border-radius: 6px;
-        }
-        /* simulation calculator specific */
-        .harmonic-calc-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 28px;
-            border: 1px solid #e2edf7;
-        }
-        .harmonic-calc-card input, .harmonic-calc-card select {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-        .harmonic-calc-card button {
-            background-color: #3498db;
-            margin-top: 8px;
-        }
-        .fourier-output {
-            background: #eef2fa;
-            padding: 15px;
-            border-radius: 8px;
-            font-family: monospace;
-            word-break: break-word;
-        }
-        .verify-section {
-            background: #fff6e5;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 20px;
-            border-left: 4px solid #f39c12;
-        }
-        @media (max-width: 768px) {
-            .header-container { flex-direction: column; text-align: center; gap: 15px; }
-            .logo-section { flex-direction: column; }
-            .pcce-logo-container { border-right: none; }
-            .aim-sections { grid-template-columns: repeat(2,1fr); }
-        }
-    </style>
-</head>
-<body>
-<header>
-    <div class="container header-container">
-        <div class="logo-section">
-            <div class="pcce-logo-container">
-                <img src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png" class="pcce-logo-img" id="pcceLogo" onerror="this.src='https://via.placeholder.com/60x60/2c3e50/ffffff?text=PCOE';">
-                <div class="pcce-logo-text">
-                    <div class="main">APPLIED SCIENCES & HUMANITIES</div>
-                    <div class="sub">Pimpri Chinchwad College of Engineering</div>
+<div id="page-simulation" class="content card-page">
+    <button class="back-btn" onclick="goBack()">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </button>
+    <div class="card-page-header">
+        <i class="fas fa-chart-line"></i>
+        <div>
+            <h2>Fourier Series Solver</h2>
+            <p>Interactive step‑by‑step derivation (no verification required)</p>
+        </div>
+    </div>
+
+    <div id="fourier-lab-wrapper" style="margin-top: 1rem;">
+        <!-- Problem Definition Card -->
+        <div class="sim-card" id="problem-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                <h3 style="color: #2c3e50; margin-bottom: 0;"><i class="fas fa-edit"></i> 1. Define f(x) & interval</h3>
+                <div class="example-buttons">
+                    <button type="button" class="mini-btn" data-example="x">f(x)=x</button>
+                    <button type="button" class="mini-btn" data-example="x^2">f(x)=x²</button>
+                    <button type="button" class="mini-btn" data-example="sin(x)">sin(x)</button>
+                    <button type="button" class="mini-btn" data-example="square">square wave</button>
                 </div>
             </div>
-            <div class="virtual-labs-logo">
-                <i class="fas fa-waveform"></i>
-                <h1>Harmonic <span>Analysis</span></h1>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px;">
+                <div>
+                    <label>Function f(x) : <span style="font-size: 0.85rem;">(use x, sin, cos, exp, ^)</span></label>
+                    <input type="text" id="funcInput" class="sim-input" value="x" placeholder="e.g., x, sin(x), x^2">
+                </div>
+                <div>
+                    <label>Interval [c, c+2L] :</label>
+                    <div style="display: flex; gap: 12px;">
+                        <input type="number" id="intervalStart" class="sim-input" value="-3.14159" step="any" placeholder="c">
+                        <input type="number" id="intervalEnd" class="sim-input" value="3.14159" step="any" placeholder="c+2L">
+                    </div>
+                </div>
             </div>
+            <button id="initProblemBtn" class="primary-btn" style="margin-top: 20px; width: 100%;"><i class="fas fa-rocket"></i> Initialize Problem</button>
+            <div id="initStatus" class="info-message" style="margin-top: 12px;"></div>
         </div>
-        <div class="user-info"><i class="fas fa-user-circle"></i><span>Student, Fourier Explorer</span></div>
-    </div>
-</header>
 
-<main class="container" style="padding-top:30px">
-    <div id="main-dashboard">
-        <div class="content">
-            <div class="content-header">
-                <h2>Virtual Lab: Harmonic Analysis (Fourier Series)</h2>
-                <p>Decompose periodic signals into fundamental harmonics — interactive simulation & assessments</p>
+        <!-- Direct Solution Button (no checkpoint) -->
+        <div id="solutionTriggerCard" class="sim-card" style="display: none; text-align: center;">
+            <button id="viewSolutionBtn" class="primary-btn" style="background: linear-gradient(135deg, #8b5cf6, #3b82f6);">
+                <i class="fas fa-eye"></i> View Detailed Solution
+            </button>
+            <p class="info-message" style="margin-top: 12px;">The solution will be generated automatically using numeric integration (Simpson’s rule) and displayed below.</p>
+        </div>
+
+        <!-- SOLUTION SECTION (displayed after clicking the button) -->
+        <div id="solutionPanel" class="sim-card" style="display: none;">
+            <h3><i class="fas fa-lightbulb"></i> Step‑by‑Step Fourier Solution</h3>
+            <div id="symmetryNote" class="symmetry-badge"></div>
+            <div id="fourierFormula" style="background: #f0f7fc; padding: 15px; border-radius: 8px; margin: 15px 0;"></div>
+            <div id="integrationSteps"></div>
+            <div id="coeffTable"></div>
+            <div class="note-box">
+                <i class="fas fa-info-circle"></i> The series is displayed up to N = 3. For arbitrary n, coefficients are computed via numeric integration (Simpson’s rule).
             </div>
-            <div class="aim-sections">
-                <div class="section-card active" data-target="page-aim"><i class="fas fa-bullseye"></i><h3>Aim</h3><p>Objective</p></div>
-                <div class="section-card" data-target="page-theory"><i class="fas fa-book"></i><h3>Theory</h3><p>Fourier formulas</p></div>
-                <div class="section-card" data-target="page-pretest"><i class="fas fa-question-circle"></i><h3>Pretest</h3><p>5 MCQs</p></div>
-                <div class="section-card" data-target="page-simulation"><i class="fas fa-desktop"></i><h3>Simulation</h3><p>Harmonic calculator & verification</p></div>
-                <div class="section-card" data-target="page-posttest"><i class="fas fa-clipboard-check"></i><h3>Posttest</h3><p>5 MCQs</p></div>
-                <div class="section-card" data-target="page-references"><i class="fas fa-book-open"></i><h3>References</h3><p>Resources</p></div>
-                <div class="section-card" data-target="page-contributors"><i class="fas fa-users"></i><h3>Contributors</h3><p>Team</p></div>
-                <div class="section-card" data-target="page-feedback"><i class="fas fa-comment-alt"></i><h3>Feedback</h3><p>Rate us</p></div>
-            </div>
+            <button id="resetLabBtn" class="secondary-btn" style="margin-top: 16px;"><i class="fas fa-sync-alt"></i> Reset / New Problem</button>
         </div>
     </div>
+</div>
 
-    <!-- AIM PAGE -->
-    <div id="page-aim" class="content card-page">
-        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
-        <div class="card-page-header"><i class="fas fa-bullseye"></i><div><h2>Aim</h2><p>Objective of harmonic analysis</p></div></div>
-        <div class="page-content-box">
-            <h4>🎯 Experiment Objective</h4>
-            <p>To understand <strong>Harmonic Analysis</strong> in Fourier Series: representing any periodic waveform as sum of sine and cosine harmonics. Students will compute Fourier coefficients (a₀, aₙ, bₙ) from discrete data points, visualize the Fourier series approximation, and verify the constant term a₀.</p>
-            <ul style="margin-left:20px;margin-top:12px;"><li>Derive Fourier coefficients from tabulated data.</li><li>Interpret role of fundamental and higher harmonics.</li><li>Validate results using an interactive simulation.</li></ul>
-        </div>
-    </div>
+<!-- required libraries + extra style for simulation -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.7.0/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
 
-    <!-- THEORY PAGE -->
-    <div id="page-theory" class="content card-page">
-        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
-        <div class="card-page-header"><i class="fas fa-book"></i><div><h2>Theory: Fourier Series & Harmonics</h2></div></div>
-        <div class="page-content-box">
-            <h4>📐 Fourier Series Representation</h4>
-            <p>For a periodic function f(x) with period 2L, the Fourier series is: <br><strong>f(x) = a₀/2 + Σ[ aₙ cos(nπx/L) + bₙ sin(nπx/L) ]</strong> (n=1 to ∞).</p>
-            <h4>📏 Fourier Coefficients (Euler formulas)</h4>
-            <p>a₀ = (1/L) ∫₋ˡˡ f(x) dx &nbsp;&nbsp; aₙ = (1/L) ∫₋ˡˡ f(x) cos(nπx/L) dx &nbsp;&nbsp; bₙ = (1/L) ∫₋ˡˡ f(x) sin(nπx/L) dx</p>
-            <p>For discrete data (numerical harmonic analysis): <br>a₀ ≈ (2∑y)/(4L) &nbsp; aₙ ≈ (2/L)∑ y·cos(nπx/L), &nbsp; bₙ ≈ (2/L)∑ y·sin(nπx/L).</p>
-            <h4>🎵 Harmonic Concept</h4>
-            <p>First harmonic (fundamental) has frequency ω, second harmonic 2ω, etc. Fourier series extracts amplitude of each harmonic from given samples, crucial in signal processing and vibrations.</p>
-        </div>
-    </div>
-
-    <!-- PRETEST: 5 questions -->
-    <div id="page-pretest" class="content card-page">
-        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
-        <div class="card-page-header"><i class="fas fa-question-circle"></i><div><h2>Pretest</h2><p>Check prior knowledge</p></div></div>
-        <div id="pretest-questions">
-            <div class="mcq-question"><p>1. Fourier series decomposes a periodic function into:</p><label class="mcq-option"><input type="radio" name="pre1" value="A"> Exponential only</label><label class="mcq-option"><input type="radio" name="pre1" value="B"> Sines and cosines</label><label class="mcq-option"><input type="radio" name="pre1" value="C"> Polynomials</label><label class="mcq-option"><input type="radio" name="pre1" value="D"> Logarithms</label></div>
-            <div class="mcq-question"><p>2. The constant term (DC component) a₀ in Fourier series is equal to:</p><label class="mcq-option"><input type="radio" name="pre2" value="A"> Average value of function over one period</label><label class="mcq-option"><input type="radio" name="pre2" value="B"> Peak amplitude</label><label class="mcq-option"><input type="radio" name="pre2" value="C"> Frequency</label><label class="mcq-option"><input type="radio" name="pre2" value="D"> Phase shift</label></div>
-            <div class="mcq-question"><p>3. Dirichlet conditions ensure:</p><label class="mcq-option"><input type="radio" name="pre3" value="A"> Fourier series converges</label><label class="mcq-option"><input type="radio" name="pre3" value="B"> Series diverges</label><label class="mcq-option"><input type="radio" name="pre3" value="C"> Function is odd</label><label class="mcq-option"><input type="radio" name="pre3" value="D"> No harmonics exist</label></div>
-            <div class="mcq-question"><p>4. For a function with half-wave symmetry, which harmonics vanish?</p><label class="mcq-option"><input type="radio" name="pre4" value="A"> Even harmonics</label><label class="mcq-option"><input type="radio" name="pre4" value="B"> Odd harmonics</label><label class="mcq-option"><input type="radio" name="pre4" value="C"> All harmonics</label><label class="mcq-option"><input type="radio" name="pre4" value="D"> Fundamental only</label></div>
-            <div class="mcq-question"><p>5. The coefficient bₙ for an even function f(x) is:</p><label class="mcq-option"><input type="radio" name="pre5" value="A"> Zero</label><label class="mcq-option"><input type="radio" name="pre5" value="B"> Non-zero</label><label class="mcq-option"><input type="radio" name="pre5" value="C"> Equal to aₙ</label><label class="mcq-option"><input type="radio" name="pre5" value="D"> Maximum</label></div>
-        </div>
-        <button class="submit-btn" onclick="gradePretest()"><i class="fas fa-pen-alt"></i> Submit Pretest</button>
-    </div>
-
-    <!-- SIMULATION PAGE : Harmonic Analysis Calculator + Verification & Detailed Solution -->
-    <div id="page-simulation" class="content card-page">
-        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
-        <div class="card-page-header"><i class="fas fa-desktop"></i><div><h2>Harmonic Simulator</h2><p>Compute Fourier series & verify a₀</p></div></div>
-        <div class="harmonic-calc-card">
-            <h3><i class="fas fa-chart-line"></i> Fourier Series Calculator</h3>
-            <label>Values of x (comma separated):</label>
-            <input type="text" id="xInput" placeholder="e.g., 0, 1, 2, 3, 4, 5" value="0,1,2,3,4,5">
-            <label>Values of y (comma separated):</label>
-            <input type="text" id="yInput" placeholder="e.g., 2,3,4,3,2,1" value="2,3,4,3,2,1">
-            <label>Number of Harmonics (n):</label>
-            <input type="number" id="nInput" placeholder="e.g., 2" value="2">
-            <button onclick="computeHarmonicSeries()"><i class="fas fa-calculator"></i> Calculate Fourier Series</button>
-            <div id="fourierOutput" class="fourier-output" style="margin-top:15px;"><strong>Fourier expression:</strong> (click calculate)</div>
-        </div>
-
-        <!-- Verification Block : Marking & solution -->
-        <div class="verify-section">
-            <h4><i class="fas fa-check-circle"></i> ✅ Verify Your Understanding</h4>
-            <p>Based on the Fourier series computed above, <strong>what is the constant term a₀</strong> (DC component)? Enter numeric value (rounded to 3 decimals).</p>
-            <input type="text" id="userA0" placeholder="e.g., 1.25" style="width:200px; display:inline-block; margin-right:10px;">
-            <button class="submit-btn" onclick="checkA0Answer()" style="background:#27ae60;">Check Answer & Get Marks</button>
-            <div id="verifyResult" style="margin-top:12px; font-weight:500;"></div>
-            <button class="submit-btn" onclick="showDetailedSolution()" style="background:#e67e22; margin-top:12px;"><i class="fas fa-lightbulb"></i> View Detailed Solution</button>
-            <div id="detailedSolution" style="margin-top:18px; background:#fff; padding:14px; border-radius:8px; display:none;"></div>
-        </div>
-    </div>
-
-    <!-- POSTTEST: 5 questions -->
-    <div id="page-posttest" class="content card-page">
-        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
-        <div class="card-page-header"><i class="fas fa-clipboard-check"></i><div><h2>Posttest</h2><p>Assess after simulation</p></div></div>
-        <div id="posttest-questions">
-            <div class="mcq-question"><p>1. The Fourier series of a square wave contains only:</p><label class="mcq-option"><input type="radio" name="post1" value="A"> Even harmonics</label><label class="mcq-option"><input type="radio" name="post1" value="B"> Odd harmonics</label><label class="mcq-option"><input type="radio" name="post1" value="C"> All harmonics</label><label class="mcq-option"><input type="radio" name="post1" value="D"> DC only</label></div>
-            <div class="mcq-question"><p>2. In harmonic analysis using discrete data, the half-range L is computed based on:</p><label class="mcq-option"><input type="radio" name="post2" value="A"> Last x minus first x over 2</label><label class="mcq-option"><input type="radio" name="post2" value="B"> Sum of y values</label><label class="mcq-option"><input type="radio" name="post2" value="C"> Number of points</label><label class="mcq-option"><input type="radio" name="post2" value="D"> Minimum y</label></div>
-            <div class="mcq-question"><p>3. If a₀ = 0, the waveform has:</p><label class="mcq-option"><input type="radio" name="post3" value="A"> Zero average value</label><label class="mcq-option"><input type="radio" name="post3" value="B"> No harmonics</label><label class="mcq-option"><input type="radio" name="post3" value="C"> Only sine terms</label><label class="mcq-option"><input type="radio" name="post3" value="D"> Symmetry about y-axis</label></div>
-            <div class="mcq-question"><p>4. Which coefficient represents amplitude of nth cosine harmonic?</p><label class="mcq-option"><input type="radio" name="post4" value="A"> aₙ</label><label class="mcq-option"><input type="radio" name="post4" value="B"> bₙ</label><label class="mcq-option"><input type="radio" name="post4" value="C"> a₀</label><label class="mcq-option"><input type="radio" name="post4" value="D"> L</label></div>
-            <div class="mcq-question"><p>5. For a function sampled at x = [0,1,2,3] with y = [1,2,1,2], the period is:</p><label class="mcq-option"><input type="radio" name="post5" value="A"> 2</label><label class="mcq-option"><input type="radio" name="post5" value="B"> 4</label><label class="mcq-option"><input type="radio" name="post5" value="C"> 3</label><label class="mcq-option"><input type="radio" name="post5" value="D"> 1</label></div>
-        </div>
-        <button class="submit-btn" onclick="gradePosttest()"><i class="fas fa-check-double"></i> Submit Posttest</button>
-    </div>
-
-    <!-- References & Contributors etc (minimal changes) -->
-    <div id="page-references" class="content card-page"><button class="back-btn" onclick="goBack()">Back</button><div class="card-page-header"><i class="fas fa-book-open"></i><div><h2>References</h2></div></div><ul class="ref-list"><li><i class="fas fa-book"></i><div><strong>Advanced Engineering Mathematics</strong> - Erwin Kreyszig (Fourier Series chapter)</div></li><li><i class="fas fa-globe"></i><div><a href="#">MIT 18.03: Differential Equations</a></div></li><li><i class="fas fa-globe"></i><div>NPTEL - Mathematics - Fourier Series lectures</div></li></ul></div>
-    <div id="page-contributors" class="content card-page"><button class="back-btn" onclick="goBack()">Back</button><div class="card-page-header"><i class="fas fa-users"></i><div><h2>Contributors</h2></div></div><div class="contributors-grid"><div class="contributor-card"><i class="fas fa-user-tie"></i><h4>Dr. Ashish Joshi</h4><p>Principal Investigator</p></div><div class="contributor-card"><i class="fas fa-chalkboard-teacher"></i><h4>Prof. Snehal Kulkarni</h4><p>Content Expert</p></div><div class="contributor-card"><i class="fas fa-code"></i><h4>Team Virtual Labs</h4><p>Developers</p></div></div></div>
-    <div id="page-feedback" class="content card-page"><button class="back-btn" onclick="goBack()">Back</button><div class="card-page-header"><i class="fas fa-comment-alt"></i><div><h2>Feedback</h2></div></div><div class="feedback-form"><label>Name</label><input type="text" id="fbName"><label>Rating</label><div class="star-rating" id="starRating"><i class="fas fa-star" data-val="1"></i><i class="fas fa-star" data-val="2"></i><i class="fas fa-star" data-val="3"></i><i class="fas fa-star" data-val="4"></i><i class="fas fa-star" data-val="5"></i></div><label>Comments</label><textarea rows="3"></textarea><button class="submit-btn" onclick="alert('Thanks for feedback!')">Submit</button></div></div>
-</main>
-<footer class="container"><p>Virtual Labs © 2025 | Harmonic Analysis (Fourier Series) | Pimpri Chinchwad College of Engineering</p></footer>
+<style>
+    .sim-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        padding: 1.5rem;
+        margin-bottom: 1.8rem;
+        border: 1px solid #e9ecef;
+        transition: 0.2s;
+    }
+    .sim-input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-family: 'Segoe UI', monospace;
+        font-size: 0.95rem;
+        margin-top: 6px;
+        transition: 0.2s;
+    }
+    .sim-input:focus {
+        border-color: #3498db;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(52,152,219,0.2);
+    }
+    .primary-btn {
+        background: linear-gradient(135deg, #3498db, #2c3e50);
+        border: none;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 40px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+        font-size: 0.9rem;
+    }
+    .primary-btn:hover { transform: translateY(-2px); opacity: 0.95; box-shadow: 0 6px 12px rgba(52,152,219,0.2);}
+    .secondary-btn {
+        background: #ecf0f1;
+        color: #2c3e50;
+        border: none;
+        padding: 8px 18px;
+        border-radius: 40px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+    .mini-btn {
+        background: #f1f5f9;
+        border: 1px solid #cbd5e1;
+        border-radius: 30px;
+        padding: 4px 12px;
+        font-size: 0.75rem;
+        margin-left: 6px;
+        cursor: pointer;
+        transition: 0.1s;
+    }
+    .mini-btn:hover { background: #e2e8f0; border-color: #3498db;}
+    .info-message {
+        background: #f8f9fc;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        border-left: 4px solid #3498db;
+    }
+    .symmetry-badge {
+        display: inline-block;
+        background: #eef2ff;
+        padding: 6px 12px;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        margin-bottom: 12px;
+        color: #2c3e50;
+    }
+    .note-box {
+        background: #fef9e6;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        margin-top: 15px;
+        border-left: 3px solid #f1c40f;
+    }
+    .step-block {
+        background: #f9fafb;
+        margin: 12px 0;
+        padding: 12px;
+        border-radius: 8px;
+    }
+    .coeff-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px,1fr));
+        gap: 10px;
+        margin: 12px 0;
+    }
+    .coeff-item {
+        background: white;
+        border-radius: 8px;
+        padding: 8px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    @media (max-width: 650px) {
+        .sim-card { padding: 1rem; }
+        .example-buttons { margin-top: 8px; }
+    }
+</style>
 
 <script>
-    // navigation & globals
-    function openPage(targetId) { document.getElementById('main-dashboard').classList.add('hidden'); document.querySelectorAll('.card-page').forEach(p=>p.classList.remove('active-page')); document.getElementById(targetId).classList.add('active-page'); window.scrollTo({top:0}); }
-    function goBack() { document.querySelectorAll('.card-page').forEach(p=>p.classList.remove('active-page')); document.getElementById('main-dashboard').classList.remove('hidden'); window.scrollTo({top:0}); }
-    document.querySelectorAll('.section-card').forEach(card=>{ card.addEventListener('click',()=>{ document.querySelectorAll('.section-card').forEach(c=>c.classList.remove('active')); card.classList.add('active'); openPage(card.getAttribute('data-target')); }); });
+    (function() {
+        // ---------- Global state ----------
+        let currentProblem = {
+            funcExpr: 'x',
+            start: -Math.PI,
+            end: Math.PI,
+            L: Math.PI,
+            valid: false
+        };
+        let solutionGenerated = false;
 
-    // star rating
-    let selectedRating=0; const stars=document.querySelectorAll('#starRating .fa-star');
-    stars.forEach(star=>{ star.addEventListener('mouseover',function(){ let v=parseInt(this.dataset.val); stars.forEach((s,i)=>s.classList.toggle('active',i<v)); }); star.addEventListener('mouseout',()=>{ stars.forEach((s,i)=>s.classList.toggle('active',i<selectedRating)); }); star.addEventListener('click',function(){ selectedRating=parseInt(this.dataset.val); stars.forEach((s,i)=>s.classList.toggle('active',i<selectedRating)); }); });
+        // DOM elements
+        const funcInput = document.getElementById('funcInput');
+        const startInput = document.getElementById('intervalStart');
+        const endInput = document.getElementById('intervalEnd');
+        const initBtn = document.getElementById('initProblemBtn');
+        const initStatusDiv = document.getElementById('initStatus');
+        const solutionTriggerCard = document.getElementById('solutionTriggerCard');
+        const solutionPanel = document.getElementById('solutionPanel');
+        const viewSolutionBtn = document.getElementById('viewSolutionBtn');
+        const resetBtn = document.getElementById('resetLabBtn');
 
-    // --------------------- HARMONIC ANALYSIS LOGIC (MATLAB style as given) ------------------
-    let currentFourierData = { a0: 0, Lval: 1, coeffs: [] };
-    
-    function computeHarmonicSeries() {
-        const x = document.getElementById('xInput').value.split(',').map(Number);
-        const y = document.getElementById('yInput').value.split(',').map(Number);
-        const n = parseInt(document.getElementById('nInput').value);
-        if(x.length!==y.length || x.some(isNaN) || y.some(isNaN)){ document.getElementById('fourierOutput').innerHTML="<strong>Error:</strong> Invalid numbers or mismatch."; return; }
-        let L; const lastX=x[x.length-1], firstX=x[0], secondX=x[1];
-        if(y[0]===y[y.length-1]) L=(lastX-firstX)/2;
-        else L=((lastX+secondX-firstX)-firstX)/2;
-        const sum_y=y.reduce((a,b)=>a+b,0);
-        let A=[], B=[];
-        for(let i=1;i<=n;i++){ let sumCos=0, sumSin=0;
-            for(let j=0;j<x.length;j++){ sumCos+=y[j]*Math.cos((i*Math.PI*x[j])/L); sumSin+=y[j]*Math.sin((i*Math.PI*x[j])/L); }
-            A.push(sumCos); B.push(sumSin);
+        // Helper: numeric integration (Simpson's rule)
+        function integrateExpression(expr, a, b, params = {}) {
+            const nSteps = 400;
+            if (a === b) return 0;
+            const h = (b - a) / nSteps;
+            let sum = 0;
+            for (let i = 0; i <= nSteps; i++) {
+                const x = a + i * h;
+                let y;
+                try {
+                    const scope = { x: x, ...params };
+                    y = math.evaluate(expr, scope);
+                } catch(e) { return NaN; }
+                if (i === 0 || i === nSteps) sum += y;
+                else if (i % 2 === 0) sum += 2 * y;
+                else sum += 4 * y;
+            }
+            return (h / 3) * sum;
         }
-        let a0 = (2*sum_y)/(4*L);
-        let f_string = `f(x) = ${a0.toFixed(5)}`;
-        for(let i=0;i<n;i++){ let harm=i+1; let coeffA=(A[i]/L).toFixed(5); let coeffB=(B[i]/L).toFixed(5);
-            f_string += ` + (${coeffA})·cos(${harm}πx/${L.toFixed(3)}) + (${coeffB})·sin(${harm}πx/${L.toFixed(3)})`;
+
+        // Compute Fourier coefficients (a0, an, bn) numerically for given function, L, start, end
+        function computeFourierCoeffs(expr, start, end, L, nVal = 1) {
+            const T = end - start;
+            const Lval = T / 2;
+            const a0 = (1 / Lval) * integrateExpression(expr, start, end);
+            
+            function computeAn(n) {
+                const integ = (xval) => {
+                    const scope = { x: xval, pi: Math.PI };
+                    const fval = math.evaluate(expr, scope);
+                    return fval * Math.cos(n * Math.PI * xval / Lval);
+                };
+                let integral = 0;
+                const steps = 400;
+                const h = (end - start) / steps;
+                for (let i=0; i<=steps; i++) {
+                    const x = start + i*h;
+                    const w = (i===0 || i===steps) ? 1 : (i%2===0 ? 2 : 4);
+                    integral += w * integ(x);
+                }
+                integral *= h/3;
+                return (1 / Lval) * integral;
+            }
+            function computeBn(n) {
+                const integ = (xval) => {
+                    const scope = { x: xval, pi: Math.PI };
+                    const fval = math.evaluate(expr, scope);
+                    return fval * Math.sin(n * Math.PI * xval / Lval);
+                };
+                let integral = 0;
+                const steps = 400;
+                const h = (end - start) / steps;
+                for (let i=0; i<=steps; i++) {
+                    const x = start + i*h;
+                    const w = (i===0 || i===steps) ? 1 : (i%2===0 ? 2 : 4);
+                    integral += w * integ(x);
+                }
+                integral *= h/3;
+                return (1 / Lval) * integral;
+            }
+            const a1 = computeAn(nVal);
+            const b1 = computeBn(nVal);
+            return { a0, a1, b1, Lval };
         }
-        document.getElementById('fourierOutput').innerHTML = `<strong>📐 Fourier Series:</strong><br>${f_string}`;
-        currentFourierData = { a0: a0, Lval: L, xVals:x, yVals:y, harmonics:n, Acoeffs:A, Bcoeffs:B, sum_y };
-    }
 
-    // verification: user enters a0, check correctness
-    function checkA0Answer() {
-        if(currentFourierData.a0 === undefined){ alert("Please calculate Fourier series first."); return; }
-        const userVal = parseFloat(document.getElementById('userA0').value);
-        if(isNaN(userVal)){ document.getElementById('verifyResult').innerHTML="❌ Please enter a numeric a₀ value."; return; }
-        const diff = Math.abs(userVal - currentFourierData.a0);
-        if(diff < 0.001) { document.getElementById('verifyResult').innerHTML="✅ Perfect! Correct a₀. You earned +10 marks! Excellent understanding of DC component."; }
-        else { document.getElementById('verifyResult').innerHTML=`❌ Incorrect. The correct a₀ = ${currentFourierData.a0.toFixed(5)}. Try again by recomputing or reviewing theory.`; }
-    }
-
-    // detailed solution
-    function showDetailedSolution() {
-        if(!currentFourierData.xVals){ alert("First calculate Fourier series using the button."); return; }
-        let Lv = currentFourierData.Lval, sumy=currentFourierData.sum_y, a0val=currentFourierData.a0;
-        let solHtml = `<b>📖 Detailed Step-by-Step Solution:</b><br><br>`;
-        solHtml += `Given points: x = [${currentFourierData.xVals}], y = [${currentFourierData.yVals}]<br>`;
-        solHtml += `Step 1: Determine L (half period). Since y[0] ${currentFourierData.yVals[0]} == y[last] ${currentFourierData.yVals[currentFourierData.yVals.length-1]} ? L = (x_last - x_first)/2 = (${currentFourierData.xVals[currentFourierData.xVals.length-1]} - ${currentFourierData.xVals[0]})/2 = ${Lv.toFixed(4)}<br>`;
-        solHtml += `Step 2: Compute constant term a₀ = (2·∑y)/(4L) = (2×${sumy})/(4×${Lv.toFixed(4)}) = ${a0val.toFixed(6)}<br>`;
-        solHtml += `Step 3: For each harmonic n, aₙ = (1/L)∑ y·cos(nπx/L) , bₙ = (1/L)∑ y·sin(nπx/L).<br>`;
-        for(let i=0;i<currentFourierData.harmonics;i++){ let harm=i+1; let an= (currentFourierData.Acoeffs[i]/Lv).toFixed(5); let bn= (currentFourierData.Bcoeffs[i]/Lv).toFixed(5);
-            solHtml += `Harmonic ${harm}: a${harm} = ${an}, b${harm} = ${bn}<br>`;
+        // Compute coefficients up to N (for display)
+        function getCoeffsUpTo(expr, start, end, L, maxN) {
+            let an = [0], bn = [0];
+            for (let n=1; n<=maxN; n++) {
+                const nCoeff = computeFourierCoeffs(expr, start, end, L, n);
+                an.push(nCoeff.a1);
+                bn.push(nCoeff.b1);
+            }
+            const a0_main = (1/L) * integrateExpression(expr, start, end);
+            return { a0: a0_main, an, bn };
         }
-        solHtml += `<br>Final Fourier expression: f(x) = ${a0val.toFixed(5)} + Σ (aₙ cos(nπx/${Lv.toFixed(3)}) + bₙ sin(...)).`;
-        document.getElementById('detailedSolution').innerHTML = solHtml;
-        document.getElementById('detailedSolution').style.display = 'block';
-    }
 
-    // Pretest grading keys
-    function gradePretest(){
-        const keys = { pre1:'B', pre2:'A', pre3:'A', pre4:'A', pre5:'A' };
-        let score=0;
-        for(let i=1;i<=5;i++){ let val=document.querySelector(`input[name='pre${i}']:checked`); if(val && val.value===keys[`pre${i}`]) score++; }
-        alert(`Pretest Result: ${score}/5 correct.\n${score>=3?"Good foundation!":"Review Dirichlet & Fourier coefficients."}`);
-    }
-    function gradePosttest(){
-        const keys = { post1:'B', post2:'A', post3:'A', post4:'A', post5:'B' };
-        let score=0;
-        for(let i=1;i<=5;i++){ let val=document.querySelector(`input[name='post${i}']:checked`); if(val && val.value===keys[`post${i}`]) score++; }
-        alert(`Posttest Score: ${score}/5. ${score>=4?"Excellent harmonic analysis skills!":"Revisit harmonic extraction concepts."}`);
-    }
+        // Validate function expression
+        function isValidExpression(expr) {
+            try {
+                math.evaluate(expr, { x: 0.5 });
+                return true;
+            } catch(e) { return false; }
+        }
 
-    // initial load example: compute default values
-    window.addEventListener('DOMContentLoaded',()=>{ computeHarmonicSeries(); });
+        // Initialize problem (no verification, just store and show "View Solution" button)
+        function initializeProblem() {
+            let func = funcInput.value.trim();
+            let start = parseFloat(startInput.value);
+            let end = parseFloat(endInput.value);
+            if (isNaN(start) || isNaN(end) || start >= end) {
+                initStatusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Invalid interval: start must be < end.';
+                return false;
+            }
+            if (!isValidExpression(func)) {
+                initStatusDiv.innerHTML = '<i class="fas fa-times-circle"></i> Invalid function. Use x, sin(x), cos(x), x^2, etc.';
+                return false;
+            }
+            const L_calc = (end - start) / 2;
+            currentProblem = {
+                funcExpr: func,
+                start: start,
+                end: end,
+                L: L_calc,
+                valid: true
+            };
+            initStatusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Problem ready! Half‑period L = ${L_calc.toFixed(5)}. Click "View Detailed Solution" to see full derivation.`;
+            solutionTriggerCard.style.display = 'block';
+            solutionPanel.style.display = 'none';
+            solutionGenerated = false;
+        }
+
+        // Generate and display full solution (no verification)
+        function generateSolution() {
+            if (!currentProblem.valid) {
+                alert("Please initialize a problem first.");
+                return;
+            }
+            const { funcExpr, start, end, L } = currentProblem;
+            const maxDisplay = 3;
+            const coeffsUp = getCoeffsUpTo(funcExpr, start, end, L, maxDisplay);
+            const a0val = coeffsUp.a0;
+            
+            // Symmetry detection
+            let evenFlag = true, oddFlag = true;
+            for (let x of [-1.5, -0.8, 1.2]) {
+                try {
+                    const fx = math.evaluate(funcExpr, { x: x });
+                    const fnx = math.evaluate(funcExpr, { x: -x });
+                    if (Math.abs(fx - fnx) > 1e-4) evenFlag = false;
+                    if (Math.abs(fx + fnx) > 1e-4) oddFlag = false;
+                } catch(e) { evenFlag = false; oddFlag = false; }
+            }
+            let symMsg = "";
+            if (evenFlag) symMsg = "Even function → bₙ = 0, only cosine terms.";
+            else if (oddFlag) symMsg = "Odd function → a₀ = 0, aₙ = 0 → only sine series.";
+            else symMsg = "Function has no pure even/odd symmetry, both sine & cosine terms appear.";
+            document.getElementById('symmetryNote').innerHTML = `<i class="fas fa-chart-simple"></i> Symmetry insight: ${symMsg}`;
+            
+            // Build Fourier formula LaTeX
+            let seriesLatex = `f(x) \\sim \\frac{a_0}{2} + \\sum_{n=1}^{\\infty} \\left[ a_n \\cos\\left(\\frac{n\\pi x}{L}\\right) + b_n \\sin\\left(\\frac{n\\pi x}{L}\\right) \\right]` +
+                `, \\quad L = ${L.toFixed(4)}. <br> `;
+            seriesLatex += `\\[ a_0 = \\frac{1}{L}\\int_{${start.toFixed(2)}}^{${end.toFixed(2)}} f(x)\\,dx = ${a0val.toFixed(6)} \\]`;
+            seriesLatex += `<br> \\[ a_n = \\frac{1}{L}\\int_{${start.toFixed(2)}}^{${end.toFixed(2)}} f(x)\\cos\\left(\\frac{n\\pi x}{L}\\right) dx , \\quad b_n = \\frac{1}{L}\\int f(x)\\sin\\left(\\frac{n\\pi x}{L}\\right) dx \\]`;
+            document.getElementById('fourierFormula').innerHTML = `<div style="overflow-x:auto;">$${seriesLatex}</div>`;
+            
+            // Integration steps explanation
+            let stepsHtml = `<div class="step-block"><strong>📐 Step-by-step integration (numeric evaluation)</strong><br>
+            For a₀: a₀ = 1/L ∫ f(x) dx = 1/${L.toFixed(4)} × (numerical integral) = ${a0val.toFixed(6)}.<br>
+            For a₁: a₁ = 1/L ∫ f(x)·cos(πx/L) dx → computed ≈ ${coeffsUp.an[1].toFixed(6)}.<br>
+            For b₁: b₁ = 1/L ∫ f(x)·sin(πx/L) dx → computed ≈ ${coeffsUp.bn[1].toFixed(6)}.<br>
+            The integrations used adaptive Simpson method over N=400 subintervals.</div>`;
+            
+            // Coefficient table
+            let coeffTableHtml = `<div class="coeff-grid"><div class="coeff-item"><strong>a₀/2</strong> = ${(a0val/2).toFixed(5)}</div>`;
+            for (let n=1; n<=maxDisplay; n++) {
+                coeffTableHtml += `<div class="coeff-item"><strong>a<sub>${n}</sub></strong> = ${coeffsUp.an[n].toFixed(6)}<br>
+                <strong>b<sub>${n}</sub></strong> = ${coeffsUp.bn[n].toFixed(6)}</div>`;
+            }
+            coeffTableHtml += `</div><div>Fourier partial sum (up to N=3): 
+            \\[ S_3(x) = ${(a0val/2).toFixed(4)} + ${coeffsUp.an[1].toFixed(4)}\\cos\\left(\\frac{\\pi x}{${L.toFixed(3)}}\\right) + ${coeffsUp.bn[1].toFixed(4)}\\sin\\left(\\frac{\\pi x}{${L.toFixed(3)}}\\right) + ... \\] </div>`;
+            document.getElementById('coeffTable').innerHTML = coeffTableHtml;
+            document.getElementById('integrationSteps').innerHTML = stepsHtml;
+            
+            // Render MathJax
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+            
+            solutionPanel.style.display = 'block';
+            solutionPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            solutionGenerated = true;
+        }
+
+        // Reset everything
+        function resetLab() {
+            funcInput.value = 'x';
+            startInput.value = '-3.14159';
+            endInput.value = '3.14159';
+            currentProblem.valid = false;
+            solutionTriggerCard.style.display = 'none';
+            solutionPanel.style.display = 'none';
+            initStatusDiv.innerHTML = '';
+            solutionGenerated = false;
+        }
+
+        // Example selector
+        function setExample(exampleType) {
+            if (exampleType === 'x') { funcInput.value = 'x'; startInput.value = '-3.14159'; endInput.value = '3.14159'; }
+            else if (exampleType === 'x^2') { funcInput.value = 'x^2'; startInput.value = '-3.14159'; endInput.value = '3.14159'; }
+            else if (exampleType === 'sin(x)') { funcInput.value = 'sin(x)'; startInput.value = '-3.14159'; endInput.value = '3.14159'; }
+            else if (exampleType === 'square') { funcInput.value = 'abs(sin(x))/sin(x)'; startInput.value = '-3.14159'; endInput.value = '3.14159'; }
+            initializeProblem();
+        }
+
+        // Attach event listeners
+        initBtn.addEventListener('click', initializeProblem);
+        viewSolutionBtn.addEventListener('click', generateSolution);
+        resetBtn.addEventListener('click', resetLab);
+        document.querySelectorAll('.mini-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const type = btn.getAttribute('data-example');
+                setExample(type);
+            });
+        });
+        // Initial auto-init
+        setTimeout(() => { initializeProblem(); }, 100);
+    })();
 </script>
-</body>
-</html>
