@@ -250,10 +250,66 @@
             border-radius: 12px;
             padding: 15px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            position: relative;
         }
         .video-container iframe {
             max-width: 100%;
             border-radius: 8px;
+        }
+        .quiz-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .quiz-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .quiz-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .quiz-content h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .quiz-options {
+            text-align: left;
+            margin: 20px 0;
+        }
+        .quiz-options label {
+            display: block;
+            padding: 10px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quiz-options label:hover {
+            background: #e8f4fc;
+        }
+        .quiz-options input {
+            margin-right: 10px;
+        }
+        .quiz-feedback {
+            margin-top: 15px;
+            font-weight: bold;
         }
         .mcq-question {
             background: #fff;
@@ -427,7 +483,7 @@
         </div>
     </div>
 
-    <!-- THEORY PAGE (with embedded YouTube video) -->
+    <!-- THEORY PAGE (with embedded YouTube video + interactive quiz) -->
     <div id="page-theory" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-book"></i><div><h2>Theory: Fourier Series & Harmonics</h2></div></div>
@@ -440,12 +496,22 @@
             <h4>🎵 Harmonic Concept</h4>
             <p>First harmonic (fundamental) has frequency ω, second harmonic 2ω, etc. Fourier series extracts amplitude of each harmonic from given samples, crucial in signal processing and vibrations.</p>
             
-            <!-- Embedded video below theory -->
+            <!-- Embedded video with interactive quiz -->
             <div class="video-container">
                 <p><strong>📺 Watch this explanatory video on Fourier Series:</strong></p>
-                <iframe width="560" height="315" src="https://youtu.be/X-z6e1zZw80?si=T_QQ3lDMrykkpZIW" title="Fourier Series Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                <p style="font-size:0.85rem; margin-top:8px;"><a href="https://youtu.be/X-z6e1zZw80?si=T_QQ3lDMrykkpZIW" target="_blank">Click here if video doesn't load</a></p>
+                <div id="youtube-player"></div>
+                <p style="font-size:0.85rem; margin-top:8px;"><a href="https://www.youtube.com/watch?v=X-z6e1zZw80" target="_blank">Click here if video doesn't load</a></p>
             </div>
+        </div>
+    </div>
+
+    <!-- Quiz Modal -->
+    <div id="quizModal" class="quiz-modal">
+        <div class="quiz-content">
+            <h3 id="quizQuestion">Question will appear here</h3>
+            <div class="quiz-options" id="quizOptions"></div>
+            <div id="quizFeedback" class="quiz-feedback"></div>
+            <button id="submitQuiz" class="submit-btn">Submit Answer</button>
         </div>
     </div>
 
@@ -463,7 +529,7 @@
         <button class="submit-btn" onclick="gradePretest()"><i class="fas fa-pen-alt"></i> Submit Pretest</button>
     </div>
 
-    <!-- SIMULATION PAGE : formulas clear, detailed solution at bottom -->
+    <!-- SIMULATION PAGE (unchanged) -->
     <div id="page-simulation" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-desktop"></i><div><h2>Harmonic Simulator</h2><p>Compute Fourier series & verify coefficients</p></div></div>
@@ -518,7 +584,7 @@
                 <div id="verifyResultB1" style="margin-top:8px; font-weight:500;"></div>
             </div>
 
-            <!-- Detailed Solution button - appears at the bottom of verify section -->
+            <!-- Detailed Solution button -->
             <button class="submit-btn" onclick="showDetailedSolution()" style="background:#e67e22; margin-top:8px;"><i class="fas fa-lightbulb"></i> View Detailed Solution</button>
             <div id="detailedSolution" style="margin-top:18px; background:#fff; padding:14px; border-radius:8px; display:none;"></div>
         </div>
@@ -554,6 +620,122 @@
     // star rating
     let selectedRating=0; const stars=document.querySelectorAll('#starRating .fa-star');
     stars.forEach(star=>{ star.addEventListener('mouseover',function(){ let v=parseInt(this.dataset.val); stars.forEach((s,i)=>s.classList.toggle('active',i<v)); }); star.addEventListener('mouseout',()=>{ stars.forEach((s,i)=>s.classList.toggle('active',i<selectedRating)); }); star.addEventListener('click',function(){ selectedRating=parseInt(this.dataset.val); stars.forEach((s,i)=>s.classList.toggle('active',i<selectedRating)); }); });
+
+    // youtube iframe api with interactive quiz at specific timestamps
+    let player;
+    let quizTimestamps = [15]; // timestamp (in seconds) when quiz should appear
+    let quizData = {
+        15: {
+            question: "What is the constant term a₀ in Fourier series also known as?",
+            options: ["Harmonic Amplitude", "DC Component", "Fundamental Frequency", "Phase Shift"],
+            correct: "DC Component"
+        }
+    };
+    let currentQuizTimestamp = null;
+    let quizAnswered = false;
+    let quizInterval = null;
+
+    // Load YouTube IFrame API
+    let tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    let firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('youtube-player', {
+            height: '360',
+            width: '640',
+            videoId: 'X-z6e1zZw80',
+            playerVars: {
+                'playsinline': 1,
+                'enablejsapi': 1,
+                'origin': window.location.origin
+            },
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    function onPlayerReady(event) {
+        // Start tracking video time when playing
+        startTimeTracking();
+    }
+
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING) {
+            startTimeTracking();
+        } else if (event.data == YT.PlayerState.PAUSED) {
+            stopTimeTracking();
+        }
+    }
+
+    function startTimeTracking() {
+        if (quizInterval) clearInterval(quizInterval);
+        quizInterval = setInterval(checkVideoTime, 500);
+    }
+
+    function stopTimeTracking() {
+        if (quizInterval) clearInterval(quizInterval);
+        quizInterval = null;
+    }
+
+    function checkVideoTime() {
+        if (!player) return;
+        let currentTime = player.getCurrentTime();
+        // Check if we have reached a quiz timestamp
+        for (let i = 0; i < quizTimestamps.length; i++) {
+            let ts = quizTimestamps[i];
+            if (currentTime >= ts && currentTime < ts + 2 && !quizAnswered && currentQuizTimestamp !== ts) {
+                // Pause the video and show quiz
+                player.pauseVideo();
+                currentQuizTimestamp = ts;
+                showQuiz(ts);
+                break;
+            }
+        }
+    }
+
+    function showQuiz(timestamp) {
+        let quiz = quizData[timestamp];
+        if (!quiz) return;
+        
+        document.getElementById('quizQuestion').innerText = quiz.question;
+        let optionsHtml = '';
+        quiz.options.forEach(option => {
+            optionsHtml += `<label><input type="radio" name="quizOption" value="${option}"> ${option}</label>`;
+        });
+        document.getElementById('quizOptions').innerHTML = optionsHtml;
+        document.getElementById('quizFeedback').innerHTML = '';
+        document.getElementById('quizModal').classList.add('active');
+        
+        // Clear previous answer flag
+        quizAnswered = false;
+        
+        // Add event listener for submit button
+        let submitBtn = document.getElementById('submitQuiz');
+        submitBtn.onclick = function() {
+            let selectedOption = document.querySelector('input[name="quizOption"]:checked');
+            if (!selectedOption) {
+                document.getElementById('quizFeedback').innerHTML = 'Please select an answer.';
+                return;
+            }
+            let userAnswer = selectedOption.value;
+            if (userAnswer === quiz.correct) {
+                document.getElementById('quizFeedback').innerHTML = '✅ Correct! Resuming video...';
+                quizAnswered = true;
+                // Close modal after short delay and resume video
+                setTimeout(() => {
+                    document.getElementById('quizModal').classList.remove('active');
+                    player.playVideo();
+                    currentQuizTimestamp = null;
+                }, 1500);
+            } else {
+                document.getElementById('quizFeedback').innerHTML = '❌ Incorrect. Please try again.';
+            }
+        };
+    }
 
     // --------------------- HARMONIC ANALYSIS (with a1, b1) ------------------
     let currentFourierData = { a0: 0, Lval: 1, coeffs: [], a1:0, b1:0 };
@@ -631,7 +813,6 @@
         }
     }
 
-    // Detailed solution with full step-by-step, placed at the bottom
     function showDetailedSolution() {
         if(!currentFourierData.xVals){ alert("First calculate Fourier series."); return; }
         let Lv = currentFourierData.Lval, sumy=currentFourierData.sum_y, a0val=currentFourierData.a0;
