@@ -483,7 +483,7 @@
         </div>
     </div>
 
-    <!-- THEORY PAGE (with embedded YouTube video + interactive quiz) -->
+    <!-- THEORY PAGE (with embedded YouTube video + interactive quiz at 15s, 40s, 160s) -->
     <div id="page-theory" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-book"></i><div><h2>Theory: Fourier Series & Harmonics</h2></div></div>
@@ -496,7 +496,7 @@
             <h4>🎵 Harmonic Concept</h4>
             <p>First harmonic (fundamental) has frequency ω, second harmonic 2ω, etc. Fourier series extracts amplitude of each harmonic from given samples, crucial in signal processing and vibrations.</p>
             
-            <!-- Embedded video with interactive quiz -->
+            <!-- Embedded video with interactive quiz at 15, 40, 160 seconds -->
             <div class="video-container">
                 <p><strong>📺 Watch this explanatory video on Fourier Series:</strong></p>
                 <div id="youtube-player"></div>
@@ -505,7 +505,7 @@
         </div>
     </div>
 
-    <!-- Quiz Modal -->
+    <!-- Quiz Modal (appears at timestamps) -->
     <div id="quizModal" class="quiz-modal">
         <div class="quiz-content">
             <h3 id="quizQuestion">Question will appear here</h3>
@@ -621,18 +621,29 @@
     let selectedRating=0; const stars=document.querySelectorAll('#starRating .fa-star');
     stars.forEach(star=>{ star.addEventListener('mouseover',function(){ let v=parseInt(this.dataset.val); stars.forEach((s,i)=>s.classList.toggle('active',i<v)); }); star.addEventListener('mouseout',()=>{ stars.forEach((s,i)=>s.classList.toggle('active',i<selectedRating)); }); star.addEventListener('click',function(){ selectedRating=parseInt(this.dataset.val); stars.forEach((s,i)=>s.classList.toggle('active',i<selectedRating)); }); });
 
-    // youtube iframe api with interactive quiz at specific timestamps
+    // ---------- YOUTUBE INTERACTIVE QUIZ (timestamps: 15s, 40s, 160s) ----------
     let player;
-    let quizTimestamps = [15]; // timestamp (in seconds) when quiz should appear
+    // Timestamps and corresponding quiz questions
+    let quizTimestamps = [15, 40, 160];
     let quizData = {
         15: {
-            question: "What is the constant term a₀ in Fourier series also known as?",
-            options: ["Harmonic Amplitude", "DC Component", "Fundamental Frequency", "Phase Shift"],
-            correct: "DC Component"
+            question: "In Fourier series, what does the constant term a₀ represent?",
+            options: ["The amplitude of the fundamental harmonic", "The average (DC) value of the function", "The frequency of the signal", "The phase shift"],
+            correct: "The average (DC) value of the function"
+        },
+        40: {
+            question: "For an odd function f(x) = -f(-x), which Fourier coefficients are always zero?",
+            options: ["a₀ and aₙ (cosine terms)", "bₙ (sine terms)", "Only a₀", "All coefficients are non-zero"],
+            correct: "a₀ and aₙ (cosine terms)"
+        },
+        160: {
+            question: "What does harmonic analysis primarily help us achieve?",
+            options: ["Convert a signal into digital form", "Decompose a periodic signal into sine/cosine components", "Amplify weak signals", "Reduce noise in a system"],
+            correct: "Decompose a periodic signal into sine/cosine components"
         }
     };
+    let answeredTimestamps = {}; // track which timestamps have been answered
     let currentQuizTimestamp = null;
-    let quizAnswered = false;
     let quizInterval = null;
 
     // Load YouTube IFrame API
@@ -659,7 +670,6 @@
     }
 
     function onPlayerReady(event) {
-        // Start tracking video time when playing
         startTimeTracking();
     }
 
@@ -684,11 +694,10 @@
     function checkVideoTime() {
         if (!player) return;
         let currentTime = player.getCurrentTime();
-        // Check if we have reached a quiz timestamp
         for (let i = 0; i < quizTimestamps.length; i++) {
             let ts = quizTimestamps[i];
-            if (currentTime >= ts && currentTime < ts + 2 && !quizAnswered && currentQuizTimestamp !== ts) {
-                // Pause the video and show quiz
+            // If we haven't answered this timestamp yet and we are within +/- 1 second of it
+            if (!answeredTimestamps[ts] && currentTime >= ts && currentTime < ts + 2 && currentQuizTimestamp !== ts) {
                 player.pauseVideo();
                 currentQuizTimestamp = ts;
                 showQuiz(ts);
@@ -710,12 +719,11 @@
         document.getElementById('quizFeedback').innerHTML = '';
         document.getElementById('quizModal').classList.add('active');
         
-        // Clear previous answer flag
-        quizAnswered = false;
-        
-        // Add event listener for submit button
+        // Remove previous submit listener and add new one
         let submitBtn = document.getElementById('submitQuiz');
-        submitBtn.onclick = function() {
+        let newSubmit = submitBtn.cloneNode(true);
+        submitBtn.parentNode.replaceChild(newSubmit, submitBtn);
+        newSubmit.onclick = function() {
             let selectedOption = document.querySelector('input[name="quizOption"]:checked');
             if (!selectedOption) {
                 document.getElementById('quizFeedback').innerHTML = 'Please select an answer.';
@@ -724,8 +732,7 @@
             let userAnswer = selectedOption.value;
             if (userAnswer === quiz.correct) {
                 document.getElementById('quizFeedback').innerHTML = '✅ Correct! Resuming video...';
-                quizAnswered = true;
-                // Close modal after short delay and resume video
+                answeredTimestamps[timestamp] = true; // mark as answered
                 setTimeout(() => {
                     document.getElementById('quizModal').classList.remove('active');
                     player.playVideo();
