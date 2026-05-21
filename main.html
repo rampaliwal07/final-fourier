@@ -340,13 +340,13 @@
             flex-wrap: wrap;
             align-items: center;
             gap: 12px;
-            margin: 18px 0;
-            padding: 12px;
+            margin: 12px 0;
+            padding: 8px;
             background: #f8f9ff;
             border-radius: 10px;
         }
         .verify-row label {
-            min-width: 140px;
+            min-width: 160px;
             font-weight: 600;
         }
         .verify-row input {
@@ -355,6 +355,23 @@
             padding: 8px;
             border: 1px solid #bdd4e9;
             border-radius: 5px;
+        }
+        .verify-row button {
+            background-color: #17a2b8;
+            border: none;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .verify-row button:hover {
+            background-color: #138496;
+        }
+        .check-feedback {
+            font-size: 0.9rem;
+            margin-left: 8px;
+            font-weight: 500;
         }
         .harmonic-group {
             border: 1px solid #cfe2f0;
@@ -448,7 +465,7 @@
         </div>
     </div>
 
-    <!-- AIM PAGE (unchanged) -->
+    <!-- AIM PAGE -->
     <div id="page-aim" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
         <div class="card-page-header"><i class="fas fa-bullseye"></i><div><h2>Aim</h2><p>Objective of harmonic analysis</p></div></div>
@@ -459,7 +476,7 @@
         </div>
     </div>
 
-    <!-- THEORY PAGE (unchanged) -->
+    <!-- THEORY PAGE -->
     <div id="page-theory" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-book"></i><div><h2>Theory: Fourier Series & Harmonics</h2></div></div>
@@ -491,7 +508,7 @@
     <!-- *********************** SIMULATION PAGE (REDESIGNED) *********************** -->
     <div id="page-simulation" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
-        <div class="card-page-header"><i class="fas fa-desktop"></i><div><h2>Harmonic Analysis Simulator (MATLAB style)</h2><p>Enter data, compute sums, then verify</p></div></div>
+        <div class="card-page-header"><i class="fas fa-desktop"></i><div><h2>Harmonic Analysis Simulator (MATLAB style)</h2><p>Enter data, compute L, then verify each value</p></div></div>
         
         <div class="sim-input-group">
             <h3><i class="fas fa-chart-line"></i> Input Data</h3>
@@ -504,25 +521,27 @@
             <button id="computeDataBtn" class="submit-btn" style="margin-top: 20px;"><i class="fas fa-sync-alt"></i> Compute Data (L, sum_y, A(i), B(i))</button>
         </div>
 
-        <!-- Display computed base values -->
+        <!-- Display computed base values (only L is shown, sum_y hidden) -->
         <div id="computedInfo" class="math-display" style="margin-bottom: 20px; display: none;">
-            <!-- Will show L and sum_y after compute -->
+            <!-- Will show L only -->
         </div>
 
-        <!-- Verification area: user must enter sum_y, then each A(i), B(i) -->
+        <!-- Verification area: individual check buttons for each quantity -->
         <div id="verificationArea" style="margin-top: 20px; background: #ffffff; border-radius: 16px; padding: 16px; border: 1px solid #d4e3f0;">
             <h3><i class="fas fa-check-double"></i> Verification Task</h3>
-            <p>Enter the following values exactly as computed (match the internal results):</p>
+            <p>Enter each value (approx. to 2 decimal places) and click the <strong>Check</strong> button beside it.</p>
             <div id="verificationForm">
-                <!-- Sum y field -->
-                <div class="verify-row">
+                <!-- Sum y field with its own check -->
+                <div class="verify-row" id="row-sumY">
                     <label>∑ y (sum of y values):</label>
-                    <input type="text" id="verifySumY" placeholder="e.g., 15">
+                    <input type="text" id="verifySumY" placeholder="e.g., 15.00">
+                    <button class="check-single" data-type="sumY"><i class="fas fa-check"></i> Check</button>
+                    <span class="check-feedback" id="fb-sumY"></span>
                 </div>
                 <!-- Harmonic specific rows will be generated dynamically after compute -->
                 <div id="harmonicVerifyFields"></div>
-                <button id="verifyAnswersBtn" class="submit-btn" style="background: #28a745;"><i class="fas fa-vote-yea"></i> Verify Answers</button>
             </div>
+            <button id="verifyAllBtn" class="submit-btn" style="background: #28a745; margin-top: 10px;"><i class="fas fa-vote-yea"></i> Verify All Answers</button>
             <div id="verifyStatus" class="status-msg" style="display: none;"></div>
             <!-- Final Fourier series (shown only after successful verification) -->
             <div id="finalFourierDisplay" style="display: none;" class="final-series large-math"></div>
@@ -590,7 +609,17 @@
         B: []    // sum_y_sin for each harmonic
     };
 
-    // Helper: parse input, compute L, A, B according to MATLAB style
+    // Helper: approx equality to 2 decimal places (tolerance 0.01)
+    function approxEq(a, b) {
+        return Math.abs(a - b) < 0.01;
+    }
+
+    // Round to 2 decimals for display
+    function to2Dec(val) {
+        return val.toFixed(2);
+    }
+
+    // Compute L, A, B from current inputs
     function computeFourierData() {
         const xStr = document.getElementById('simX').value;
         const yStr = document.getElementById('simY').value;
@@ -611,7 +640,6 @@
             L = (xArr[xArr.length-1] - xArr[0]) / 2;
         } else {
             L = ((xArr[xArr.length-1] + xArr[1] - xArr[0]) - xArr[0]) / 2;
-            // simplified from code: ((x(end)+x(2)-x(1)) - x(1))/2
         }
         const sum_y = yArr.reduce((a,b)=>a+b,0);
         let A = [];
@@ -635,61 +663,144 @@
             A: A,
             B: B
         };
-        // Display computed info
-        let infoHtml = `<strong>📌 Computed values (internal):</strong><br>`;
-        infoHtml += `L (half period) = ${L.toFixed(6)}<br>`;
-        infoHtml += `∑ y = ${sum_y.toFixed(6)}<br>`;
-        infoHtml += `A(i) = sum(y·cos(iπx/L)) and B(i) = sum(y·sin(iπx/L)) calculated for i=1..${nVal}.`;
+        // Display computed info (only L, sum_y is hidden)
+        let infoHtml = `<strong>📌 Computed values:</strong><br>`;
+        infoHtml += `L (half period) = ${to2Dec(L)}<br>`;
+        infoHtml += `<em>(sum_y, A(i), B(i) are computed internally for verification)</em>`;
         document.getElementById('computedInfo').innerHTML = infoHtml;
         document.getElementById('computedInfo').style.display = 'block';
         
-        // Build dynamic verification fields for each harmonic
+        // Build dynamic verification fields for each harmonic (A and B)
         let html = '';
         for (let i = 1; i <= nVal; i++) {
             html += `<div class="harmonic-group"><span class="harmonic-title">Harmonic ${i}</span>`;
-            html += `<div class="verify-row"><label>A(${i}) = Σ y·cos(${i}πx/L):</label><input type="text" id="verifyA_${i}" placeholder="e.g., ${A[i-1].toFixed(4)}"></div>`;
-            html += `<div class="verify-row"><label>B(${i}) = Σ y·sin(${i}πx/L):</label><input type="text" id="verifyB_${i}" placeholder="e.g., ${B[i-1].toFixed(4)}"></div></div>`;
+            html += `<div class="verify-row" id="row-A${i}">
+                        <label>A(${i}) = Σ y·cos(${i}πx/L):</label>
+                        <input type="text" id="verifyA_${i}" placeholder="e.g., ${to2Dec(A[i-1])}">
+                        <button class="check-single" data-type="A" data-harm="${i}"><i class="fas fa-check"></i> Check</button>
+                        <span class="check-feedback" id="fb-A${i}"></span>
+                      </div>`;
+            html += `<div class="verify-row" id="row-B${i}">
+                        <label>B(${i}) = Σ y·sin(${i}πx/L):</label>
+                        <input type="text" id="verifyB_${i}" placeholder="e.g., ${to2Dec(B[i-1])}">
+                        <button class="check-single" data-type="B" data-harm="${i}"><i class="fas fa-check"></i> Check</button>
+                        <span class="check-feedback" id="fb-B${i}"></span>
+                      </div></div>`;
         }
         document.getElementById('harmonicVerifyFields').innerHTML = html;
+        
+        // Re-attach event listeners for all single-check buttons
+        attachSingleCheckEvents();
+        
         // Reset verification status and final display
         document.getElementById('verifyStatus').style.display = 'none';
         document.getElementById('finalFourierDisplay').style.display = 'none';
         document.getElementById('detailedSolutionDiv').style.display = 'none';
+        // Clear all feedback spans
+        document.querySelectorAll('.check-feedback').forEach(span => span.innerHTML = '');
+        document.getElementById('verifySumY').value = '';
         return true;
     }
 
-    // Verify user entries against computed values
-    function verifyAnswers() {
+    // Attach events to all "Check" buttons (including sumY and dynamic ones)
+    function attachSingleCheckEvents() {
+        // Sum Y check
+        const sumYBtn = document.querySelector('#row-sumY .check-single');
+        if (sumYBtn) {
+            sumYBtn.removeEventListener('click', handleSingleCheck);
+            sumYBtn.addEventListener('click', handleSingleCheck);
+        }
+        // A and B buttons (will be added dynamically)
+        document.querySelectorAll('.check-single').forEach(btn => {
+            btn.removeEventListener('click', handleSingleCheck);
+            btn.addEventListener('click', handleSingleCheck);
+        });
+    }
+
+    function handleSingleCheck(e) {
         if (!simComputed.valid) {
             alert("Please click 'Compute Data' first.");
             return;
         }
-        const userSumY = parseFloat(document.getElementById('verifySumY').value);
-        if (isNaN(userSumY)) {
-            showVerifyStatus("Please enter a numeric value for ∑ y.", false);
+        const btn = e.currentTarget;
+        const type = btn.getAttribute('data-type');
+        if (type === 'sumY') {
+            const userVal = parseFloat(document.getElementById('verifySumY').value);
+            const correct = simComputed.sum_y;
+            const fbSpan = document.getElementById('fb-sumY');
+            if (isNaN(userVal)) {
+                fbSpan.innerHTML = '❌ Enter a number';
+                fbSpan.style.color = 'red';
+            } else if (approxEq(userVal, correct)) {
+                fbSpan.innerHTML = `✅ Correct (${to2Dec(correct)})`;
+                fbSpan.style.color = 'green';
+            } else {
+                fbSpan.innerHTML = `❌ Incorrect. Expected ≈ ${to2Dec(correct)}`;
+                fbSpan.style.color = 'red';
+            }
+        } 
+        else if (type === 'A') {
+            const harm = parseInt(btn.getAttribute('data-harm'));
+            const userVal = parseFloat(document.getElementById(`verifyA_${harm}`).value);
+            const correct = simComputed.A[harm-1];
+            const fbSpan = document.getElementById(`fb-A${harm}`);
+            if (isNaN(userVal)) {
+                fbSpan.innerHTML = '❌ Enter a number';
+                fbSpan.style.color = 'red';
+            } else if (approxEq(userVal, correct)) {
+                fbSpan.innerHTML = `✅ Correct (${to2Dec(correct)})`;
+                fbSpan.style.color = 'green';
+            } else {
+                fbSpan.innerHTML = `❌ Incorrect. Expected ≈ ${to2Dec(correct)}`;
+                fbSpan.style.color = 'red';
+            }
+        }
+        else if (type === 'B') {
+            const harm = parseInt(btn.getAttribute('data-harm'));
+            const userVal = parseFloat(document.getElementById(`verifyB_${harm}`).value);
+            const correct = simComputed.B[harm-1];
+            const fbSpan = document.getElementById(`fb-B${harm}`);
+            if (isNaN(userVal)) {
+                fbSpan.innerHTML = '❌ Enter a number';
+                fbSpan.style.color = 'red';
+            } else if (approxEq(userVal, correct)) {
+                fbSpan.innerHTML = `✅ Correct (${to2Dec(correct)})`;
+                fbSpan.style.color = 'green';
+            } else {
+                fbSpan.innerHTML = `❌ Incorrect. Expected ≈ ${to2Dec(correct)}`;
+                fbSpan.style.color = 'red';
+            }
+        }
+    }
+
+    // Verify all answers at once
+    function verifyAllAnswers() {
+        if (!simComputed.valid) {
+            alert("Please click 'Compute Data' first.");
             return;
         }
-        if (Math.abs(userSumY - simComputed.sum_y) > 1e-5) {
-            showVerifyStatus(`❌ Incorrect ∑ y. Expected ${simComputed.sum_y.toFixed(6)}. Try again.`, false);
+        // Check sumY
+        const sumYInput = document.getElementById('verifySumY').value;
+        const sumYVal = parseFloat(sumYInput);
+        if (isNaN(sumYVal) || !approxEq(sumYVal, simComputed.sum_y)) {
+            showVerifyStatus(`❌ ∑ y is incorrect. Expected ≈ ${to2Dec(simComputed.sum_y)}.`, false);
             return;
         }
-        // Check each harmonic A and B
+        // Check each A and B
         for (let i = 1; i <= simComputed.n; i++) {
-            const userA = parseFloat(document.getElementById(`verifyA_${i}`).value);
-            const userB = parseFloat(document.getElementById(`verifyB_${i}`).value);
-            if (isNaN(userA) || isNaN(userB)) {
-                showVerifyStatus(`Incomplete: Please enter both A(${i}) and B(${i}).`, false);
+            const aVal = parseFloat(document.getElementById(`verifyA_${i}`).value);
+            const bVal = parseFloat(document.getElementById(`verifyB_${i}`).value);
+            if (isNaN(aVal) || !approxEq(aVal, simComputed.A[i-1])) {
+                showVerifyStatus(`❌ A(${i}) incorrect. Expected ≈ ${to2Dec(simComputed.A[i-1])}.`, false);
                 return;
             }
-            const expectedA = simComputed.A[i-1];
-            const expectedB = simComputed.B[i-1];
-            if (Math.abs(userA - expectedA) > 1e-5 || Math.abs(userB - expectedB) > 1e-5) {
-                showVerifyStatus(`❌ Mismatch for harmonic ${i}. A expected: ${expectedA.toFixed(6)}, B expected: ${expectedB.toFixed(6)}. Please correct.`, false);
+            if (isNaN(bVal) || !approxEq(bVal, simComputed.B[i-1])) {
+                showVerifyStatus(`❌ B(${i}) incorrect. Expected ≈ ${to2Dec(simComputed.B[i-1])}.`, false);
                 return;
             }
         }
-        // All correct -> show success and display Fourier series
-        showVerifyStatus("✅ All answers correct! Excellent work. Here is the Fourier series:", true);
+        // All correct
+        showVerifyStatus("✅ All answers are correct! Great job. Here is the Fourier series:", true);
         displayFinalFourierSeries();
     }
 
@@ -706,29 +817,16 @@
         const n = simComputed.n;
         const A = simComputed.A;
         const B = simComputed.B;
-        // constant term f0 = (2*sum_y)/(4*L) as per MATLAB f=(2*sum_y)/4*L
-        const constTerm = (2 * sum_y) / (4 * L);   // using precedence: (2*sum_y)/4 * L? Wait careful: MATLAB: f=(2*sum_y)/4*L -> ((2*sum_y)/4)*L = (sum_y/2)*L
-        // But to be consistent with the given code (which they used in syms f expression), we compute exactly as MATLAB does:
-        // f = (2*sum_y)/4 * L   => (2*sum_y * L)/4 = (sum_y * L)/2
-        const dcComponent = (sum_y * L) / 2;
-        // But for output we'll show expression as per derived coefficients: a0/2? Actually standard Fourier uses a0/2.
-        // We follow the style from the code: f = (2*sum_y)/4*L + Σ (A(i)/L)cos + (B(i)/L) sin
-        let seriesExpr = `f(X) = ${dcComponent.toFixed(6)}`;   // DC term as constant
-        for (let i = 0; i < n; i++) {
+        // Constant term as per MATLAB: f = (2*sum_y)/4 * L
+        const constTerm = (sum_y * L) / 2;
+        let displayHtml = `<strong>📈 Final Fourier Series (verified):</strong><br><br>`;
+        displayHtml += `<div style="font-size: 1.35rem; font-family: 'Courier New', monospace;">`;
+        displayHtml += `f(x) = ${to2Dec(constTerm)}`;
+        for (let i=0; i<n; i++) {
             const harm = i+1;
             const a_coeff = A[i] / L;
             const b_coeff = B[i] / L;
-            seriesExpr += ` + (${a_coeff.toFixed(6)})·cos\\left(\\frac{${harm}π X}{${L.toFixed(4)}}\\right) + (${b_coeff.toFixed(6)})·sin\\left(\\frac{${harm}π X}{${L.toFixed(4)}}\\right)`;
-        }
-        // Use unicode and HTML for beautiful math
-        let displayHtml = `<strong>📈 Final Fourier Series (verified):</strong><br><br>`;
-        displayHtml += `<div style="font-size: 1.35rem; font-family: 'Courier New', monospace;">`;
-        displayHtml += `f(x) = ${dcComponent.toFixed(6)}`;
-        for (let i=0; i<n; i++) {
-            const harm = i+1;
-            const a_coeff = (A[i]/L).toFixed(6);
-            const b_coeff = (B[i]/L).toFixed(6);
-            displayHtml += ` + (${a_coeff}) cos(${harm}πx/${L.toFixed(4)}) + (${b_coeff}) sin(${harm}πx/${L.toFixed(4)})`;
+            displayHtml += ` + (${to2Dec(a_coeff)}) cos(${harm}πx/${to2Dec(L)}) + (${to2Dec(b_coeff)}) sin(${harm}πx/${to2Dec(L)})`;
         }
         displayHtml += `</div>`;
         const finalDiv = document.getElementById('finalFourierDisplay');
@@ -750,18 +848,18 @@
         solHtml += `<p><strong>Given:</strong> x = [${x.join(', ')}], y = [${y.join(', ')}], harmonics n = ${n}</p>`;
         solHtml += `<p><strong>Step 1: Determine L</strong><br>`;
         if (y[0] === y[y.length-1]) 
-            solHtml += `Since y(1) = y(end), L = (x_last - x_first)/2 = (${x[x.length-1]} - ${x[0]})/2 = ${L.toFixed(6)}</p>`;
+            solHtml += `Since y(1) = y(end), L = (x_last - x_first)/2 = (${x[x.length-1]} - ${x[0]})/2 = ${to2Dec(L)}</p>`;
         else 
-            solHtml += `Since y(1) ≠ y(end), L = ((x_last + x_second - x_first) - x_first)/2 = ((${x[x.length-1]} + ${x[1]} - ${x[0]}) - ${x[0]})/2 = ${L.toFixed(6)}</p>`;
-        solHtml += `<p><strong>Step 2: Compute sum_y = Σ y = ${sumY.toFixed(6)}</strong></p>`;
+            solHtml += `Since y(1) ≠ y(end), L = ((x_last + x_second - x_first) - x_first)/2 = ((${x[x.length-1]} + ${x[1]} - ${x[0]}) - ${x[0]})/2 = ${to2Dec(L)}</p>`;
+        solHtml += `<p><strong>Step 2: Compute sum_y = Σ y = ${to2Dec(sumY)}</strong> (kept internal)</p>`;
         solHtml += `<p><strong>Step 3: Compute A(i)=Σ y·cos(iπx/L) and B(i)=Σ y·sin(iπx/L):</strong></p><ul>`;
         for (let i=0; i<n; i++) {
-            solHtml += `<li>For i=${i+1}: A = ${simComputed.A[i].toFixed(6)}, B = ${simComputed.B[i].toFixed(6)}</li>`;
+            solHtml += `<li>For i=${i+1}: A = ${to2Dec(simComputed.A[i])}, B = ${to2Dec(simComputed.B[i])}</li>`;
         }
         solHtml += `</ul><p><strong>Step 4: Construct Fourier series</strong><br>`;
         const dcTerm = (simComputed.sum_y * L)/2;
-        solHtml += `Constant term = (2·sum_y)/(4)·L = ${dcTerm.toFixed(6)}<br>`;
-        solHtml += `Fourier expansion: f(x) = ${dcTerm.toFixed(6)} + Σ[ (A(i)/L) cos(iπx/L) + (B(i)/L) sin(iπx/L) ]`;
+        solHtml += `Constant term = (2·sum_y)/(4)·L = ${to2Dec(dcTerm)}<br>`;
+        solHtml += `Fourier expansion: f(x) = ${to2Dec(dcTerm)} + Σ[ (A(i)/L) cos(iπx/L) + (B(i)/L) sin(iπx/L) ]`;
         solHtml += `</p><p><strong>Final verified series is shown above.</strong></p>`;
         document.getElementById('detailedSolutionDiv').innerHTML = solHtml;
         document.getElementById('detailedSolutionDiv').style.display = 'block';
@@ -771,8 +869,8 @@
     document.getElementById('computeDataBtn').addEventListener('click', () => {
         computeFourierData();
     });
-    document.getElementById('verifyAnswersBtn').addEventListener('click', () => {
-        verifyAnswers();
+    document.getElementById('verifyAllBtn').addEventListener('click', () => {
+        verifyAllAnswers();
     });
     document.getElementById('detailedSolutionBtn').addEventListener('click', () => {
         showDetailedSolution();
