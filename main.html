@@ -89,13 +89,6 @@
             font-weight: 500;
             color: #1e2a3a;
         }
-        .math-inline {
-            font-family: monospace;
-            background: #f0f2f5;
-            padding: 2px 6px;
-            border-radius: 6px;
-            font-size: 1em;
-        }
         .theory-section {
             margin-bottom: 28px;
         }
@@ -105,9 +98,6 @@
             color: #2c3e50;
             border-left: 4px solid #3498db;
             padding-left: 15px;
-        }
-        .theory-section p {
-            margin-bottom: 12px;
         }
         .video-container { position: relative; width: 100%; margin: 25px 0 15px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         #youtube-player { width: 100%; aspect-ratio: 16/9; background: #000; }
@@ -218,7 +208,7 @@
         </div>
     </div>
 
-    <!-- AIM PAGE (unchanged) -->
+    <!-- AIM PAGE -->
     <div id="page-aim" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
         <div class="card-page-header"><i class="fas fa-bullseye"></i><div><h2>Aim</h2><p>Objective of harmonic analysis</p></div></div>
@@ -238,17 +228,15 @@
         </div>
     </div>
 
-    <!-- THEORY PAGE with improved math formatting and added content -->
+    <!-- THEORY PAGE with comprehensive harmonic analysis content -->
     <div id="page-theory" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-book"></i><div><h2>Theory: Harmonic Analysis</h2><p>Fourier Series & Harmonics</p></div></div>
         <div class="page-content-box">
-            
             <div class="theory-section">
                 <h4>📈 What is Harmonic Analysis?</h4>
                 <p>Harmonic analysis is the process of expressing a periodic function as the sum of simple sine and cosine waves called <strong>harmonics</strong>. It helps to study the frequency, amplitude, and phase of periodic signals. The fundamental harmonic has the lowest frequency, while higher harmonics are integral multiples of the fundamental frequency.</p>
             </div>
-
             <div class="theory-section">
                 <h4>📐 Fourier Series Representation</h4>
                 <p>A periodic function <i>f(x)</i> with period 2π can be represented as:</p>
@@ -263,7 +251,6 @@
                     <li><i>n</i> = harmonic number (n = 1,2,3,...)</li>
                 </ul>
             </div>
-
             <div class="theory-section">
                 <h4>🧮 Harmonic Coefficients (Euler–Fourier formulas)</h4>
                 <div class="math">
@@ -277,17 +264,14 @@
                     b_n \approx \frac{2}{L}\sum y\cdot\sin\left(\frac{n\pi x}{L}\right)
                 </div>
             </div>
-
             <div class="theory-section">
                 <h4>🎵 Applications of Harmonic Analysis</h4>
                 <p>Harmonic analysis is widely used in signal processing, sound analysis, electrical systems, communication engineering, and solving partial differential equations. It simplifies complex waveforms into manageable frequency components, enabling efficient filtering, compression, and feature extraction.</p>
             </div>
-
             <div class="theory-section">
                 <h4>💡 Why Study Harmonics?</h4>
                 <p>Understanding harmonics allows engineers and scientists to design better filters, predict system resonances, reduce noise, and analyze vibrations. The Fourier series is the foundation of modern digital signal processing.</p>
             </div>
-
             <h4 style="margin-top: 30px;">📺 Watch: Fourier Series (Interactive)</h4>
             <div class="video-container" id="video-container">
                 <div id="youtube-player"></div>
@@ -296,7 +280,7 @@
         </div>
     </div>
 
-    <!-- PRETEST (same as before) -->
+    <!-- PRETEST (unchanged - shows correct answer for learning) -->
     <div id="page-pretest" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-question-circle"></i><div><h2>Pretest</h2><p>Numerical harmonic analysis problems</p></div></div>
@@ -304,7 +288,7 @@
         <button class="submit-btn submit-all" id="submitPretestAll"><i class="fas fa-check-double"></i> Submit All Pretest Answers</button>
     </div>
 
-    <!-- SIMULATION PAGE (unchanged) -->
+    <!-- SIMULATION PAGE (verification does NOT reveal correct numeric value) -->
     <div id="page-simulation" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-desktop"></i><div><h2>Harmonic Analysis Simulator</h2><p>Enter data, compute L, verify values</p></div></div>
@@ -339,7 +323,7 @@
         <div id="detailedSolutionDiv" style="margin-top:20px; display:none; background:#fef7e0; padding:20px; border-radius:12px;"></div>
     </div>
 
-    <!-- POSTTEST (same as before) -->
+    <!-- POSTTEST (unchanged - shows correct answer for learning) -->
     <div id="page-posttest" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-clipboard-check"></i><div><h2>Posttest</h2><p>Numerical harmonic analysis problems</p></div></div>
@@ -347,7 +331,7 @@
         <button class="submit-btn submit-all" id="submitPosttestAll"><i class="fas fa-check-double"></i> Submit All Posttest Answers</button>
     </div>
 
-    <!-- REFERENCES PAGE (unchanged) -->
+    <!-- REFERENCES PAGE -->
     <div id="page-references" class="content card-page">
         <button class="back-btn" onclick="goBack()">Back</button>
         <div class="card-page-header"><i class="fas fa-book-open"></i><div><h2>References</h2><p>Recommended reading</p></div></div>
@@ -368,7 +352,7 @@
         </table>
     </div>
 
-    <!-- CONTRIBUTORS PAGE (unchanged) -->
+    <!-- CONTRIBUTORS PAGE -->
     <div id="page-contributors" class="content card-page">
         <button class="back-btn" onclick="goBack()">Back</button>
         <div class="card-page-header"><i class="fas fa-users"></i><div><h2>Contributors</h2></div></div>
@@ -379,7 +363,7 @@
         </div>
     </div>
 
-    <!-- FEEDBACK PAGE (unchanged) -->
+    <!-- FEEDBACK PAGE -->
     <div id="page-feedback" class="content card-page">
         <button class="back-btn" onclick="goBack()">Back</button>
         <div class="card-page-header"><i class="fas fa-comment-alt"></i><div><h2>Feedback</h2></div></div>
@@ -394,7 +378,7 @@
 <footer class="container"><p>Virtual Labs © 2025 | Harmonic Analysis (Fourier Series) | Pimpri Chinchwad College of Engineering</p></footer>
 
 <script>
-    // ----- Navigation (same as before) -----
+    // Navigation
     function openPage(targetId) {
         document.getElementById('main-dashboard').classList.add('hidden');
         document.querySelectorAll('.card-page').forEach(p => p.classList.remove('active-page'));
@@ -443,7 +427,7 @@
         return { L, sum_y, A, B, a0_const };
     }
 
-    // Pretest & Posttest data (same as before)
+    // Pretest & Posttest data (unchanged)
     const pretestQuestions = [
         { id:0, x:[0,1,2,3,4], y:[2,3,4,3,2], ask:"sum_y", label:"∑ y (sum of y values)", difficulty:"Easy", tol:0.01 },
         { id:1, x:[0,1,2,3,4,5], y:[1,2,3,4,3,2], ask:"L", label:"L (half period)", difficulty:"Medium", tol:0.01 },
@@ -531,7 +515,7 @@
         alert(`${testType.toUpperCase()} Result: ${score}/${questions.length} correct.`);
     }
 
-    // Simulation logic (same as before)
+    // Simulation logic (does NOT reveal correct numeric values)
     let simComputed = { valid: false, xArr: [], yArr: [], L: 0, sum_y: 0, n: 0, A: [], B: [] };
     function approxEq(a,b) { return Math.abs(a-b) < 0.01; }
     function to2Dec(v) { return v.toFixed(2); }
@@ -605,24 +589,24 @@
             const correct = simComputed.sum_y;
             const fb = document.getElementById('fb-sumY');
             if (isNaN(user)) fb.innerHTML = '❌ Enter number';
-            else if (approxEq(user, correct)) fb.innerHTML = `✅ Correct (${to2Dec(correct)})`;
-            else fb.innerHTML = `❌ Incorrect. Expected ≈ ${to2Dec(correct)}`;
+            else if (approxEq(user, correct)) fb.innerHTML = '✅ Correct';
+            else fb.innerHTML = '❌ Incorrect';
         } else if (type === 'A') {
             const harm = parseInt(btn.getAttribute('data-harm'));
             const user = parseFloat(document.getElementById(`verifyA_${harm}`).value);
             const correct = simComputed.A[harm-1];
             const fb = document.getElementById(`fb-A${harm}`);
             if (isNaN(user)) fb.innerHTML = '❌ Enter number';
-            else if (approxEq(user, correct)) fb.innerHTML = `✅ Correct (${to2Dec(correct)})`;
-            else fb.innerHTML = `❌ Incorrect. Expected ≈ ${to2Dec(correct)}`;
+            else if (approxEq(user, correct)) fb.innerHTML = '✅ Correct';
+            else fb.innerHTML = '❌ Incorrect';
         } else if (type === 'B') {
             const harm = parseInt(btn.getAttribute('data-harm'));
             const user = parseFloat(document.getElementById(`verifyB_${harm}`).value);
             const correct = simComputed.B[harm-1];
             const fb = document.getElementById(`fb-B${harm}`);
             if (isNaN(user)) fb.innerHTML = '❌ Enter number';
-            else if (approxEq(user, correct)) fb.innerHTML = `✅ Correct (${to2Dec(correct)})`;
-            else fb.innerHTML = `❌ Incorrect. Expected ≈ ${to2Dec(correct)}`;
+            else if (approxEq(user, correct)) fb.innerHTML = '✅ Correct';
+            else fb.innerHTML = '❌ Incorrect';
         }
     }
 
@@ -630,18 +614,18 @@
         if (!simComputed.valid) { alert("Compute Data first."); return; }
         const sumYVal = parseFloat(document.getElementById('verifySumY').value);
         if (isNaN(sumYVal) || !approxEq(sumYVal, simComputed.sum_y)) {
-            showVerifyStatus(`❌ ∑ y incorrect. Expected ≈ ${to2Dec(simComputed.sum_y)}.`, false);
+            showVerifyStatus(`❌ ∑ y is incorrect.`, false);
             return;
         }
         for (let i=1; i<=simComputed.n; i++) {
             const aVal = parseFloat(document.getElementById(`verifyA_${i}`).value);
             const bVal = parseFloat(document.getElementById(`verifyB_${i}`).value);
             if (isNaN(aVal) || !approxEq(aVal, simComputed.A[i-1])) {
-                showVerifyStatus(`❌ A(${i}) incorrect. Expected ≈ ${to2Dec(simComputed.A[i-1])}.`, false);
+                showVerifyStatus(`❌ A(${i}) is incorrect.`, false);
                 return;
             }
             if (isNaN(bVal) || !approxEq(bVal, simComputed.B[i-1])) {
-                showVerifyStatus(`❌ B(${i}) incorrect. Expected ≈ ${to2Dec(simComputed.B[i-1])}.`, false);
+                showVerifyStatus(`❌ B(${i}) is incorrect.`, false);
                 return;
             }
         }
