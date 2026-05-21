@@ -108,21 +108,6 @@
             gap: 10px;
         }
  
-        .main-content {
-            display: flex;
-            margin-top: 30px;
-            gap: 30px;
-        }
- 
-        .sidebar {
-            flex: 0 0 280px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            padding: 20px 0;
-            height: fit-content;
-        }
- 
         .content {
             flex: 1;
             background-color: white;
@@ -316,16 +301,7 @@
         .popup-feedback {
             font-weight: bold;
             margin-top: 10px;
-        }
-        .close-popup {
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 30px;
-            margin-top: 10px;
-            cursor: pointer;
-            font-weight: bold;
+            font-size: 1rem;
         }
         .mcq-question {
             background: #fff;
@@ -351,40 +327,38 @@
             border-radius: 6px;
             cursor: pointer;
         }
-        .ref-list {
-            list-style: none;
-        }
-        .ref-list li {
-            display: flex;
-            gap: 12px;
-            padding: 14px 0;
-            border-bottom: 1px solid #eee;
-        }
-        .contributors-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 20px;
-        }
-        .contributor-card {
-            background: #f0f7ff;
-            border-radius: 10px;
-            padding: 22px 16px;
-            text-align: center;
-        }
-        .star-rating i {
-            font-size: 28px;
-            color: #ccc;
-            cursor: pointer;
-        }
-        .star-rating i.active { color: #f39c12; }
-        .feedback-form input, .feedback-form select, .feedback-form textarea {
+        .ref-table {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 18px;
-            border: 1px solid #cde3f5;
-            border-radius: 6px;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95rem;
         }
-
+        .ref-table th, .ref-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .ref-table th {
+            background-color: #2c3e50;
+            color: white;
+            font-weight: 600;
+        }
+        .ref-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .star-rating {
+            color: #f39c12;
+            letter-spacing: 2px;
+        }
+        .aim-list {
+            list-style-type: disc;
+            margin-left: 25px;
+            line-height: 1.8;
+        }
+        .aim-list li {
+            margin: 8px 0;
+        }
         /* Simulation styles (unchanged) */
         .sim-input-group {
             background: #fef9e6;
@@ -488,10 +462,6 @@
             color: #721c24;
             border-left: 5px solid #dc3545;
         }
-        .info {
-            background: #d1ecf1;
-            color: #0c5460;
-        }
         .final-series {
             background: #e2f0e8;
             padding: 20px;
@@ -507,6 +477,24 @@
         }
         button i {
             margin-right: 8px;
+        }
+        .contributors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+        .contributor-card {
+            background: #f0f7ff;
+            border-radius: 10px;
+            padding: 22px 16px;
+            text-align: center;
+        }
+        .feedback-form input, .feedback-form select, .feedback-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 18px;
+            border: 1px solid #cde3f5;
+            border-radius: 6px;
         }
     </style>
 </head>
@@ -549,18 +537,27 @@
         </div>
     </div>
 
-    <!-- AIM PAGE (unchanged) -->
+    <!-- AIM PAGE with new bullet points -->
     <div id="page-aim" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
         <div class="card-page-header"><i class="fas fa-bullseye"></i><div><h2>Aim</h2><p>Objective of harmonic analysis</p></div></div>
         <div class="page-content-box">
-            <h4>🎯 Experiment Objective</h4>
-            <p>To understand <strong>Harmonic Analysis</strong> in Fourier Series: representing any periodic waveform as sum of sine and cosine harmonics. Students will compute Fourier coefficients (a₀, aₙ, bₙ) from discrete data points, visualize the Fourier series approximation, and verify the constant term a₀.</p>
-            <ul style="margin-left:20px;margin-top:12px;"><li>Derive Fourier coefficients from tabulated data.</li><li>Interpret role of fundamental and higher harmonics.</li><li>Validate results using an interactive simulation.</li></ul>
+            <h4>🎯 Experiment Objectives</h4>
+            <ul class="aim-list">
+                <li>Study of periodic mathematical functions using Fourier series</li>
+                <li>Understanding sine and cosine expansions in mathematical analysis</li>
+                <li>Applications of harmonic analysis in pure and applied mathematics</li>
+                <li>Solving differential equations using Fourier methods</li>
+                <li>Development of logical reasoning and analytical problem-solving skills</li>
+                <li>Study of convergence and orthogonality of trigonometric series</li>
+                <li>Mathematical interpretation of frequency and wave behavior</li>
+                <li>Foundation for advanced mathematical topics like Fourier transforms</li>
+                <li>Importance in mathematical modeling, engineering, and scientific research</li>
+            </ul>
         </div>
     </div>
 
-    <!-- THEORY PAGE with YouTube API and timed popup questions -->
+    <!-- THEORY PAGE with YouTube API and correct-answer-only resume -->
     <div id="page-theory" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-book"></i><div><h2>Theory: Fourier Series & Harmonics</h2></div></div>
@@ -573,12 +570,11 @@
             <h4>🎵 Harmonic Concept</h4>
             <p>First harmonic (fundamental) has frequency ω, second harmonic 2ω, etc. Fourier series extracts amplitude of each harmonic from given samples, crucial in signal processing and vibrations.</p>
             
-            <!-- YouTube video container with API -->
             <h4 style="margin-top: 30px;">📺 Watch: Fourier Series (Video Lecture)</h4>
             <div class="video-container" id="video-container">
                 <div id="youtube-player"></div>
             </div>
-            <p><em>Interactive video: Questions will pop up at 15s, 30s, and 60s to test your understanding.</em></p>
+            <p><em>Interactive video: Questions will pop up at 15s, 30s, and 60s. Answer correctly to continue playback.</em></p>
         </div>
     </div>
 
@@ -649,20 +645,63 @@
         <button class="submit-btn" onclick="gradePosttest()"><i class="fas fa-check-double"></i> Submit Posttest</button>
     </div>
 
-    <!-- REFERENCES, CONTRIBUTORS, FEEDBACK (unchanged) -->
-    <div id="page-references" class="content card-page"><button class="back-btn" onclick="goBack()">Back</button><div class="card-page-header"><i class="fas fa-book-open"></i><div><h2>References</h2></div></div><ul class="ref-list"><li><i class="fas fa-book"></i><div><strong>Advanced Engineering Mathematics</strong> - Erwin Kreyszig (Fourier Series chapter)</div></li><li><i class="fas fa-globe"></i><div><a href="#">MIT 18.03: Differential Equations</a></div></li><li><i class="fas fa-globe"></i><div>NPTEL - Mathematics - Fourier Series lectures</div></li></ul></div>
-    <div id="page-contributors" class="content card-page"><button class="back-btn" onclick="goBack()">Back</button><div class="card-page-header"><i class="fas fa-users"></i><div><h2>Contributors</h2></div></div><div class="contributors-grid"><div class="contributor-card"><i class="fas fa-user-tie"></i><h4>Dr. Ashish Joshi</h4><p>Principal Investigator</p></div><div class="contributor-card"><i class="fas fa-chalkboard-teacher"></i><h4>Prof. Snehal Kulkarni</h4><p>Content Expert</p></div><div class="contributor-card"><i class="fas fa-code"></i><h4>Team Virtual Labs</h4><p>Developers</p></div></div></div>
-    <div id="page-feedback" class="content card-page"><button class="back-btn" onclick="goBack()">Back</button><div class="card-page-header"><i class="fas fa-comment-alt"></i><div><h2>Feedback</h2></div></div><div class="feedback-form"><label>Name</label><input type="text" id="fbName"><label>Rating</label><div class="star-rating" id="starRating"><i class="fas fa-star" data-val="1"></i><i class="fas fa-star" data-val="2"></i><i class="fas fa-star" data-val="3"></i><i class="fas fa-star" data-val="4"></i><i class="fas fa-star" data-val="5"></i></div><label>Comments</label><textarea rows="3"></textarea><button class="submit-btn" onclick="alert('Thanks for feedback!')">Submit</button></div></div>
+    <!-- REFERENCES PAGE with table -->
+    <div id="page-references" class="content card-page">
+        <button class="back-btn" onclick="goBack()">Back</button>
+        <div class="card-page-header"><i class="fas fa-book-open"></i><div><h2>References</h2><p>Recommended reading</p></div></div>
+        <table class="ref-table">
+            <thead>
+                <tr><th>Book / Reference</th><th>Author</th><th>Level</th><th>Rating</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Fourier Analysis: An Introduction</td><td>Elias M. Stein & Rami Shakarchi</td><td>Beginner–Intermediate</td><td class="star-rating">⭐ 4.8/5</td></tr>
+                <tr><td>An Introduction To Harmonic Analysis</td><td>Yitzhak Katznelson</td><td>Intermediate</td><td class="star-rating">⭐ 4.7/5</td></tr>
+                <tr><td>A First Course in Harmonic Analysis 2ED (PB 2018)</td><td>Anton Deitmar</td><td>Beginner</td><td class="star-rating">⭐ 4.6/5</td></tr>
+                <tr><td>Harmonic Analysis By Maria Cristina Pereyra</td><td>Maria Cristina Pereyra & Lesley Ward</td><td>Intermediate</td><td class="star-rating">⭐ 4.8/5</td></tr>
+                <tr><td>Harmonic Analysis A Gentle Introduction</td><td>Yitzhak Katznelson</td><td>Beginner</td><td class="star-rating">⭐ 4.5/5</td></tr>
+                <tr><td>Fourier Analysis And Its Applications</td><td>Gerald B. Folland</td><td>Intermediate–Advanced</td><td class="star-rating">⭐ 4.7/5</td></tr>
+                <tr><td>Fourier Series: Texts and Readings in Mathematics</td><td>G.H. Hardy & Rogosinski</td><td>Intermediate</td><td class="star-rating">⭐ 4.6/5</td></tr>
+                <tr><td>Fourier Series and Integral Transforms</td><td>A.K. Jain</td><td>Beginner–Intermediate</td><td class="star-rating">⭐ 4.4/5</td></tr>
+                <tr><td>Fourier Series, Transforms, And Boundary Value Problems</td><td>Brown & Churchill</td><td>Beginner</td><td class="star-rating">⭐ 4.5/5</td></tr>
+                <tr><td>Harmonic Analysis From Fourier To Wavelets</td><td>Pereyra & Ward</td><td>Intermediate–Advanced</td><td class="star-rating">⭐ 4.9/5</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- CONTRIBUTORS & FEEDBACK (unchanged) -->
+    <div id="page-contributors" class="content card-page">
+        <button class="back-btn" onclick="goBack()">Back</button>
+        <div class="card-page-header"><i class="fas fa-users"></i><div><h2>Contributors</h2></div></div>
+        <div class="contributors-grid">
+            <div class="contributor-card"><i class="fas fa-user-tie"></i><h4>Dr. Ashish Joshi</h4><p>Principal Investigator</p></div>
+            <div class="contributor-card"><i class="fas fa-chalkboard-teacher"></i><h4>Prof. Snehal Kulkarni</h4><p>Content Expert</p></div>
+            <div class="contributor-card"><i class="fas fa-code"></i><h4>Team Virtual Labs</h4><p>Developers</p></div>
+        </div>
+    </div>
+    <div id="page-feedback" class="content card-page">
+        <button class="back-btn" onclick="goBack()">Back</button>
+        <div class="card-page-header"><i class="fas fa-comment-alt"></i><div><h2>Feedback</h2></div></div>
+        <div class="feedback-form">
+            <label>Name</label><input type="text" id="fbName">
+            <label>Rating</label>
+            <div class="star-rating" id="starRating">
+                <i class="fas fa-star" data-val="1"></i><i class="fas fa-star" data-val="2"></i>
+                <i class="fas fa-star" data-val="3"></i><i class="fas fa-star" data-val="4"></i><i class="fas fa-star" data-val="5"></i>
+            </div>
+            <label>Comments</label><textarea rows="3"></textarea>
+            <button class="submit-btn" onclick="alert('Thanks for feedback!')">Submit</button>
+        </div>
+    </div>
 </main>
 <footer class="container"><p>Virtual Labs © 2025 | Harmonic Analysis (Fourier Series) | Pimpri Chinchwad College of Engineering</p></footer>
 
 <script>
-    // Navigation and other existing functions
+    // Navigation and other functions
     function openPage(targetId) { document.getElementById('main-dashboard').classList.add('hidden'); document.querySelectorAll('.card-page').forEach(p=>p.classList.remove('active-page')); document.getElementById(targetId).classList.add('active-page'); window.scrollTo({top:0}); }
     function goBack() { document.querySelectorAll('.card-page').forEach(p=>p.classList.remove('active-page')); document.getElementById('main-dashboard').classList.remove('hidden'); window.scrollTo({top:0}); }
     document.querySelectorAll('.section-card').forEach(card=>{ card.addEventListener('click',()=>{ document.querySelectorAll('.section-card').forEach(c=>c.classList.remove('active')); card.classList.add('active'); openPage(card.getAttribute('data-target')); }); });
 
-    // Star rating
+    // Star rating for feedback
     let selectedRating=0; const stars=document.querySelectorAll('#starRating .fa-star');
     stars.forEach(star=>{ star.addEventListener('mouseover',function(){ let v=parseInt(this.dataset.val); stars.forEach((s,i)=>s.classList.toggle('active',i<v)); }); star.addEventListener('mouseout',()=>{ stars.forEach((s,i)=>s.classList.toggle('active',i<selectedRating)); }); star.addEventListener('click',function(){ selectedRating=parseInt(this.dataset.val); stars.forEach((s,i)=>s.classList.toggle('active',i<selectedRating)); }); });
 
@@ -679,14 +718,13 @@
         alert(`Posttest Score: ${score}/5. ${score>=4?"Excellent harmonic analysis skills!":"Revisit harmonic extraction concepts."}`);
     }
 
-    // ========== YOUTUBE API WITH TIMED POPUPS ==========
+    // ========== YOUTUBE API WITH CORRECT-ANSWER-ONLY RESUME ==========
     let player;
     let popupActive = false;
     let popupContainer = null;
-    const questionTimes = [15, 30, 60]; // seconds
+    const questionTimes = [15, 30, 60];
     let asked = { 15: false, 30: false, 60: false };
     
-    // Questions for each time (you can modify)
     const questionBank = {
         15: {
             text: "What does the constant term a₀/2 represent in a Fourier series?",
@@ -705,7 +743,6 @@
         }
     };
 
-    // Load YouTube API
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('youtube-player', {
             height: '100%',
@@ -724,14 +761,10 @@
         });
     }
 
-    function onPlayerReady(event) {
-        // Optional: start playing automatically when theory page becomes active?
-        // We'll let user play manually.
-    }
+    function onPlayerReady(event) { }
 
     function onPlayerStateChange(event) {
         if (event.data == YT.PlayerState.PLAYING) {
-            // Start checking time every 200ms
             if (!timeCheckInterval) startTimeCheck();
         } else {
             if (timeCheckInterval) clearInterval(timeCheckInterval);
@@ -757,12 +790,10 @@
     function showPopup(timeSec) {
         if (popupActive) return;
         popupActive = true;
-        // Pause video
         player.pauseVideo();
         const qData = questionBank[timeSec];
         if (!qData) return;
         
-        // Create popup element
         const container = document.getElementById('video-container');
         if (popupContainer) popupContainer.remove();
         popupContainer = document.createElement('div');
@@ -775,37 +806,31 @@
                     ${qData.options.map((opt, idx) => `<div class="popup-option" data-opt="${idx}">${opt}</div>`).join('')}
                 </div>
                 <div class="popup-feedback" id="popup-feedback"></div>
-                <button class="close-popup" id="close-popup-btn">Continue Watching</button>
             </div>
         `;
         container.appendChild(popupContainer);
         
-        // Attach event to options
         const optionsDivs = popupContainer.querySelectorAll('.popup-option');
         const feedbackDiv = popupContainer.querySelector('#popup-feedback');
         optionsDivs.forEach(optDiv => {
             optDiv.addEventListener('click', () => {
                 const selected = parseInt(optDiv.getAttribute('data-opt'));
                 if (selected === qData.correct) {
-                    feedbackDiv.innerHTML = '✅ Correct! Well done.';
+                    feedbackDiv.innerHTML = '✅ Correct! Resuming video...';
                     feedbackDiv.style.color = 'green';
-                    // Auto close after 2 seconds
+                    // Close popup and resume video after short delay
                     setTimeout(() => {
-                        closePopup();
-                    }, 1500);
+                        closePopupAndResume();
+                    }, 1000);
                 } else {
                     feedbackDiv.innerHTML = '❌ Incorrect. Try again.';
                     feedbackDiv.style.color = 'red';
                 }
             });
         });
-        const closeBtn = popupContainer.querySelector('#close-popup-btn');
-        closeBtn.addEventListener('click', () => {
-            closePopup();
-        });
     }
     
-    function closePopup() {
+    function closePopupAndResume() {
         if (popupContainer) {
             popupContainer.remove();
             popupContainer = null;
@@ -814,7 +839,6 @@
         player.playVideo();
     }
     
-    // Load YouTube API script
     function loadYouTubeAPI() {
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
@@ -822,27 +846,20 @@
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     }
     
-    // When theory page becomes active, we need to ensure the player is initialized
-    // But the API loads globally. We'll also reset asked flags on page show.
     let theoryPageActive = false;
     const observer = new MutationObserver(() => {
         const theoryPage = document.getElementById('page-theory');
         if (theoryPage && theoryPage.classList.contains('active-page')) {
             if (!theoryPageActive) {
                 theoryPageActive = true;
-                // Reset asked flags
                 asked = { 15: false, 30: false, 60: false };
-                if (player && player.getCurrentTime) {
-                    // If player exists, seek to start+12? optional
-                }
             }
         } else {
             if (theoryPageActive) {
                 theoryPageActive = false;
-                // Stop time check when leaving theory page
                 if (timeCheckInterval) clearInterval(timeCheckInterval);
                 if (player && player.pauseVideo) player.pauseVideo();
-                if (popupContainer) closePopup();
+                if (popupContainer) closePopupAndResume();
             }
         }
     });
@@ -851,7 +868,7 @@
     loadYouTubeAPI();
     window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
 
-    // ========== SIMULATION CODE (unchanged from previous working version) ==========
+    // ========== SIMULATION CODE (unchanged) ==========
     let simComputed = { valid: false, xArr: [], yArr: [], L: 0, sum_y: 0, n: 0, A: [], B: [] };
     function approxEq(a,b){ return Math.abs(a-b)<0.01; }
     function to2Dec(val){ return val.toFixed(2); }
