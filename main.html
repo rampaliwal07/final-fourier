@@ -367,7 +367,6 @@
         <div class="content">
             <div class="content-header">
                 <h2>Virtual Lab: Harmonic Analysis (Fourier Series)</h2>
-                <p>Decompose periodic signals into fundamental harmonics — interactive simulation & assessments</p>
             </div>
             <div class="aim-sections">
                 <div class="section-card active" data-target="page-aim"><i class="fas fa-bullseye"></i><h3>Aim</h3><p>Objective</p></div>
@@ -425,17 +424,17 @@
     <!-- SIMULATION PAGE : Harmonic Analysis Calculator + Verification & Detailed Solution -->
     <div id="page-simulation" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
-        <div class="card-page-header"><i class="fas fa-desktop"></i><div><h2>Harmonic Simulator</h2><p>Compute Fourier series & verify a₀</p></div></div>
+        <div class="card-page-header"><i class="fas fa-desktop"></i><div><h2>Harmonic Simulator</h2></p></div></div>
         <div class="harmonic-calc-card">
-            <h3><i class="fas fa-chart-line"></i> Fourier Series Calculator</h3>
+            <h3><i class="fas fa-chart-line"></i> Harmonic Series Calculator</h3>
             <label>Values of x (comma separated):</label>
             <input type="text" id="xInput" placeholder="e.g., 0, 1, 2, 3, 4, 5" value="0,1,2,3,4,5">
             <label>Values of y (comma separated):</label>
             <input type="text" id="yInput" placeholder="e.g., 2,3,4,3,2,1" value="2,3,4,3,2,1">
             <label>Number of Harmonics (n):</label>
             <input type="number" id="nInput" placeholder="e.g., 2" value="2">
-            <button onclick="computeHarmonicSeries()"><i class="fas fa-calculator"></i> Calculate Fourier Series</button>
-            <div id="fourierOutput" class="fourier-output" style="margin-top:15px;"><strong>Fourier expression:</strong> (click calculate)</div>
+            <button onclick="computeHarmonicSeries()"><i class="fas fa-calculator"></i> Calculate Harmonic Series</button>
+            <div id="fourierOutput" class="fourier-output" style="margin-top:15px;"><strong>Harmonic expression:</strong> (click calculate)</div>
         </div>
 
         <!-- Verification Block : Marking & solution -->
