@@ -12,72 +12,218 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        body { background-color: #f8f9fa; color: #333; line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        body {
+            background-color: #f0f2f5;
+            color: #1a2a3a;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Header */
         header {
-            background: linear-gradient(135deg, #2c3e50, #1a2530);
+            background: linear-gradient(135deg, #1e2a3a, #0f1720);
             color: white;
             padding: 15px 0;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        .header-container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-        .logo-section { display: flex; align-items: center; gap: 25px; flex-wrap: wrap; }
-        .pcce-logo-container { display: flex; align-items: center; gap: 15px; padding-right: 25px; border-right: 2px solid rgba(255,255,255,0.2); }
-        .pcce-logo-img { width: 60px; height: 60px; object-fit: contain; border-radius: 8px; background: white; padding: 5px; }
-        .pcce-logo-text .main { font-size: 20px; font-weight: 700; color: #fff; }
-        .pcce-logo-text .sub { font-size: 12px; color: #ecf0f1; }
-        .virtual-labs-logo { display: flex; align-items: center; gap: 15px; }
-        .virtual-labs-logo i { font-size: 32px; color: #3498db; }
-        .virtual-labs-logo h1 { font-size: 26px; font-weight: 600; }
-        .virtual-labs-logo span { color: #3498db; }
-        .user-info { display: flex; align-items: center; gap: 10px; }
-        .content { flex: 1; background: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); padding: 30px; min-height: 600px; }
-        .content-header { margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
-        .content-header h2 { font-size: 28px; color: #2c3e50; font-weight: 600; }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        .pcce-logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-right: 25px;
+            border-right: 2px solid rgba(255,255,255,0.2);
+        }
+        .pcce-logo-img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: white;
+            padding: 5px;
+        }
+        .pcce-logo-text .main {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .pcce-logo-text .sub {
+            font-size: 12px;
+            color: #b0c4de;
+        }
+        .virtual-labs-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .virtual-labs-logo i {
+            font-size: 32px;
+            color: #4aa3ff;
+        }
+        .virtual-labs-logo h1 {
+            font-size: 26px;
+            font-weight: 600;
+        }
+        .virtual-labs-logo span {
+            color: #4aa3ff;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 15px;
+            border-radius: 40px;
+        }
+        /* Main content */
+        .content {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            padding: 30px;
+            min-height: 600px;
+        }
+        .content-header h2 {
+            font-size: 28px;
+            color: #1e2a3a;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
         .aim-sections {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 20px;
             margin-bottom: 40px;
         }
         .section-card {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 20px 12px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
+            transition: all 0.25s ease;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
-        .section-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); border-color: #3498db; }
-        .section-card.active { background-color: #e8f4fc; border-color: #3498db; }
-        .section-card i { font-size: 32px; color: #3498db; margin-bottom: 15px; }
-        .section-card h3 { font-size: 18px; margin-bottom: 8px; color: #2c3e50; }
-        footer { margin-top: 40px; padding: 20px 0; text-align: center; color: #7f8c8d; border-top: 1px solid #eee; }
-        .card-page { display: none; animation: fadeInPage 0.3s ease; }
-        .card-page.active-page { display: block; }
-        #main-dashboard.hidden { display: none; }
-        @keyframes fadeInPage { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.08);
+            border-color: #4aa3ff;
+        }
+        .section-card.active {
+            background: #eef4ff;
+            border-color: #4aa3ff;
+            color: #1e2a3a;
+        }
+        .section-card i {
+            font-size: 32px;
+            color: #4aa3ff;
+            margin-bottom: 12px;
+        }
+        .section-card h3 {
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            color: #5a6e7c;
+            border-top: 1px solid #e2e8f0;
+        }
+        /* Page transitions */
+        .card-page {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+        .card-page.active-page {
+            display: block;
+        }
+        #main-dashboard.hidden {
+            display: none;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         .back-btn {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: linear-gradient(to right, #2c3e50, #3d566e);
-            color: #fff;
+            background: #2c3e50;
+            color: white;
             border: none;
-            padding: 10px 22px;
-            font-size: 14px;
+            padding: 8px 20px;
             font-weight: 600;
-            border-radius: 6px;
+            border-radius: 40px;
             cursor: pointer;
             margin-bottom: 24px;
+            transition: 0.2s;
         }
-        .back-btn:hover { background: linear-gradient(to right, #1a252f, #2c3e50); transform: translateX(-3px); }
-        .card-page-header { display: flex; align-items: center; gap: 14px; padding-bottom: 18px; margin-bottom: 24px; border-bottom: 2px solid #e8f4fc; }
-        .card-page-header i { font-size: 36px; color: #3498db; }
-        .page-content-box { background: #f8f9fa; border-radius: 8px; padding: 28px; border-left: 5px solid #3498db; }
-        .video-container { position: relative; width: 100%; margin: 25px 0 15px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        #youtube-player { width: 100%; aspect-ratio: 16/9; background: #000; }
+        .back-btn:hover {
+            background: #1a2a3a;
+            transform: translateX(-3px);
+        }
+        .card-page-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #eef2ff;
+        }
+        .card-page-header i {
+            font-size: 36px;
+            color: #4aa3ff;
+        }
+        /* Theory content */
+        .theory-math {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 16px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+            overflow-x: auto;
+        }
+        .theory-section {
+            margin-bottom: 28px;
+        }
+        .theory-section h4 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #1e2a3a;
+        }
+        /* Video container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            margin: 25px 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        #youtube-player {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+        }
+        /* Popup quiz */
         .video-popup {
             position: absolute;
             top: 0;
@@ -90,60 +236,211 @@
             justify-content: center;
             z-index: 1000;
             backdrop-filter: blur(6px);
-            border-radius: 12px;
+            border-radius: 20px;
         }
         .popup-content {
             background: white;
             padding: 30px;
-            border-radius: 20px;
+            border-radius: 28px;
             max-width: 450px;
-            width: 80%;
+            width: 85%;
             text-align: center;
-            animation: fadeInUp 0.3s ease;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.3);
         }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .popup-content h4 { font-size: 1.5rem; margin-bottom: 20px; color: #2c3e50; }
-        .popup-content .question { font-size: 1.2rem; margin-bottom: 20px; font-weight: 500; }
-        .popup-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
-        .popup-option { background: #f0f7ff; padding: 12px; border-radius: 12px; cursor: pointer; border: 1px solid #cfe2f0; transition: 0.2s; }
-        .popup-option:hover { background: #e2edf7; transform: scale(1.02); }
-        .popup-feedback { font-weight: bold; margin-top: 10px; }
-        .num-question { background: #fff; border: 1px solid #dce8f5; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px; }
-        .difficulty { display: inline-block; font-size: 0.75rem; font-weight: bold; padding: 3px 8px; border-radius: 20px; margin-left: 15px; vertical-align: middle; }
-        .difficulty.easy { background: #d4edda; color: #155724; }
-        .difficulty.medium { background: #fff3cd; color: #856404; }
-        .difficulty.hard { background: #f8d7da; color: #721c24; }
-        .num-answer { display: flex; align-items: center; gap: 15px; margin-top: 15px; flex-wrap: wrap; }
-        .num-answer input { padding: 8px 12px; border: 1px solid #ccc; border-radius: 6px; width: 180px; }
-        .num-answer button { background: #28a745; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; }
-        .num-feedback { margin-top: 10px; font-weight: 500; }
-        .submit-all { margin-top: 20px; background: #3498db; }
-        .ref-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        .ref-table th, .ref-table td { border: 1px solid #ddd; padding: 12px; text-align: left; vertical-align: top; }
-        .ref-table th { background-color: #2c3e50; color: white; }
-        .star-rating { color: #f39c12; letter-spacing: 2px; }
-        .aim-list { list-style-type: disc; margin-left: 25px; line-height: 1.8; }
-        .sim-input-group { background: #fef9e6; padding: 20px; border-radius: 12px; margin-bottom: 25px; }
-        .sim-input-group label { font-weight: 600; display: block; margin-top: 12px; }
-        .sim-input-group input, .sim-input-group select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 6px; font-family: monospace; }
-        .math-display { font-family: monospace; font-size: 1.2rem; background: #f0f4fa; padding: 12px; border-radius: 8px; overflow-x: auto; }
-        .verify-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 12px 0; padding: 8px; background: #f8f9ff; border-radius: 10px; }
-        .verify-row label { min-width: 160px; font-weight: 600; }
-        .verify-row input { flex: 1; min-width: 150px; padding: 8px; border: 1px solid #bdd4e9; border-radius: 5px; }
-        .verify-row button { background-color: #17a2b8; border: none; color: white; padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; }
-        .check-feedback { font-size: 0.9rem; margin-left: 8px; font-weight: 500; }
-        .harmonic-group { border: 1px solid #cfe2f0; border-radius: 12px; margin: 15px 0; padding: 12px; background: #fff; }
-        .harmonic-title { font-weight: bold; background: #eef3fc; display: inline-block; padding: 4px 14px; border-radius: 20px; margin-bottom: 10px; }
-        .status-msg { padding: 12px; border-radius: 8px; margin: 15px 0; font-weight: 500; }
-        .success { background: #d4edda; color: #155724; border-left: 5px solid #28a745; }
-        .error { background: #f8d7da; color: #721c24; border-left: 5px solid #dc3545; }
-        .final-series { background: #e2f0e8; padding: 20px; border-radius: 14px; margin-top: 20px; font-size: 1.25rem; }
-        .btn-secondary { background: #6c757d; }
-        .contributors-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 20px; }
-        .contributor-card { background: #f0f7ff; border-radius: 10px; padding: 22px 16px; text-align: center; }
-        .feedback-form input, .feedback-form select, .feedback-form textarea { width: 100%; padding: 10px; margin-bottom: 18px; border: 1px solid #cde3f5; border-radius: 6px; }
-        button i { margin-right: 8px; }
-        @media (max-width: 768px) { .header-container { flex-direction: column; text-align: center; } .logo-section { flex-direction: column; } .pcce-logo-container { border-right: none; } }
+        .popup-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .popup-option {
+            background: #f0f7ff;
+            padding: 12px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid #cfe2f0;
+        }
+        .popup-option:hover {
+            background: #e2edf7;
+            transform: scale(1.02);
+        }
+        /* Numerical questions (Pretest/Posttest) */
+        .num-question {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #eef2ff;
+            transition: 0.2s;
+        }
+        .num-question:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        .difficulty {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-radius: 30px;
+            margin-left: 12px;
+            vertical-align: middle;
+        }
+        .difficulty.easy { background: #d1fae5; color: #065f46; }
+        .difficulty.medium { background: #fed7aa; color: #92400e; }
+        .difficulty.hard { background: #fee2e2; color: #991b1b; }
+        .num-answer {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .num-answer input {
+            padding: 12px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 60px;
+            width: 220px;
+            font-size: 0.95rem;
+        }
+        .num-answer button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .num-answer button:hover {
+            background: #059669;
+        }
+        .submit-all {
+            background: #3b82f6;
+            margin-top: 20px;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 700;
+        }
+        /* Simulation cards */
+        .sim-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+            border: 1px solid #eef2ff;
+        }
+        .sim-input-group label {
+            font-weight: 600;
+            display: block;
+            margin: 15px 0 6px;
+            color: #1e2a3a;
+        }
+        .sim-input-group input, .sim-input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 60px;
+            background: #fff;
+        }
+        .verify-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin: 16px 0;
+            background: #f9fafc;
+            padding: 12px 18px;
+            border-radius: 80px;
+        }
+        .verify-row label {
+            min-width: 170px;
+            font-weight: 600;
+        }
+        .verify-row input {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 40px;
+            border: 1px solid #cbd5e1;
+        }
+        .verify-row button {
+            background: #3b82f6;
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+        .harmonic-group {
+            background: #fefce8;
+            border-radius: 20px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+        .harmonic-title {
+            font-weight: bold;
+            background: #e0f2fe;
+            display: inline-block;
+            padding: 4px 18px;
+            border-radius: 40px;
+            margin-bottom: 12px;
+        }
+        .final-series {
+            background: #e0f2fe;
+            border-radius: 20px;
+            padding: 20px;
+            font-size: 1.2rem;
+        }
+        .status-msg {
+            padding: 14px;
+            border-radius: 60px;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+        /* References table */
+        .ref-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .ref-table th, .ref-table td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+        }
+        .ref-table th {
+            background: #1e2a3a;
+            color: white;
+        }
+        .contributors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+            gap: 24px;
+        }
+        .contributor-card {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 24px;
+            text-align: center;
+        }
+        .feedback-form input, .feedback-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border-radius: 60px;
+            border: 1px solid #cbd5e1;
+        }
+        button i {
+            margin-right: 8px;
+        }
+        @media (max-width: 700px) {
+            .verify-row { flex-direction: column; align-items: stretch; border-radius: 20px; }
+            .verify-row button { align-self: flex-start; }
+        }
     </style>
 </head>
 <body>
@@ -162,7 +459,7 @@
                 <h1>Harmonic <span>Analysis</span></h1>
             </div>
         </div>
-        <div class="user-info"><i class="fas fa-user-circle"></i><span>Student, Fourier Explorer</span></div>
+        <div class="user-info"><i class="fas fa-user-graduate"></i><span>Fourier Explorer</span></div>
     </div>
 </header>
 
@@ -171,13 +468,14 @@
         <div class="content">
             <div class="content-header">
                 <h2>Virtual Lab: Harmonic Analysis (Fourier Series)</h2>
+                <p>Interactive learning of Fourier series & harmonic decomposition</p>
             </div>
             <div class="aim-sections">
                 <div class="section-card active" data-target="page-aim"><i class="fas fa-bullseye"></i><h3>Aim</h3><p>Objective</p></div>
-                <div class="section-card" data-target="page-theory"><i class="fas fa-book"></i><h3>Theory</h3><p>Fourier formulas</p></div>
-                <div class="section-card" data-target="page-pretest"><i class="fas fa-question-circle"></i><h3>Pretest</h3><p>Numerical & difficulty</p></div>
-                <div class="section-card" data-target="page-simulation"><i class="fas fa-desktop"></i><h3>Simulation</h3><p>Harmonic calculator & verification</p></div>
-                <div class="section-card" data-target="page-posttest"><i class="fas fa-clipboard-check"></i><h3>Posttest</h3><p>Numerical & difficulty</p></div>
+                <div class="section-card" data-target="page-theory"><i class="fas fa-book"></i><h3>Theory</h3><p>Fourier & Harmonics</p></div>
+                <div class="section-card" data-target="page-pretest"><i class="fas fa-question-circle"></i><h3>Pretest</h3><p>Numerical</p></div>
+                <div class="section-card" data-target="page-simulation"><i class="fas fa-desktop"></i><h3>Simulation</h3><p>Calculator & Verify</p></div>
+                <div class="section-card" data-target="page-posttest"><i class="fas fa-clipboard-check"></i><h3>Posttest</h3><p>Numerical</p></div>
                 <div class="section-card" data-target="page-references"><i class="fas fa-book-open"></i><h3>References</h3><p>Resources</p></div>
                 <div class="section-card" data-target="page-contributors"><i class="fas fa-users"></i><h3>Contributors</h3><p>Team</p></div>
                 <div class="section-card" data-target="page-feedback"><i class="fas fa-comment-alt"></i><h3>Feedback</h3><p>Rate us</p></div>
@@ -187,127 +485,156 @@
 
     <!-- AIM PAGE -->
     <div id="page-aim" class="content card-page">
-        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
-        <div class="card-page-header"><i class="fas fa-bullseye"></i><div><h2>Aim</h2><p>Objective of harmonic analysis</p></div></div>
+        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Dashboard</button>
+        <div class="card-page-header"><i class="fas fa-bullseye"></i><div><h2>Aim</h2><p>Learning objectives</p></div></div>
         <div class="page-content-box">
             <h4>🎯 Experiment Objectives</h4>
             <ul class="aim-list">
-                <li>Study of periodic mathematical functions using Fourier series</li>
-                <li>Understanding sine and cosine expansions in mathematical analysis</li>
-                <li>Applications of harmonic analysis in pure and applied mathematics</li>
-                <li>Solving differential equations using Fourier methods</li>
-                <li>Development of logical reasoning and analytical problem-solving skills</li>
-                <li>Study of convergence and orthogonality of trigonometric series</li>
-                <li>Mathematical interpretation of frequency and wave behavior</li>
-                <li>Foundation for advanced mathematical topics like Fourier transforms</li>
-                <li>Importance in mathematical modeling, engineering, and scientific research</li>
+                <li>Study periodic functions using Fourier series</li>
+                <li>Sine and cosine expansions in mathematical analysis</li>
+                <li>Applications of harmonic analysis in pure & applied mathematics</li>
+                <li>Solving differential equations with Fourier methods</li>
+                <li>Develop analytical problem-solving skills</li>
+                <li>Convergence and orthogonality of trigonometric series</li>
+                <li>Mathematical interpretation of frequency and wave behaviour</li>
+                <li>Foundation for Fourier transforms</li>
+                <li>Importance in mathematical modeling, engineering & research</li>
             </ul>
         </div>
     </div>
 
-    <!-- THEORY PAGE with interactive video -->
+    <!-- THEORY PAGE with new comprehensive content -->
     <div id="page-theory" class="content card-page">
-        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
-        <div class="card-page-header"><i class="fas fa-book"></i><div><h2>Theory: Fourier Series & Harmonics</h2></div></div>
+        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Dashboard</button>
+        <div class="card-page-header"><i class="fas fa-book"></i><div><h2>Theory: Harmonic Analysis</h2></div></div>
         <div class="page-content-box">
-            <h4>📐 Fourier Series Representation</h4>
-            <p>For a periodic function f(x) with period 2L: <strong>f(x) = a₀/2 + Σ[ aₙ cos(nπx/L) + bₙ sin(nπx/L) ]</strong> (n=1 to ∞).</p>
-            <h4>📏 Fourier Coefficients</h4>
-            <p>a₀ = (1/L)∫ f(x) dx, aₙ = (1/L)∫ f(x) cos(nπx/L) dx, bₙ = (1/L)∫ f(x) sin(nπx/L) dx.<br>For discrete data: a₀ ≈ (2∑y)/(4L), aₙ ≈ (2/L)∑ y·cos(nπx/L), bₙ ≈ (2/L)∑ y·sin(nπx/L).</p>
-            <h4>🎵 Harmonic Concept</h4>
-            <p>First harmonic (fundamental) frequency ω, second 2ω, etc. Fourier series extracts harmonic amplitudes.</p>
-            <h4>📺 Watch: Fourier Series (Video Lecture)</h4>
-            <div class="video-container" id="video-container"><div id="youtube-player"></div></div>
-            <p><em>Interactive: Questions at 15s, 30s, 60s – answer correctly to resume playback.</em></p>
+            <div class="theory-section">
+                <h4>📈 What is Harmonic Analysis?</h4>
+                <p>Harmonic analysis is the process of expressing a periodic function as the sum of simple sine and cosine waves called <strong>harmonics</strong>. It helps to study the frequency, amplitude, and phase of periodic signals. The fundamental harmonic has the lowest frequency, while higher harmonics are integral multiples of the fundamental frequency.</p>
+            </div>
+            <div class="theory-section">
+                <h4>📐 Fourier Series Representation</h4>
+                <p>A periodic function f(x) with period 2π can be represented as:</p>
+                <div class="theory-math">
+                    f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \left( a_n \cos(nx) + b_n \sin(nx) \right)
+                </div>
+                <p>Where:</p>
+                <ul style="margin-left: 25px; margin-top: 8px;">
+                    <li><strong>a₀</strong> = average value of the function (DC component)</li>
+                    <li><strong>aₙ</strong> = cosine coefficients (even part)</li>
+                    <li><strong>bₙ</strong> = sine coefficients (odd part)</li>
+                    <li><strong>n</strong> = harmonic number</li>
+                </ul>
+            </div>
+            <div class="theory-section">
+                <h4>🧮 Harmonic Coefficients (Euler–Fourier formulas)</h4>
+                <div class="theory-math">
+                    a_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(nx) \, dx, \quad 
+                    b_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin(nx) \, dx
+                </div>
+                <p>For discrete data (numerical harmonic analysis): <br>
+                a₀ ≈ (2∑y)/(4L), aₙ ≈ (2/L)∑ y·cos(nπx/L), bₙ ≈ (2/L)∑ y·sin(nπx/L).</p>
+            </div>
+            <div class="theory-section">
+                <h4>🎵 Applications</h4>
+                <p>Harmonic analysis is widely used in signal processing, sound analysis, electrical systems, communication engineering, and solving partial differential equations. It simplifies complex waveforms into manageable frequency components.</p>
+            </div>
+
+            <h4 style="margin-top: 30px;">📺 Watch: Fourier Series (Interactive)</h4>
+            <div class="video-container" id="video-container">
+                <div id="youtube-player"></div>
+            </div>
+            <p><em>⏱️ Questions appear at 15s, 30s, 60s – answer correctly to continue playback.</em></p>
         </div>
     </div>
 
-    <!-- PRETEST (numerical questions) -->
+    <!-- PRETEST (numerical, enhanced design) -->
     <div id="page-pretest" class="content card-page">
-        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
-        <div class="card-page-header"><i class="fas fa-question-circle"></i><div><h2>Pretest</h2><p>Numerical harmonic analysis problems</p></div></div>
+        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Dashboard</button>
+        <div class="card-page-header"><i class="fas fa-question-circle"></i><div><h2>Pretest</h2><p>Numerical harmonic problems</p></div></div>
         <div id="pretest-questions"></div>
-        <button class="submit-btn submit-all" id="submitPretestAll"><i class="fas fa-check-double"></i> Submit All Pretest Answers</button>
+        <button class="submit-all" id="submitPretestAll"><i class="fas fa-check-double"></i> Submit All Pretest Answers</button>
     </div>
 
-    <!-- SIMULATION PAGE -->
+    <!-- SIMULATION PAGE (redesigned verification/compute tabs) -->
     <div id="page-simulation" class="content card-page">
-        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
-        <div class="card-page-header"><i class="fas fa-desktop"></i><div><h2>Harmonic Analysis Simulator</h2><p>Enter data, compute L, verify values</p></div></div>
-        <div class="sim-input-group">
-            <h3><i class="fas fa-chart-line"></i> Input Data</h3>
-            <label>x values (comma separated):</label>
-            <input type="text" id="simX" value="0,1,2,3,4,5">
-            <label>y values (comma separated):</label>
-            <input type="text" id="simY" value="2,3,4,3,2,1">
-            <label>Number of harmonics (n):</label>
-            <input type="number" id="simN" value="2" min="1" max="6">
-            <button id="computeDataBtn" class="submit-btn" style="margin-top:20px;"><i class="fas fa-sync-alt"></i> Compute Data</button>
+        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Dashboard</button>
+        <div class="card-page-header"><i class="fas fa-desktop"></i><div><h2>Harmonic Simulator</h2><p>Compute Fourier coefficients & verify</p></div></div>
+        <div class="sim-card">
+            <h3><i class="fas fa-calculator"></i> Input Data</h3>
+            <div class="sim-input-group">
+                <label>x values (comma separated):</label>
+                <input type="text" id="simX" value="0,1,2,3,4,5">
+                <label>y values (comma separated):</label>
+                <input type="text" id="simY" value="2,3,4,3,2,1">
+                <label>Number of harmonics (n):</label>
+                <input type="number" id="simN" value="2" min="1" max="6">
+                <button id="computeDataBtn" class="submit-btn" style="margin-top:20px; background:#3b82f6; border-radius:60px;"><i class="fas fa-sync-alt"></i> Compute L, Aₙ, Bₙ</button>
+            </div>
         </div>
-        <div id="computedInfo" class="math-display" style="display:none;"></div>
-        <div id="verificationArea" style="margin-top:20px; background:#fff; border-radius:16px; padding:16px; border:1px solid #d4e3f0;">
-            <h3><i class="fas fa-check-double"></i> Verification Task</h3>
-            <p>Enter each value (approx 2 decimals) and click <strong>Check</strong>.</p>
+        <div id="computedInfo" class="math-display" style="display:none; margin-bottom:20px;"></div>
+        <div class="sim-card">
+            <h3><i class="fas fa-check-circle"></i> Verification Task</h3>
+            <p>Enter the computed values (2‑decimal accuracy) and check each:</p>
             <div id="verificationForm">
                 <div class="verify-row" id="row-sumY">
-                    <label>∑ y (sum of y):</label>
+                    <label>∑ y (sum of y values):</label>
                     <input type="text" id="verifySumY" placeholder="e.g., 15.00">
-                    <button class="check-single" data-type="sumY"><i class="fas fa-check"></i> Check</button>
+                    <button class="check-single-sim" data-type="sumY"><i class="fas fa-check"></i> Check</button>
                     <span class="check-feedback" id="fb-sumY"></span>
                 </div>
                 <div id="harmonicVerifyFields"></div>
             </div>
-            <button id="verifyAllBtn" class="submit-btn" style="background:#28a745; margin-top:10px;"><i class="fas fa-vote-yea"></i> Verify All Answers</button>
+            <button id="verifyAllBtn" class="submit-btn" style="background:#10b981; border-radius:60px; margin-top:12px;"><i class="fas fa-vote-yea"></i> Verify All & Show Fourier Series</button>
             <div id="verifyStatus" class="status-msg" style="display:none;"></div>
             <div id="finalFourierDisplay" style="display:none;" class="final-series"></div>
         </div>
-        <button id="detailedSolutionBtn" class="submit-btn btn-secondary" style="margin-top:20px;"><i class="fas fa-lightbulb"></i> Show Detailed Solution</button>
-        <div id="detailedSolutionDiv" style="margin-top:20px; display:none; background:#fef7e0; padding:20px; border-radius:12px;"></div>
+        <button id="detailedSolutionBtn" class="submit-btn btn-secondary" style="margin-top:15px; border-radius:60px;"><i class="fas fa-lightbulb"></i> Detailed Solution</button>
+        <div id="detailedSolutionDiv" style="margin-top:20px; display:none; background:#fefce8; padding:20px; border-radius:24px;"></div>
     </div>
 
-    <!-- POSTTEST (numerical questions) -->
+    <!-- POSTTEST (numerical, enhanced) -->
     <div id="page-posttest" class="content card-page">
-        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
-        <div class="card-page-header"><i class="fas fa-clipboard-check"></i><div><h2>Posttest</h2><p>Numerical harmonic analysis problems</p></div></div>
+        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Dashboard</button>
+        <div class="card-page-header"><i class="fas fa-clipboard-check"></i><div><h2>Posttest</h2><p>Numerical harmonic problems</p></div></div>
         <div id="posttest-questions"></div>
-        <button class="submit-btn submit-all" id="submitPosttestAll"><i class="fas fa-check-double"></i> Submit All Posttest Answers</button>
+        <button class="submit-all" id="submitPosttestAll"><i class="fas fa-check-double"></i> Submit All Posttest Answers</button>
     </div>
 
-    <!-- REFERENCES PAGE -->
+    <!-- REFERENCES (unchanged) -->
     <div id="page-references" class="content card-page">
-        <button class="back-btn" onclick="goBack()">Back</button>
-        <div class="card-page-header"><i class="fas fa-book-open"></i><div><h2>References</h2><p>Recommended reading</p></div></div>
+        <button class="back-btn" onclick="goBack()">Dashboard</button>
+        <div class="card-page-header"><i class="fas fa-book-open"></i><div><h2>References</h2></div></div>
         <table class="ref-table">
-            <thead><tr><th>Book / Reference</th><th>Author</th><th>Level</th><th>Rating</th></tr></thead>
+            <thead><tr><th>Book</th><th>Author</th><th>Level</th><th>Rating</th></tr></thead>
             <tbody>
-                <tr><td>Fourier Analysis: An Introduction</td><td>Elias M. Stein & Rami Shakarchi</td><td>Beginner–Intermediate</td><td class="star-rating">⭐ 4.8/5</td></tr>
-                <tr><td>An Introduction To Harmonic Analysis</td><td>Yitzhak Katznelson</td><td>Intermediate</td><td class="star-rating">⭐ 4.7/5</td></tr>
-                <tr><td>A First Course in Harmonic Analysis 2ED</td><td>Anton Deitmar</td><td>Beginner</td><td class="star-rating">⭐ 4.6/5</td></tr>
-                <tr><td>Harmonic Analysis By Maria Cristina Pereyra</td><td>Pereyra & Ward</td><td>Intermediate</td><td class="star-rating">⭐ 4.8/5</td></tr>
-                <tr><td>Harmonic Analysis A Gentle Introduction</td><td>Yitzhak Katznelson</td><td>Beginner</td><td class="star-rating">⭐ 4.5/5</td></tr>
-                <tr><td>Fourier Analysis And Its Applications</td><td>Gerald B. Folland</td><td>Intermediate–Advanced</td><td class="star-rating">⭐ 4.7/5</td></tr>
-                <tr><td>Fourier Series: Texts and Readings</td><td>G.H. Hardy & Rogosinski</td><td>Intermediate</td><td class="star-rating">⭐ 4.6/5</td></tr>
-                <tr><td>Fourier Series and Integral Transforms</td><td>A.K. Jain</td><td>Beginner–Intermediate</td><td class="star-rating">⭐ 4.4/5</td></tr>
-                <tr><td>Fourier Series, Transforms, And Boundary Value Problems</td><td>Brown & Churchill</td><td>Beginner</td><td class="star-rating">⭐ 4.5/5</td></tr>
-                <tr><td>Harmonic Analysis From Fourier To Wavelets</td><td>Pereyra & Ward</td><td>Intermediate–Advanced</td><td class="star-rating">⭐ 4.9/5</td></tr>
+                <tr><td>Fourier Analysis: An Introduction</td><td>Stein & Shakarchi</td><td>Beginner–Intermediate</td><td class="star-rating">⭐ 4.8/5</td></tr>
+                <tr><td>An Introduction To Harmonic Analysis</td><td>Yitzhak Katznelson</td><td>Intermediate</td><td>⭐ 4.7/5</td></tr>
+                <tr><td>A First Course in Harmonic Analysis 2ED</td><td>Anton Deitmar</td><td>Beginner</td><td>⭐ 4.6/5</td></tr>
+                <tr><td>Harmonic Analysis (Pereyra & Ward)</td><td>Pereyra & Ward</td><td>Intermediate</td><td>⭐ 4.8/5</td></tr>
+                <tr><td>Fourier Analysis And Its Applications</td><td>Gerald B. Folland</td><td>Advanced</td><td>⭐ 4.7/5</td></tr>
+                <tr><td>Fourier Series: Texts and Readings</td><td>Hardy & Rogosinski</td><td>Intermediate</td><td>⭐ 4.6/5</td></tr>
+                <tr><td>Fourier Series and Integral Transforms</td><td>A.K. Jain</td><td>Beginner</td><td>⭐ 4.4/5</td></tr>
+                <tr><td>Fourier Series, Transforms, And Boundary Value Problems</td><td>Brown & Churchill</td><td>Beginner</td><td>⭐ 4.5/5</td></tr>
+                <tr><td>Harmonic Analysis From Fourier To Wavelets</td><td>Pereyra & Ward</td><td>Advanced</td><td>⭐ 4.9/5</td></tr>
             </tbody>
         </table>
     </div>
 
-    <!-- CONTRIBUTORS PAGE -->
+    <!-- CONTRIBUTORS -->
     <div id="page-contributors" class="content card-page">
-        <button class="back-btn" onclick="goBack()">Back</button>
+        <button class="back-btn" onclick="goBack()">Dashboard</button>
         <div class="card-page-header"><i class="fas fa-users"></i><div><h2>Contributors</h2></div></div>
         <div class="contributors-grid">
             <div class="contributor-card"><i class="fas fa-user-tie"></i><h4>Mr. Ganesh Tarte</h4><p>Project Lead</p></div>
-            <div class="contributor-card"><i class="fas fa-chalkboard-teacher"></i><h4>Devendra Sonawane</h4><p>Mathematics and Simulation</p></div>
+            <div class="contributor-card"><i class="fas fa-chalkboard-teacher"></i><h4>Devendra Sonawane</h4><p>Mathematics & Simulation</p></div>
             <div class="contributor-card"><i class="fas fa-code"></i><h4>Ram Paliwal</h4><p>Full Stack Developer</p></div>
         </div>
     </div>
 
-    <!-- FEEDBACK PAGE -->
+    <!-- FEEDBACK -->
     <div id="page-feedback" class="content card-page">
-        <button class="back-btn" onclick="goBack()">Back</button>
+        <button class="back-btn" onclick="goBack()">Dashboard</button>
         <div class="card-page-header"><i class="fas fa-comment-alt"></i><div><h2>Feedback</h2></div></div>
         <div class="feedback-form">
             <label>Name</label><input type="text" id="fbName">
@@ -320,7 +647,7 @@
 <footer class="container"><p>Virtual Labs © 2025 | Harmonic Analysis (Fourier Series) | Pimpri Chinchwad College of Engineering</p></footer>
 
 <script>
-    // ----- Navigation -----
+    // Navigation
     function openPage(targetId) {
         document.getElementById('main-dashboard').classList.add('hidden');
         document.querySelectorAll('.card-page').forEach(p => p.classList.remove('active-page'));
@@ -340,24 +667,16 @@
         });
     });
 
-    // ----- Star rating for feedback -----
+    // Star rating
     let selectedRating = 0;
     const stars = document.querySelectorAll('#starRating .fa-star');
     stars.forEach(star => {
-        star.addEventListener('mouseover', function() {
-            let v = parseInt(this.dataset.val);
-            stars.forEach((s,i) => s.classList.toggle('active', i < v));
-        });
-        star.addEventListener('mouseout', () => {
-            stars.forEach((s,i) => s.classList.toggle('active', i < selectedRating));
-        });
-        star.addEventListener('click', function() {
-            selectedRating = parseInt(this.dataset.val);
-            stars.forEach((s,i) => s.classList.toggle('active', i < selectedRating));
-        });
+        star.addEventListener('mouseover', function() { let v = parseInt(this.dataset.val); stars.forEach((s,i) => s.classList.toggle('active', i < v)); });
+        star.addEventListener('mouseout', () => { stars.forEach((s,i) => s.classList.toggle('active', i < selectedRating)); });
+        star.addEventListener('click', function() { selectedRating = parseInt(this.dataset.val); stars.forEach((s,i) => s.classList.toggle('active', i < selectedRating)); });
     });
 
-    // ----- Helper for Fourier computations (used in pretest/posttest & simulation) -----
+    // Helper Fourier computation
     function computeFourierForData(xArr, yArr, n=1) {
         if (!xArr || !yArr || xArr.length !== yArr.length) return null;
         let L;
@@ -366,18 +685,17 @@
         const sum_y = yArr.reduce((a,b) => a+b, 0);
         let A = [], B = [];
         for (let i=1; i<=n; i++) {
-            let sumCos = 0, sumSin = 0;
+            let sumCos=0, sumSin=0;
             for (let j=0; j<xArr.length; j++) {
                 sumCos += yArr[j] * Math.cos(i * Math.PI * xArr[j] / L);
                 sumSin += yArr[j] * Math.sin(i * Math.PI * xArr[j] / L);
             }
             A.push(sumCos); B.push(sumSin);
         }
-        const a0_const = (sum_y * L) / 2;
-        return { L, sum_y, A, B, a0_const };
+        return { L, sum_y, A, B, a0_const: (sum_y * L)/2 };
     }
 
-    // ----- Pretest & Posttest numerical questions data -----
+    // Pretest & Posttest data
     const pretestQuestions = [
         { id:0, x:[0,1,2,3,4], y:[2,3,4,3,2], ask:"sum_y", label:"∑ y (sum of y values)", difficulty:"Easy", tol:0.01 },
         { id:1, x:[0,1,2,3,4,5], y:[1,2,3,4,3,2], ask:"L", label:"L (half period)", difficulty:"Medium", tol:0.01 },
@@ -386,11 +704,11 @@
         { id:4, x:[0,1,2,3,4], y:[2,4,6,4,2], ask:"a0_const", label:"Constant term in Fourier series", difficulty:"Medium", tol:0.01 }
     ];
     const posttestQuestions = [
-        { id:0, x:[0,1,2,3,4], y:[3,5,7,5,3], ask:"sum_y", label:"∑ y (sum of y values)", difficulty:"Easy", tol:0.01 },
+        { id:0, x:[0,1,2,3,4], y:[3,5,7,5,3], ask:"sum_y", label:"∑ y", difficulty:"Easy", tol:0.01 },
         { id:1, x:[0,1,2,3,4,5,6], y:[1,2,3,4,5,4,3], ask:"L", label:"L (half period)", difficulty:"Medium", tol:0.01 },
-        { id:2, x:[0,1,2,3], y:[2,2,2,2], ask:"sum_y", label:"∑ y (sum of y values)", difficulty:"Easy", tol:0.01 },
-        { id:3, x:[0,Math.PI/2,Math.PI,3*Math.PI/2,2*Math.PI], y:[0,1,0,-1,0], ask:"B1", label:"B(1) = Σ y·sin(πx/L)", difficulty:"Hard", tol:0.01, note:"Use L = π" },
-        { id:4, x:[0,1,2,3,4], y:[1,3,5,3,1], ask:"a0_const", label:"Constant term in Fourier series", difficulty:"Medium", tol:0.01 }
+        { id:2, x:[0,1,2,3], y:[2,2,2,2], ask:"sum_y", label:"∑ y", difficulty:"Easy", tol:0.01 },
+        { id:3, x:[0,Math.PI/2,Math.PI,3*Math.PI/2,2*Math.PI], y:[0,1,0,-1,0], ask:"B1", label:"B(1) = Σ y·sin(πx/L)", difficulty:"Hard", tol:0.01, note:"L = π" },
+        { id:4, x:[0,1,2,3,4], y:[1,3,5,3,1], ask:"a0_const", label:"Constant term", difficulty:"Medium", tol:0.01 }
     ];
 
     function getCorrectAnswer(q) {
@@ -424,7 +742,6 @@
             `;
             container.appendChild(div);
         });
-        // attach check events
         document.querySelectorAll('.check-single-num').forEach(btn => {
             btn.removeEventListener('click', handleNumCheck);
             btn.addEventListener('click', handleNumCheck);
@@ -442,16 +759,9 @@
         const userVal = parseFloat(input.value);
         const correct = getCorrectAnswer(q);
         const fb = document.getElementById(`${test}_fb_${qid}`);
-        if (isNaN(userVal)) {
-            fb.innerHTML = '❌ Please enter a number.';
-            fb.style.color = 'red';
-        } else if (Math.abs(userVal - correct) < q.tol) {
-            fb.innerHTML = `✅ Correct! (${correct.toFixed(4)})`;
-            fb.style.color = 'green';
-        } else {
-            fb.innerHTML = `❌ Incorrect. Expected ≈ ${correct.toFixed(4)}. Try again.`;
-            fb.style.color = 'red';
-        }
+        if (isNaN(userVal)) fb.innerHTML = '❌ Please enter a number.';
+        else if (Math.abs(userVal - correct) < q.tol) fb.innerHTML = `✅ Correct! (${correct.toFixed(4)})`;
+        else fb.innerHTML = `❌ Incorrect. Expected ≈ ${correct.toFixed(4)}.`;
     }
 
     function submitAllAnswers(testType, questions) {
@@ -461,20 +771,13 @@
             if (!input) return;
             const userVal = parseFloat(input.value);
             const correct = getCorrectAnswer(q);
-            if (!isNaN(userVal) && Math.abs(userVal - correct) < q.tol) {
-                score++;
-                const fb = document.getElementById(`${testType}_fb_${q.id}`);
-                if (fb) fb.innerHTML = `✅ Correct! (${correct.toFixed(4)})`;
-            } else {
-                const fb = document.getElementById(`${testType}_fb_${q.id}`);
-                if (fb) fb.innerHTML = `❌ Incorrect. Expected ≈ ${correct.toFixed(4)}.`;
-            }
+            if (!isNaN(userVal) && Math.abs(userVal - correct) < q.tol) { score++; }
         });
-        alert(`${testType.toUpperCase()} Result: ${score}/${questions.length} correct.`);
+        alert(`${testType.toUpperCase()} Score: ${score}/${questions.length} correct.`);
     }
 
-    // ----- Simulation logic (fully functional) -----
-    let simComputed = { valid: false, xArr: [], yArr: [], L: 0, sum_y: 0, n: 0, A: [], B: [] };
+    // Simulation logic
+    let simComputed = { valid: false };
     function approxEq(a,b) { return Math.abs(a-b) < 0.01; }
     function to2Dec(v) { return v.toFixed(2); }
 
@@ -482,13 +785,10 @@
         const xStr = document.getElementById('simX').value;
         const yStr = document.getElementById('simY').value;
         const nVal = parseInt(document.getElementById('simN').value);
-        let xArr = xStr.split(',').map(v => parseFloat(v.trim()));
-        let yArr = yStr.split(',').map(v => parseFloat(v.trim()));
-        if (xArr.some(isNaN) || yArr.some(isNaN) || xArr.length !== yArr.length || xArr.length < 2) {
-            alert("Invalid x or y arrays.");
-            return false;
-        }
-        if (isNaN(nVal) || nVal < 1) { alert("Number of harmonics >=1"); return false; }
+        let xArr = xStr.split(',').map(v=>parseFloat(v.trim()));
+        let yArr = yStr.split(',').map(v=>parseFloat(v.trim()));
+        if (xArr.some(isNaN) || yArr.some(isNaN) || xArr.length!==yArr.length || xArr.length<2) { alert("Invalid x/y arrays."); return; }
+        if (isNaN(nVal) || nVal<1) { alert("Harmonics >=1"); return; }
         let L;
         if (yArr[0] === yArr[yArr.length-1]) L = (xArr[xArr.length-1] - xArr[0])/2;
         else L = ((xArr[xArr.length-1] + xArr[1] - xArr[0]) - xArr[0])/2;
@@ -503,35 +803,31 @@
             A.push(sumCos); B.push(sumSin);
         }
         simComputed = { valid:true, xArr, yArr, L, sum_y, n:nVal, A, B };
-        document.getElementById('computedInfo').innerHTML = `<strong>📌 Computed values:</strong><br>L (half period) = ${to2Dec(L)}<br><em>(sum_y, A(i), B(i) are internal)</em>`;
+        document.getElementById('computedInfo').innerHTML = `<strong>📌 L = ${to2Dec(L)}</strong><br><em>(sum_y, Aₙ, Bₙ computed internally)</em>`;
         document.getElementById('computedInfo').style.display = 'block';
         let html = '';
         for (let i=1; i<=nVal; i++) {
             html += `<div class="harmonic-group"><span class="harmonic-title">Harmonic ${i}</span>
                      <div class="verify-row"><label>A(${i}) = Σ y·cos(${i}πx/L):</label>
                      <input type="text" id="verifyA_${i}" placeholder="e.g., ${to2Dec(A[i-1])}">
-                     <button class="check-single-sim" data-type="A" data-harm="${i}"><i class="fas fa-check"></i> Check</button>
+                     <button class="check-single-sim" data-type="A" data-harm="${i}">Check</button>
                      <span class="check-feedback" id="fb-A${i}"></span></div>
                      <div class="verify-row"><label>B(${i}) = Σ y·sin(${i}πx/L):</label>
                      <input type="text" id="verifyB_${i}" placeholder="e.g., ${to2Dec(B[i-1])}">
-                     <button class="check-single-sim" data-type="B" data-harm="${i}"><i class="fas fa-check"></i> Check</button>
+                     <button class="check-single-sim" data-type="B" data-harm="${i}">Check</button>
                      <span class="check-feedback" id="fb-B${i}"></span></div></div>`;
         }
         document.getElementById('harmonicVerifyFields').innerHTML = html;
-        attachSimCheckEvents();
+        attachSimEvents();
+        document.getElementById('verifySumY').value = '';
         document.getElementById('verifyStatus').style.display = 'none';
         document.getElementById('finalFourierDisplay').style.display = 'none';
         document.getElementById('detailedSolutionDiv').style.display = 'none';
-        document.getElementById('verifySumY').value = '';
-        return true;
     }
 
-    function attachSimCheckEvents() {
-        const sumYBtn = document.querySelector('#row-sumY .check-single');
-        if (sumYBtn) {
-            sumYBtn.removeEventListener('click', handleSimCheck);
-            sumYBtn.addEventListener('click', handleSimCheck);
-        }
+    function attachSimEvents() {
+        const sumBtn = document.querySelector('#row-sumY .check-single-sim');
+        if (sumBtn) { sumBtn.removeEventListener('click', handleSimCheck); sumBtn.addEventListener('click', handleSimCheck); }
         document.querySelectorAll('.check-single-sim').forEach(btn => {
             btn.removeEventListener('click', handleSimCheck);
             btn.addEventListener('click', handleSimCheck);
@@ -539,7 +835,7 @@
     }
 
     function handleSimCheck(e) {
-        if (!simComputed.valid) { alert("Compute Data first."); return; }
+        if (!simComputed.valid) { alert("Compute data first."); return; }
         const btn = e.currentTarget;
         const type = btn.getAttribute('data-type');
         if (type === 'sumY') {
@@ -548,7 +844,7 @@
             const fb = document.getElementById('fb-sumY');
             if (isNaN(user)) fb.innerHTML = '❌ Enter number';
             else if (approxEq(user, correct)) fb.innerHTML = `✅ Correct (${to2Dec(correct)})`;
-            else fb.innerHTML = `❌ Incorrect. Expected ≈ ${to2Dec(correct)}`;
+            else fb.innerHTML = `❌ Expected ≈ ${to2Dec(correct)}`;
         } else if (type === 'A') {
             const harm = parseInt(btn.getAttribute('data-harm'));
             const user = parseFloat(document.getElementById(`verifyA_${harm}`).value);
@@ -556,7 +852,7 @@
             const fb = document.getElementById(`fb-A${harm}`);
             if (isNaN(user)) fb.innerHTML = '❌ Enter number';
             else if (approxEq(user, correct)) fb.innerHTML = `✅ Correct (${to2Dec(correct)})`;
-            else fb.innerHTML = `❌ Incorrect. Expected ≈ ${to2Dec(correct)}`;
+            else fb.innerHTML = `❌ Expected ≈ ${to2Dec(correct)}`;
         } else if (type === 'B') {
             const harm = parseInt(btn.getAttribute('data-harm'));
             const user = parseFloat(document.getElementById(`verifyB_${harm}`).value);
@@ -564,7 +860,7 @@
             const fb = document.getElementById(`fb-B${harm}`);
             if (isNaN(user)) fb.innerHTML = '❌ Enter number';
             else if (approxEq(user, correct)) fb.innerHTML = `✅ Correct (${to2Dec(correct)})`;
-            else fb.innerHTML = `❌ Incorrect. Expected ≈ ${to2Dec(correct)}`;
+            else fb.innerHTML = `❌ Expected ≈ ${to2Dec(correct)}`;
         }
     }
 
@@ -587,53 +883,51 @@
                 return;
             }
         }
-        showVerifyStatus("✅ All answers correct! Here is the Fourier series:", true);
+        showVerifyStatus("✅ All correct! Fourier series:", true);
         displayFinalFourierSeries();
     }
+
     function showVerifyStatus(msg, success) {
         const div = document.getElementById('verifyStatus');
         div.innerHTML = msg;
         div.className = `status-msg ${success ? 'success' : 'error'}`;
         div.style.display = 'block';
     }
+
     function displayFinalFourierSeries() {
         const L = simComputed.L, sum_y = simComputed.sum_y, n = simComputed.n, A = simComputed.A, B = simComputed.B;
         const constTerm = (sum_y * L)/2;
-        let html = `<strong>📈 Final Fourier Series (verified):</strong><br><br><div style="font-size:1.35rem;">f(x) = ${to2Dec(constTerm)}`;
-        for (let i=0; i<n; i++) {
-            const h = i+1;
-            html += ` + (${to2Dec(A[i]/L)}) cos(${h}πx/${to2Dec(L)}) + (${to2Dec(B[i]/L)}) sin(${h}πx/${to2Dec(L)})`;
-        }
+        let html = `<strong>📈 Verified Fourier Series:</strong><br><div style="font-size:1.2rem;">f(x) = ${to2Dec(constTerm)}`;
+        for (let i=0; i<n; i++) html += ` + (${to2Dec(A[i]/L)}) cos(${i+1}πx/${to2Dec(L)}) + (${to2Dec(B[i]/L)}) sin(${i+1}πx/${to2Dec(L)})`;
         html += `</div>`;
         document.getElementById('finalFourierDisplay').innerHTML = html;
         document.getElementById('finalFourierDisplay').style.display = 'block';
     }
+
     function showDetailedSolution() {
         if (!simComputed.valid) { alert("Compute data first."); return; }
-        const x = simComputed.xArr, y = simComputed.yArr, L = simComputed.L, sumY = simComputed.sum_y, n = simComputed.n;
-        let html = `<h4>Step-by-Step Solution</h4><p><strong>Given:</strong> x = [${x.join(', ')}], y = [${y.join(', ')}], n = ${n}</p>`;
-        html += `<p><strong>L:</strong> ${to2Dec(L)}</p><p><strong>sum_y:</strong> ${to2Dec(sumY)}</p><p><strong>A(i), B(i):</strong></p><ul>`;
-        for (let i=0; i<n; i++) html += `<li>i=${i+1}: A = ${to2Dec(simComputed.A[i])}, B = ${to2Dec(simComputed.B[i])}</li>`;
-        html += `</ul><p><strong>Fourier series:</strong> f(x) = ${to2Dec((sumY*L)/2)} + Σ[ (A(i)/L) cos(iπx/L) + (B(i)/L) sin(iπx/L) ]</p>`;
+        let html = `<h4>Step-by-Step Solution</h4><p><strong>Given:</strong> x = [${simComputed.xArr.join(', ')}], y = [${simComputed.yArr.join(', ')}]</p>`;
+        html += `<p><strong>L = ${to2Dec(simComputed.L)}</strong>, ∑y = ${to2Dec(simComputed.sum_y)}</p><p><strong>Aₙ, Bₙ:</strong></p><ul>`;
+        for (let i=0; i<simComputed.n; i++) html += `<li>Harmonic ${i+1}: A = ${to2Dec(simComputed.A[i])}, B = ${to2Dec(simComputed.B[i])}</li>`;
+        html += `</ul><p><strong>Fourier series:</strong> f(x) = ${to2Dec((simComputed.sum_y * simComputed.L)/2)} + Σ[...]</p>`;
         document.getElementById('detailedSolutionDiv').innerHTML = html;
         document.getElementById('detailedSolutionDiv').style.display = 'block';
     }
 
-    // ----- YouTube API with popup that requires correct answer -----
+    // YouTube API with correct‑answer only
     let player, popupActive = false, popupContainer = null, timeCheckInterval = null;
     const questionTimes = [15, 30, 60];
     let asked = {15:false,30:false,60:false};
     const questionBank = {
-        15: { text: "What does the constant term a₀/2 represent?", options: ["First harmonic amplitude","Average value of the function","Signal frequency","Phase shift"], correct:1 },
-        30: { text: "For half-wave symmetry, which harmonics are present?", options:["Only even","Only odd","All","Only fundamental"], correct:1 },
+        15: { text: "What does the constant term a₀/2 represent?", options: ["First harmonic amplitude","Average value","Frequency","Phase shift"], correct:1 },
+        30: { text: "For half-wave symmetry, which harmonics appear?", options:["Only even","Only odd","All","Only fundamental"], correct:1 },
         60: { text: "Fundamental frequency in terms of L?", options:["π/L","2π/L","π/(2L)","L/π"], correct:0 }
     };
-
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('youtube-player', {
             height: '100%', width: '100%', videoId: 'Gx1P3u-5y_A',
             playerVars: { start:12, autoplay:0, controls:1, rel:0 },
-            events: { onReady: (e)=>{}, onStateChange: onPlayerStateChange }
+            events: { onStateChange: onPlayerStateChange }
         });
     }
     function onPlayerStateChange(event) {
@@ -660,20 +954,18 @@
         if (popupContainer) popupContainer.remove();
         popupContainer = document.createElement('div');
         popupContainer.className = 'video-popup';
-        popupContainer.innerHTML = `<div class="popup-content"><h4>📌 Question (${sec}s)</h4><div class="question">${q.text}</div><div class="popup-options" id="popup-options">${q.options.map((opt,i)=>`<div class="popup-option" data-opt="${i}">${opt}</div>`).join('')}</div><div class="popup-feedback" id="popup-feedback"></div></div>`;
+        popupContainer.innerHTML = `<div class="popup-content"><h4>📌 Question (${sec}s)</h4><div class="question">${q.text}</div><div class="popup-options">${q.options.map((opt,i)=>`<div class="popup-option" data-opt="${i}">${opt}</div>`).join('')}</div><div class="popup-feedback" id="popup-feedback"></div></div>`;
         container.appendChild(popupContainer);
-        const options = popupContainer.querySelectorAll('.popup-option');
+        const opts = popupContainer.querySelectorAll('.popup-option');
         const fb = popupContainer.querySelector('#popup-feedback');
-        options.forEach(opt => {
+        opts.forEach(opt => {
             opt.addEventListener('click', () => {
                 const selected = parseInt(opt.getAttribute('data-opt'));
                 if (selected === q.correct) {
-                    fb.innerHTML = '✅ Correct! Resuming video...';
-                    fb.style.color = 'green';
+                    fb.innerHTML = '✅ Correct! Resuming...';
                     setTimeout(() => { closePopupAndResume(); }, 1000);
                 } else {
                     fb.innerHTML = '❌ Incorrect. Try again.';
-                    fb.style.color = 'red';
                 }
             });
         });
@@ -684,11 +976,7 @@
         popupActive = false;
         player.playVideo();
     }
-    function loadYouTubeAPI() {
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        document.head.appendChild(tag);
-    }
+    function loadYouTubeAPI() { const tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api"; document.head.appendChild(tag); }
     loadYouTubeAPI();
     window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
     let theoryActive = false;
@@ -697,17 +985,12 @@
         if (theory && theory.classList.contains('active-page')) {
             if (!theoryActive) { theoryActive = true; asked = {15:false,30:false,60:false}; }
         } else {
-            if (theoryActive) {
-                theoryActive = false;
-                if (timeCheckInterval) clearInterval(timeCheckInterval);
-                if (player && player.pauseVideo) player.pauseVideo();
-                if (popupContainer) closePopupAndResume();
-            }
+            if (theoryActive) { theoryActive = false; if (timeCheckInterval) clearInterval(timeCheckInterval); if (player && player.pauseVideo) player.pauseVideo(); if (popupContainer) closePopupAndResume(); }
         }
     });
     observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] });
 
-    // ----- Initialize all dynamic content -----
+    // Init all
     window.addEventListener('DOMContentLoaded', () => {
         buildNumericalQuestions('pretest-questions', pretestQuestions, 'pretest');
         buildNumericalQuestions('posttest-questions', posttestQuestions, 'posttest');
@@ -716,7 +999,7 @@
         document.getElementById('computeDataBtn').addEventListener('click', computeSimulationData);
         document.getElementById('verifyAllBtn').addEventListener('click', verifyAllAnswers);
         document.getElementById('detailedSolutionBtn').addEventListener('click', showDetailedSolution);
-        computeSimulationData(); // initial default compute
+        computeSimulationData();
     });
 </script>
 </body>
