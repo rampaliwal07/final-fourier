@@ -245,20 +245,87 @@
         }
         .video-container {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            height: 0;
-            overflow: hidden;
+            width: 100%;
             margin: 25px 0 15px 0;
             border-radius: 12px;
+            overflow: hidden;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        .video-container iframe {
+        #youtube-player {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+        }
+        /* Popup modal over video */
+        .video-popup {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            border: 0;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            border-radius: 12px;
+        }
+        .popup-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 450px;
+            width: 80%;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.3s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .popup-content h4 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .popup-content .question {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .popup-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .popup-option {
+            background: #f0f7ff;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #cfe2f0;
+        }
+        .popup-option:hover {
+            background: #e2edf7;
+            transform: scale(1.02);
+        }
+        .popup-feedback {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .close-popup {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: bold;
         }
         .mcq-question {
             background: #fff;
@@ -318,7 +385,7 @@
             border-radius: 6px;
         }
 
-        /* Simulation specific styles */
+        /* Simulation styles (unchanged) */
         .sim-input-group {
             background: #fef9e6;
             padding: 20px;
@@ -482,7 +549,7 @@
         </div>
     </div>
 
-    <!-- AIM PAGE -->
+    <!-- AIM PAGE (unchanged) -->
     <div id="page-aim" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
         <div class="card-page-header"><i class="fas fa-bullseye"></i><div><h2>Aim</h2><p>Objective of harmonic analysis</p></div></div>
@@ -493,7 +560,7 @@
         </div>
     </div>
 
-    <!-- THEORY PAGE (with user's YouTube link) -->
+    <!-- THEORY PAGE with YouTube API and timed popup questions -->
     <div id="page-theory" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-book"></i><div><h2>Theory: Fourier Series & Harmonics</h2></div></div>
@@ -506,20 +573,16 @@
             <h4>🎵 Harmonic Concept</h4>
             <p>First harmonic (fundamental) has frequency ω, second harmonic 2ω, etc. Fourier series extracts amplitude of each harmonic from given samples, crucial in signal processing and vibrations.</p>
             
-            <!-- YouTube video embed section with the user's link -->
+            <!-- YouTube video container with API -->
             <h4 style="margin-top: 30px;">📺 Watch: Fourier Series (Video Lecture)</h4>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/Gx1P3u-5y_A?start=12" 
-                        title="YouTube video player - Fourier Series Lecture"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                </iframe>
+            <div class="video-container" id="video-container">
+                <div id="youtube-player"></div>
             </div>
-            <p><em>Video: A detailed explanation of Fourier series and harmonic analysis (starts at 12 seconds).</em></p>
+            <p><em>Interactive video: Questions will pop up at 15s, 30s, and 60s to test your understanding.</em></p>
         </div>
     </div>
 
-    <!-- PRETEST -->
+    <!-- PRETEST (unchanged) -->
     <div id="page-pretest" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-question-circle"></i><div><h2>Pretest</h2><p>Check prior knowledge</p></div></div>
@@ -533,7 +596,7 @@
         <button class="submit-btn" onclick="gradePretest()"><i class="fas fa-pen-alt"></i> Submit Pretest</button>
     </div>
 
-    <!-- SIMULATION PAGE (same as last version, with individual checks & 2 decimals) -->
+    <!-- SIMULATION PAGE (unchanged from previous working version) -->
     <div id="page-simulation" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-desktop"></i><div><h2>Harmonic Analysis Simulator (MATLAB style)</h2><p>Enter data, compute L, then verify each value</p></div></div>
@@ -549,10 +612,8 @@
             <button id="computeDataBtn" class="submit-btn" style="margin-top: 20px;"><i class="fas fa-sync-alt"></i> Compute Data (L, sum_y, A(i), B(i))</button>
         </div>
 
-        <!-- Display computed base values (only L is shown) -->
         <div id="computedInfo" class="math-display" style="margin-bottom: 20px; display: none;"></div>
 
-        <!-- Verification area: individual check buttons -->
         <div id="verificationArea" style="margin-top: 20px; background: #ffffff; border-radius: 16px; padding: 16px; border: 1px solid #d4e3f0;">
             <h3><i class="fas fa-check-double"></i> Verification Task</h3>
             <p>Enter each value (approx. to 2 decimal places) and click the <strong>Check</strong> button beside it.</p>
@@ -574,7 +635,7 @@
         <div id="detailedSolutionDiv" style="margin-top: 20px; display: none; background: #fef7e0; padding: 20px; border-radius: 12px;"></div>
     </div>
 
-    <!-- POSTTEST -->
+    <!-- POSTTEST (unchanged) -->
     <div id="page-posttest" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-clipboard-check"></i><div><h2>Posttest</h2><p>Assess after simulation</p></div></div>
@@ -588,7 +649,7 @@
         <button class="submit-btn" onclick="gradePosttest()"><i class="fas fa-check-double"></i> Submit Posttest</button>
     </div>
 
-    <!-- REFERENCES & CONTRIBUTORS & FEEDBACK -->
+    <!-- REFERENCES, CONTRIBUTORS, FEEDBACK (unchanged) -->
     <div id="page-references" class="content card-page"><button class="back-btn" onclick="goBack()">Back</button><div class="card-page-header"><i class="fas fa-book-open"></i><div><h2>References</h2></div></div><ul class="ref-list"><li><i class="fas fa-book"></i><div><strong>Advanced Engineering Mathematics</strong> - Erwin Kreyszig (Fourier Series chapter)</div></li><li><i class="fas fa-globe"></i><div><a href="#">MIT 18.03: Differential Equations</a></div></li><li><i class="fas fa-globe"></i><div>NPTEL - Mathematics - Fourier Series lectures</div></li></ul></div>
     <div id="page-contributors" class="content card-page"><button class="back-btn" onclick="goBack()">Back</button><div class="card-page-header"><i class="fas fa-users"></i><div><h2>Contributors</h2></div></div><div class="contributors-grid"><div class="contributor-card"><i class="fas fa-user-tie"></i><h4>Dr. Ashish Joshi</h4><p>Principal Investigator</p></div><div class="contributor-card"><i class="fas fa-chalkboard-teacher"></i><h4>Prof. Snehal Kulkarni</h4><p>Content Expert</p></div><div class="contributor-card"><i class="fas fa-code"></i><h4>Team Virtual Labs</h4><p>Developers</p></div></div></div>
     <div id="page-feedback" class="content card-page"><button class="back-btn" onclick="goBack()">Back</button><div class="card-page-header"><i class="fas fa-comment-alt"></i><div><h2>Feedback</h2></div></div><div class="feedback-form"><label>Name</label><input type="text" id="fbName"><label>Rating</label><div class="star-rating" id="starRating"><i class="fas fa-star" data-val="1"></i><i class="fas fa-star" data-val="2"></i><i class="fas fa-star" data-val="3"></i><i class="fas fa-star" data-val="4"></i><i class="fas fa-star" data-val="5"></i></div><label>Comments</label><textarea rows="3"></textarea><button class="submit-btn" onclick="alert('Thanks for feedback!')">Submit</button></div></div>
@@ -596,16 +657,15 @@
 <footer class="container"><p>Virtual Labs © 2025 | Harmonic Analysis (Fourier Series) | Pimpri Chinchwad College of Engineering</p></footer>
 
 <script>
-    // navigation & globals
+    // Navigation and other existing functions
     function openPage(targetId) { document.getElementById('main-dashboard').classList.add('hidden'); document.querySelectorAll('.card-page').forEach(p=>p.classList.remove('active-page')); document.getElementById(targetId).classList.add('active-page'); window.scrollTo({top:0}); }
     function goBack() { document.querySelectorAll('.card-page').forEach(p=>p.classList.remove('active-page')); document.getElementById('main-dashboard').classList.remove('hidden'); window.scrollTo({top:0}); }
     document.querySelectorAll('.section-card').forEach(card=>{ card.addEventListener('click',()=>{ document.querySelectorAll('.section-card').forEach(c=>c.classList.remove('active')); card.classList.add('active'); openPage(card.getAttribute('data-target')); }); });
 
-    // star rating
+    // Star rating
     let selectedRating=0; const stars=document.querySelectorAll('#starRating .fa-star');
     stars.forEach(star=>{ star.addEventListener('mouseover',function(){ let v=parseInt(this.dataset.val); stars.forEach((s,i)=>s.classList.toggle('active',i<v)); }); star.addEventListener('mouseout',()=>{ stars.forEach((s,i)=>s.classList.toggle('active',i<selectedRating)); }); star.addEventListener('click',function(){ selectedRating=parseInt(this.dataset.val); stars.forEach((s,i)=>s.classList.toggle('active',i<selectedRating)); }); });
 
-    // Pretest / Posttest grading
     function gradePretest(){
         const keys = { pre1:'B', pre2:'A', pre3:'A', pre4:'A', pre5:'A' };
         let score=0;
@@ -619,7 +679,179 @@
         alert(`Posttest Score: ${score}/5. ${score>=4?"Excellent harmonic analysis skills!":"Revisit harmonic extraction concepts."}`);
     }
 
-    // Simulation state
+    // ========== YOUTUBE API WITH TIMED POPUPS ==========
+    let player;
+    let popupActive = false;
+    let popupContainer = null;
+    const questionTimes = [15, 30, 60]; // seconds
+    let asked = { 15: false, 30: false, 60: false };
+    
+    // Questions for each time (you can modify)
+    const questionBank = {
+        15: {
+            text: "What does the constant term a₀/2 represent in a Fourier series?",
+            options: ["The amplitude of the first harmonic", "The average value of the function over one period", "The frequency of the signal", "The phase shift"],
+            correct: 1
+        },
+        30: {
+            text: "For a periodic function with half-wave symmetry, which harmonics are present?",
+            options: ["Only even harmonics", "Only odd harmonics", "All harmonics", "Only the fundamental"],
+            correct: 1
+        },
+        60: {
+            text: "What is the fundamental frequency in terms of L (half period)?",
+            options: ["π/L", "2π/L", "π/(2L)", "L/π"],
+            correct: 0
+        }
+    };
+
+    // Load YouTube API
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('youtube-player', {
+            height: '100%',
+            width: '100%',
+            videoId: 'Gx1P3u-5y_A',
+            playerVars: {
+                'start': 12,
+                'autoplay': 0,
+                'controls': 1,
+                'rel': 0
+            },
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    function onPlayerReady(event) {
+        // Optional: start playing automatically when theory page becomes active?
+        // We'll let user play manually.
+    }
+
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING) {
+            // Start checking time every 200ms
+            if (!timeCheckInterval) startTimeCheck();
+        } else {
+            if (timeCheckInterval) clearInterval(timeCheckInterval);
+        }
+    }
+
+    let timeCheckInterval = null;
+    function startTimeCheck() {
+        if (timeCheckInterval) clearInterval(timeCheckInterval);
+        timeCheckInterval = setInterval(() => {
+            if (!player || popupActive) return;
+            const current = player.getCurrentTime();
+            for (let t of questionTimes) {
+                if (!asked[t] && current >= t && current < t + 1.5) {
+                    asked[t] = true;
+                    showPopup(t);
+                    break;
+                }
+            }
+        }, 200);
+    }
+
+    function showPopup(timeSec) {
+        if (popupActive) return;
+        popupActive = true;
+        // Pause video
+        player.pauseVideo();
+        const qData = questionBank[timeSec];
+        if (!qData) return;
+        
+        // Create popup element
+        const container = document.getElementById('video-container');
+        if (popupContainer) popupContainer.remove();
+        popupContainer = document.createElement('div');
+        popupContainer.className = 'video-popup';
+        popupContainer.innerHTML = `
+            <div class="popup-content">
+                <h4>📌 Quick Question (${Math.floor(timeSec)}s)</h4>
+                <div class="question">${qData.text}</div>
+                <div class="popup-options" id="popup-options">
+                    ${qData.options.map((opt, idx) => `<div class="popup-option" data-opt="${idx}">${opt}</div>`).join('')}
+                </div>
+                <div class="popup-feedback" id="popup-feedback"></div>
+                <button class="close-popup" id="close-popup-btn">Continue Watching</button>
+            </div>
+        `;
+        container.appendChild(popupContainer);
+        
+        // Attach event to options
+        const optionsDivs = popupContainer.querySelectorAll('.popup-option');
+        const feedbackDiv = popupContainer.querySelector('#popup-feedback');
+        optionsDivs.forEach(optDiv => {
+            optDiv.addEventListener('click', () => {
+                const selected = parseInt(optDiv.getAttribute('data-opt'));
+                if (selected === qData.correct) {
+                    feedbackDiv.innerHTML = '✅ Correct! Well done.';
+                    feedbackDiv.style.color = 'green';
+                    // Auto close after 2 seconds
+                    setTimeout(() => {
+                        closePopup();
+                    }, 1500);
+                } else {
+                    feedbackDiv.innerHTML = '❌ Incorrect. Try again.';
+                    feedbackDiv.style.color = 'red';
+                }
+            });
+        });
+        const closeBtn = popupContainer.querySelector('#close-popup-btn');
+        closeBtn.addEventListener('click', () => {
+            closePopup();
+        });
+    }
+    
+    function closePopup() {
+        if (popupContainer) {
+            popupContainer.remove();
+            popupContainer = null;
+        }
+        popupActive = false;
+        player.playVideo();
+    }
+    
+    // Load YouTube API script
+    function loadYouTubeAPI() {
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+    
+    // When theory page becomes active, we need to ensure the player is initialized
+    // But the API loads globally. We'll also reset asked flags on page show.
+    let theoryPageActive = false;
+    const observer = new MutationObserver(() => {
+        const theoryPage = document.getElementById('page-theory');
+        if (theoryPage && theoryPage.classList.contains('active-page')) {
+            if (!theoryPageActive) {
+                theoryPageActive = true;
+                // Reset asked flags
+                asked = { 15: false, 30: false, 60: false };
+                if (player && player.getCurrentTime) {
+                    // If player exists, seek to start+12? optional
+                }
+            }
+        } else {
+            if (theoryPageActive) {
+                theoryPageActive = false;
+                // Stop time check when leaving theory page
+                if (timeCheckInterval) clearInterval(timeCheckInterval);
+                if (player && player.pauseVideo) player.pauseVideo();
+                if (popupContainer) closePopup();
+            }
+        }
+    });
+    observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] });
+    
+    loadYouTubeAPI();
+    window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
+    // ========== SIMULATION CODE (unchanged from previous working version) ==========
     let simComputed = { valid: false, xArr: [], yArr: [], L: 0, sum_y: 0, n: 0, A: [], B: [] };
     function approxEq(a,b){ return Math.abs(a-b)<0.01; }
     function to2Dec(val){ return val.toFixed(2); }
