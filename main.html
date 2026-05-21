@@ -241,7 +241,6 @@
             aspect-ratio: 16 / 9;
             background: #000;
         }
-        /* Popup modal over video */
         .video-popup {
             position: absolute;
             top: 0;
@@ -303,29 +302,57 @@
             margin-top: 10px;
             font-size: 1rem;
         }
-        .mcq-question {
+        /* Numerical question styles */
+        .num-question {
             background: #fff;
             border: 1px solid #dce8f5;
             border-radius: 8px;
             padding: 20px 24px;
             margin-bottom: 20px;
         }
-        .mcq-option {
+        .difficulty {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 20px;
+            margin-left: 15px;
+            vertical-align: middle;
+        }
+        .difficulty.easy { background: #d4edda; color: #155724; }
+        .difficulty.medium { background: #fff3cd; color: #856404; }
+        .difficulty.hard { background: #f8d7da; color: #721c24; }
+        .num-question p {
+            margin: 12px 0;
+        }
+        .num-answer {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 8px 12px;
-            cursor: pointer;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
         }
-        .submit-btn {
-            background: linear-gradient(to right, #3498db, #2c80b9);
+        .num-answer input {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            width: 180px;
+        }
+        .num-answer button {
+            background: #28a745;
             color: white;
             border: none;
-            padding: 11px 28px;
-            font-size: 15px;
-            font-weight: 600;
+            padding: 8px 18px;
             border-radius: 6px;
             cursor: pointer;
+        }
+        .num-feedback {
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        .submit-all {
+            margin-top: 20px;
+            background: #3498db;
         }
         .ref-table {
             width: 100%;
@@ -480,7 +507,7 @@
         }
         .contributors-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 20px;
         }
         .contributor-card {
@@ -527,9 +554,9 @@
             <div class="aim-sections">
                 <div class="section-card active" data-target="page-aim"><i class="fas fa-bullseye"></i><h3>Aim</h3><p>Objective</p></div>
                 <div class="section-card" data-target="page-theory"><i class="fas fa-book"></i><h3>Theory</h3><p>Fourier formulas</p></div>
-                <div class="section-card" data-target="page-pretest"><i class="fas fa-question-circle"></i><h3>Pretest</h3><p>5 MCQs</p></div>
+                <div class="section-card" data-target="page-pretest"><i class="fas fa-question-circle"></i><h3>Pretest</h3><p>Numerical & difficulty</p></div>
                 <div class="section-card" data-target="page-simulation"><i class="fas fa-desktop"></i><h3>Simulation</h3><p>Harmonic calculator & verification</p></div>
-                <div class="section-card" data-target="page-posttest"><i class="fas fa-clipboard-check"></i><h3>Posttest</h3><p>5 MCQs</p></div>
+                <div class="section-card" data-target="page-posttest"><i class="fas fa-clipboard-check"></i><h3>Posttest</h3><p>Numerical & difficulty</p></div>
                 <div class="section-card" data-target="page-references"><i class="fas fa-book-open"></i><h3>References</h3><p>Resources</p></div>
                 <div class="section-card" data-target="page-contributors"><i class="fas fa-users"></i><h3>Contributors</h3><p>Team</p></div>
                 <div class="section-card" data-target="page-feedback"><i class="fas fa-comment-alt"></i><h3>Feedback</h3><p>Rate us</p></div>
@@ -537,7 +564,7 @@
         </div>
     </div>
 
-    <!-- AIM PAGE with new bullet points -->
+    <!-- AIM PAGE (updated bullet points) -->
     <div id="page-aim" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
         <div class="card-page-header"><i class="fas fa-bullseye"></i><div><h2>Aim</h2><p>Objective of harmonic analysis</p></div></div>
@@ -557,7 +584,7 @@
         </div>
     </div>
 
-    <!-- THEORY PAGE with YouTube API and correct-answer-only resume -->
+    <!-- THEORY PAGE (unchanged from previous version) -->
     <div id="page-theory" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-book"></i><div><h2>Theory: Fourier Series & Harmonics</h2></div></div>
@@ -578,21 +605,15 @@
         </div>
     </div>
 
-    <!-- PRETEST (unchanged) -->
+    <!-- PRETEST: Numerical questions with difficulty tags -->
     <div id="page-pretest" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
-        <div class="card-page-header"><i class="fas fa-question-circle"></i><div><h2>Pretest</h2><p>Check prior knowledge</p></div></div>
-        <div id="pretest-questions">
-            <div class="mcq-question"><p>1. Fourier series decomposes a periodic function into:</p><label class="mcq-option"><input type="radio" name="pre1" value="A"> Exponential only</label><label class="mcq-option"><input type="radio" name="pre1" value="B"> Sines and cosines</label><label class="mcq-option"><input type="radio" name="pre1" value="C"> Polynomials</label><label class="mcq-option"><input type="radio" name="pre1" value="D"> Logarithms</label></div>
-            <div class="mcq-question"><p>2. The constant term (DC component) a₀ in Fourier series is equal to:</p><label class="mcq-option"><input type="radio" name="pre2" value="A"> Average value of function over one period</label><label class="mcq-option"><input type="radio" name="pre2" value="B"> Peak amplitude</label><label class="mcq-option"><input type="radio" name="pre2" value="C"> Frequency</label><label class="mcq-option"><input type="radio" name="pre2" value="D"> Phase shift</label></div>
-            <div class="mcq-question"><p>3. Dirichlet conditions ensure:</p><label class="mcq-option"><input type="radio" name="pre3" value="A"> Fourier series converges</label><label class="mcq-option"><input type="radio" name="pre3" value="B"> Series diverges</label><label class="mcq-option"><input type="radio" name="pre3" value="C"> Function is odd</label><label class="mcq-option"><input type="radio" name="pre3" value="D"> No harmonics exist</label></div>
-            <div class="mcq-question"><p>4. For a function with half-wave symmetry, which harmonics vanish?</p><label class="mcq-option"><input type="radio" name="pre4" value="A"> Even harmonics</label><label class="mcq-option"><input type="radio" name="pre4" value="B"> Odd harmonics</label><label class="mcq-option"><input type="radio" name="pre4" value="C"> All harmonics</label><label class="mcq-option"><input type="radio" name="pre4" value="D"> Fundamental only</label></div>
-            <div class="mcq-question"><p>5. The coefficient bₙ for an even function f(x) is:</p><label class="mcq-option"><input type="radio" name="pre5" value="A"> Zero</label><label class="mcq-option"><input type="radio" name="pre5" value="B"> Non-zero</label><label class="mcq-option"><input type="radio" name="pre5" value="C"> Equal to aₙ</label><label class="mcq-option"><input type="radio" name="pre5" value="D"> Maximum</label></div>
-        </div>
-        <button class="submit-btn" onclick="gradePretest()"><i class="fas fa-pen-alt"></i> Submit Pretest</button>
+        <div class="card-page-header"><i class="fas fa-question-circle"></i><div><h2>Pretest</h2><p>Numerical harmonic analysis problems</p></div></div>
+        <div id="pretest-questions"></div>
+        <button class="submit-btn submit-all" id="submitPretestAll"><i class="fas fa-check-double"></i> Submit All Pretest Answers</button>
     </div>
 
-    <!-- SIMULATION PAGE (unchanged from previous working version) -->
+    <!-- SIMULATION PAGE (unchanged) -->
     <div id="page-simulation" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
         <div class="card-page-header"><i class="fas fa-desktop"></i><div><h2>Harmonic Analysis Simulator (MATLAB style)</h2><p>Enter data, compute L, then verify each value</p></div></div>
@@ -631,28 +652,20 @@
         <div id="detailedSolutionDiv" style="margin-top: 20px; display: none; background: #fef7e0; padding: 20px; border-radius: 12px;"></div>
     </div>
 
-    <!-- POSTTEST (unchanged) -->
+    <!-- POSTTEST: Numerical questions with difficulty tags -->
     <div id="page-posttest" class="content card-page">
         <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
-        <div class="card-page-header"><i class="fas fa-clipboard-check"></i><div><h2>Posttest</h2><p>Assess after simulation</p></div></div>
-        <div id="posttest-questions">
-            <div class="mcq-question"><p>1. The Fourier series of a square wave contains only:</p><label class="mcq-option"><input type="radio" name="post1" value="A"> Even harmonics</label><label class="mcq-option"><input type="radio" name="post1" value="B"> Odd harmonics</label><label class="mcq-option"><input type="radio" name="post1" value="C"> All harmonics</label><label class="mcq-option"><input type="radio" name="post1" value="D"> DC only</label></div>
-            <div class="mcq-question"><p>2. In harmonic analysis using discrete data, the half-range L is computed based on:</p><label class="mcq-option"><input type="radio" name="post2" value="A"> Last x minus first x over 2</label><label class="mcq-option"><input type="radio" name="post2" value="B"> Sum of y values</label><label class="mcq-option"><input type="radio" name="post2" value="C"> Number of points</label><label class="mcq-option"><input type="radio" name="post2" value="D"> Minimum y</label></div>
-            <div class="mcq-question"><p>3. If a₀ = 0, the waveform has:</p><label class="mcq-option"><input type="radio" name="post3" value="A"> Zero average value</label><label class="mcq-option"><input type="radio" name="post3" value="B"> No harmonics</label><label class="mcq-option"><input type="radio" name="post3" value="C"> Only sine terms</label><label class="mcq-option"><input type="radio" name="post3" value="D"> Symmetry about y-axis</label></div>
-            <div class="mcq-question"><p>4. Which coefficient represents amplitude of nth cosine harmonic?</p><label class="mcq-option"><input type="radio" name="post4" value="A"> aₙ</label><label class="mcq-option"><input type="radio" name="post4" value="B"> bₙ</label><label class="mcq-option"><input type="radio" name="post4" value="C"> a₀</label><label class="mcq-option"><input type="radio" name="post4" value="D"> L</label></div>
-            <div class="mcq-question"><p>5. For a function sampled at x = [0,1,2,3] with y = [1,2,1,2], the period is:</p><label class="mcq-option"><input type="radio" name="post5" value="A"> 2</label><label class="mcq-option"><input type="radio" name="post5" value="B"> 4</label><label class="mcq-option"><input type="radio" name="post5" value="C"> 3</label><label class="mcq-option"><input type="radio" name="post5" value="D"> 1</label></div>
-        </div>
-        <button class="submit-btn" onclick="gradePosttest()"><i class="fas fa-check-double"></i> Submit Posttest</button>
+        <div class="card-page-header"><i class="fas fa-clipboard-check"></i><div><h2>Posttest</h2><p>Numerical harmonic analysis problems</p></div></div>
+        <div id="posttest-questions"></div>
+        <button class="submit-btn submit-all" id="submitPosttestAll"><i class="fas fa-check-double"></i> Submit All Posttest Answers</button>
     </div>
 
-    <!-- REFERENCES PAGE with table -->
+    <!-- REFERENCES PAGE (unchanged) -->
     <div id="page-references" class="content card-page">
         <button class="back-btn" onclick="goBack()">Back</button>
         <div class="card-page-header"><i class="fas fa-book-open"></i><div><h2>References</h2><p>Recommended reading</p></div></div>
         <table class="ref-table">
-            <thead>
-                <tr><th>Book / Reference</th><th>Author</th><th>Level</th><th>Rating</th></tr>
-            </thead>
+            <thead><tr><th>Book / Reference</th><th>Author</th><th>Level</th><th>Rating</th></tr></thead>
             <tbody>
                 <tr><td>Fourier Analysis: An Introduction</td><td>Elias M. Stein & Rami Shakarchi</td><td>Beginner–Intermediate</td><td class="star-rating">⭐ 4.8/5</td></tr>
                 <tr><td>An Introduction To Harmonic Analysis</td><td>Yitzhak Katznelson</td><td>Intermediate</td><td class="star-rating">⭐ 4.7/5</td></tr>
@@ -668,16 +681,18 @@
         </table>
     </div>
 
-    <!-- CONTRIBUTORS & FEEDBACK (unchanged) -->
+    <!-- CONTRIBUTORS PAGE (updated) -->
     <div id="page-contributors" class="content card-page">
         <button class="back-btn" onclick="goBack()">Back</button>
         <div class="card-page-header"><i class="fas fa-users"></i><div><h2>Contributors</h2></div></div>
         <div class="contributors-grid">
-            <div class="contributor-card"><i class="fas fa-user-tie"></i><h4>Dr. Ashish Joshi</h4><p>Principal Investigator</p></div>
-            <div class="contributor-card"><i class="fas fa-chalkboard-teacher"></i><h4>Prof. Snehal Kulkarni</h4><p>Content Expert</p></div>
-            <div class="contributor-card"><i class="fas fa-code"></i><h4>Team Virtual Labs</h4><p>Developers</p></div>
+            <div class="contributor-card"><i class="fas fa-user-tie"></i><h4>Mr. Ganesh Tarte</h4><p>Project Lead</p></div>
+            <div class="contributor-card"><i class="fas fa-chalkboard-teacher"></i><h4>Devendra Sonawane</h4><p>Mathematics and Simulation</p></div>
+            <div class="contributor-card"><i class="fas fa-code"></i><h4>Ram Paliwal</h4><p>Full Stack Developer</p></div>
         </div>
     </div>
+
+    <!-- FEEDBACK PAGE (unchanged) -->
     <div id="page-feedback" class="content card-page">
         <button class="back-btn" onclick="goBack()">Back</button>
         <div class="card-page-header"><i class="fas fa-comment-alt"></i><div><h2>Feedback</h2></div></div>
@@ -696,29 +711,134 @@
 <footer class="container"><p>Virtual Labs © 2025 | Harmonic Analysis (Fourier Series) | Pimpri Chinchwad College of Engineering</p></footer>
 
 <script>
-    // Navigation and other functions
+    // Navigation and basic functions
     function openPage(targetId) { document.getElementById('main-dashboard').classList.add('hidden'); document.querySelectorAll('.card-page').forEach(p=>p.classList.remove('active-page')); document.getElementById(targetId).classList.add('active-page'); window.scrollTo({top:0}); }
     function goBack() { document.querySelectorAll('.card-page').forEach(p=>p.classList.remove('active-page')); document.getElementById('main-dashboard').classList.remove('hidden'); window.scrollTo({top:0}); }
     document.querySelectorAll('.section-card').forEach(card=>{ card.addEventListener('click',()=>{ document.querySelectorAll('.section-card').forEach(c=>c.classList.remove('active')); card.classList.add('active'); openPage(card.getAttribute('data-target')); }); });
 
-    // Star rating for feedback
+    // Star rating
     let selectedRating=0; const stars=document.querySelectorAll('#starRating .fa-star');
     stars.forEach(star=>{ star.addEventListener('mouseover',function(){ let v=parseInt(this.dataset.val); stars.forEach((s,i)=>s.classList.toggle('active',i<v)); }); star.addEventListener('mouseout',()=>{ stars.forEach((s,i)=>s.classList.toggle('active',i<selectedRating)); }); star.addEventListener('click',function(){ selectedRating=parseInt(this.dataset.val); stars.forEach((s,i)=>s.classList.toggle('active',i<selectedRating)); }); });
 
-    function gradePretest(){
-        const keys = { pre1:'B', pre2:'A', pre3:'A', pre4:'A', pre5:'A' };
-        let score=0;
-        for(let i=1;i<=5;i++){ let val=document.querySelector(`input[name='pre${i}']:checked`); if(val && val.value===keys[`pre${i}`]) score++; }
-        alert(`Pretest Result: ${score}/5 correct.\n${score>=3?"Good foundation!":"Review Dirichlet & Fourier coefficients."}`);
-    }
-    function gradePosttest(){
-        const keys = { post1:'B', post2:'A', post3:'A', post4:'A', post5:'B' };
-        let score=0;
-        for(let i=1;i<=5;i++){ let val=document.querySelector(`input[name='post${i}']:checked`); if(val && val.value===keys[`post${i}`]) score++; }
-        alert(`Posttest Score: ${score}/5. ${score>=4?"Excellent harmonic analysis skills!":"Revisit harmonic extraction concepts."}`);
+    // ---------- Numerical Questions Data for Pretest and Posttest ----------
+    // Helper to compute L, sum_y, A1, B1, a0, etc. from given x,y arrays
+    function computeFourierForData(xArr, yArr, n=1) {
+        if (xArr.length !== yArr.length) return null;
+        let L;
+        if (yArr[0] === yArr[yArr.length-1]) L = (xArr[xArr.length-1] - xArr[0])/2;
+        else L = ((xArr[xArr.length-1] + xArr[1] - xArr[0]) - xArr[0])/2;
+        const sum_y = yArr.reduce((a,b)=>a+b,0);
+        let A = [], B = [];
+        for (let i=1; i<=n; i++) {
+            let sumCos=0, sumSin=0;
+            for (let j=0; j<xArr.length; j++) {
+                sumCos += yArr[j] * Math.cos(i * Math.PI * xArr[j] / L);
+                sumSin += yArr[j] * Math.sin(i * Math.PI * xArr[j] / L);
+            }
+            A.push(sumCos); B.push(sumSin);
+        }
+        const a0_const = (sum_y * L) / 2; // constant term in final series
+        return { L, sum_y, A, B, a0_const };
     }
 
-    // ========== YOUTUBE API WITH CORRECT-ANSWER-ONLY RESUME ==========
+    // Define pretest questions
+    const pretestQuestions = [
+        { id: 0, x: [0,1,2,3,4], y: [2,3,4,3,2], ask: "sum_y", label: "∑ y (sum of y values)", difficulty: "Easy", tolerance: 0.01 },
+        { id: 1, x: [0,1,2,3,4,5], y: [1,2,3,4,3,2], ask: "L", label: "L (half period)", difficulty: "Medium", tolerance: 0.01 },
+        { id: 2, x: [0,1,2,3], y: [1,1,1,1], ask: "sum_y", label: "∑ y (sum of y values)", difficulty: "Easy", tolerance: 0.01 },
+        { id: 3, x: [0, π/2, π, 3π/2, 2π], y: [0,1,0,-1,0], ask: "A1", label: "A(1) = Σ y·cos(πx/L)", difficulty: "Hard", tolerance: 0.01, note: "Use L = π" },
+        { id: 4, x: [0,1,2,3,4], y: [2,4,6,4,2], ask: "a0_const", label: "Constant term in Fourier series (a₀/2?)", difficulty: "Medium", tolerance: 0.01 }
+    ];
+
+    const posttestQuestions = [
+        { id: 0, x: [0,1,2,3,4], y: [3,5,7,5,3], ask: "sum_y", label: "∑ y (sum of y values)", difficulty: "Easy", tolerance: 0.01 },
+        { id: 1, x: [0,1,2,3,4,5,6], y: [1,2,3,4,5,4,3], ask: "L", label: "L (half period)", difficulty: "Medium", tolerance: 0.01 },
+        { id: 2, x: [0,1,2,3], y: [2,2,2,2], ask: "sum_y", label: "∑ y (sum of y values)", difficulty: "Easy", tolerance: 0.01 },
+        { id: 3, x: [0, π/2, π, 3π/2, 2π], y: [0,1,0,-1,0], ask: "B1", label: "B(1) = Σ y·sin(πx/L)", difficulty: "Hard", tolerance: 0.01, note: "Use L = π" },
+        { id: 4, x: [0,1,2,3,4], y: [1,3,5,3,1], ask: "a0_const", label: "Constant term in Fourier series", difficulty: "Medium", tolerance: 0.01 }
+    ];
+
+    function getCorrectAnswer(q) {
+        const { x, y, ask } = q;
+        const res = computeFourierForData(x, y, 1);
+        if (!res) return NaN;
+        if (ask === "sum_y") return res.sum_y;
+        if (ask === "L") return res.L;
+        if (ask === "A1") return res.A[0];
+        if (ask === "B1") return res.B[0];
+        if (ask === "a0_const") return res.a0_const;
+        return NaN;
+    }
+
+    function buildNumericalQuestions(containerId, questions, testType) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+        questions.forEach((q, idx) => {
+            const correctVal = getCorrectAnswer(q);
+            const div = document.createElement('div');
+            div.className = 'num-question';
+            div.innerHTML = `
+                <div><strong>Q${idx+1}. </strong> <span class="difficulty ${q.difficulty.toLowerCase()}">${q.difficulty}</span></div>
+                <p>Given: x = [${q.x.map(v=>v.toFixed(3)).join(', ')}], y = [${q.y.join(', ')}]</p>
+                <p>${q.note ? `<em>${q.note}</em><br>` : ''}Calculate: <strong>${q.label}</strong></p>
+                <div class="num-answer">
+                    <input type="number" step="any" id="${testType}_ans_${q.id}" placeholder="Enter numeric value">
+                    <button class="check-single-num" data-qid="${q.id}" data-test="${testType}">Check</button>
+                </div>
+                <div class="num-feedback" id="${testType}_fb_${q.id}"></div>
+            `;
+            container.appendChild(div);
+        });
+        // attach event listeners to check buttons
+        document.querySelectorAll('.check-single-num').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const qid = parseInt(btn.getAttribute('data-qid'));
+                const test = btn.getAttribute('data-test');
+                const question = (test === 'pretest') ? pretestQuestions.find(q => q.id === qid) : posttestQuestions.find(q => q.id === qid);
+                const input = document.getElementById(`${test}_ans_${qid}`);
+                const userVal = parseFloat(input.value);
+                const correct = getCorrectAnswer(question);
+                const fb = document.getElementById(`${test}_fb_${qid}`);
+                if (isNaN(userVal)) {
+                    fb.innerHTML = '❌ Please enter a number.';
+                    fb.style.color = 'red';
+                } else if (Math.abs(userVal - correct) < question.tolerance) {
+                    fb.innerHTML = `✅ Correct! (${correct.toFixed(4)})`;
+                    fb.style.color = 'green';
+                } else {
+                    fb.innerHTML = `❌ Incorrect. Expected ≈ ${correct.toFixed(4)}. Try again.`;
+                    fb.style.color = 'red';
+                }
+            });
+        });
+    }
+
+    // Submit all answers for a test
+    function submitAllAnswers(testType, questions) {
+        let score = 0;
+        questions.forEach(q => {
+            const input = document.getElementById(`${testType}_ans_${q.id}`);
+            if (!input) return;
+            const userVal = parseFloat(input.value);
+            const correct = getCorrectAnswer(q);
+            if (!isNaN(userVal) && Math.abs(userVal - correct) < q.tolerance) {
+                score++;
+                const fb = document.getElementById(`${testType}_fb_${q.id}`);
+                if (fb) fb.innerHTML = `✅ Correct! (${correct.toFixed(4)})`;
+            } else {
+                const fb = document.getElementById(`${testType}_fb_${q.id}`);
+                if (fb) fb.innerHTML = `❌ Incorrect. Expected ≈ ${correct.toFixed(4)}.`;
+            }
+        });
+        alert(`${testType.toUpperCase()} Result: ${score}/${questions.length} correct.`);
+    }
+
+    buildNumericalQuestions('pretest-questions', pretestQuestions, 'pretest');
+    buildNumericalQuestions('posttest-questions', posttestQuestions, 'posttest');
+    document.getElementById('submitPretestAll').addEventListener('click', () => submitAllAnswers('pretest', pretestQuestions));
+    document.getElementById('submitPosttestAll').addEventListener('click', () => submitAllAnswers('posttest', posttestQuestions));
+
+    // ========== YOUTUBE API WITH CORRECT-ANSWER-ONLY RESUME (unchanged) ==========
     let player;
     let popupActive = false;
     let popupContainer = null;
@@ -726,51 +846,23 @@
     let asked = { 15: false, 30: false, 60: false };
     
     const questionBank = {
-        15: {
-            text: "What does the constant term a₀/2 represent in a Fourier series?",
-            options: ["The amplitude of the first harmonic", "The average value of the function over one period", "The frequency of the signal", "The phase shift"],
-            correct: 1
-        },
-        30: {
-            text: "For a periodic function with half-wave symmetry, which harmonics are present?",
-            options: ["Only even harmonics", "Only odd harmonics", "All harmonics", "Only the fundamental"],
-            correct: 1
-        },
-        60: {
-            text: "What is the fundamental frequency in terms of L (half period)?",
-            options: ["π/L", "2π/L", "π/(2L)", "L/π"],
-            correct: 0
-        }
+        15: { text: "What does the constant term a₀/2 represent in a Fourier series?", options: ["The amplitude of the first harmonic", "The average value of the function over one period", "The frequency of the signal", "The phase shift"], correct: 1 },
+        30: { text: "For a periodic function with half-wave symmetry, which harmonics are present?", options: ["Only even harmonics", "Only odd harmonics", "All harmonics", "Only the fundamental"], correct: 1 },
+        60: { text: "What is the fundamental frequency in terms of L (half period)?", options: ["π/L", "2π/L", "π/(2L)", "L/π"], correct: 0 }
     };
 
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('youtube-player', {
-            height: '100%',
-            width: '100%',
-            videoId: 'Gx1P3u-5y_A',
-            playerVars: {
-                'start': 12,
-                'autoplay': 0,
-                'controls': 1,
-                'rel': 0
-            },
-            events: {
-                'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
-            }
+            height: '100%', width: '100%', videoId: 'Gx1P3u-5y_A',
+            playerVars: { 'start': 12, 'autoplay': 0, 'controls': 1, 'rel': 0 },
+            events: { 'onReady': onPlayerReady, 'onStateChange': onPlayerStateChange }
         });
     }
-
     function onPlayerReady(event) { }
-
     function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING) {
-            if (!timeCheckInterval) startTimeCheck();
-        } else {
-            if (timeCheckInterval) clearInterval(timeCheckInterval);
-        }
+        if (event.data == YT.PlayerState.PLAYING) { if (!timeCheckInterval) startTimeCheck(); }
+        else { if (timeCheckInterval) clearInterval(timeCheckInterval); }
     }
-
     let timeCheckInterval = null;
     function startTimeCheck() {
         if (timeCheckInterval) clearInterval(timeCheckInterval);
@@ -778,38 +870,22 @@
             if (!player || popupActive) return;
             const current = player.getCurrentTime();
             for (let t of questionTimes) {
-                if (!asked[t] && current >= t && current < t + 1.5) {
-                    asked[t] = true;
-                    showPopup(t);
-                    break;
-                }
+                if (!asked[t] && current >= t && current < t + 1.5) { asked[t] = true; showPopup(t); break; }
             }
         }, 200);
     }
-
     function showPopup(timeSec) {
         if (popupActive) return;
         popupActive = true;
         player.pauseVideo();
         const qData = questionBank[timeSec];
         if (!qData) return;
-        
         const container = document.getElementById('video-container');
         if (popupContainer) popupContainer.remove();
         popupContainer = document.createElement('div');
         popupContainer.className = 'video-popup';
-        popupContainer.innerHTML = `
-            <div class="popup-content">
-                <h4>📌 Quick Question (${Math.floor(timeSec)}s)</h4>
-                <div class="question">${qData.text}</div>
-                <div class="popup-options" id="popup-options">
-                    ${qData.options.map((opt, idx) => `<div class="popup-option" data-opt="${idx}">${opt}</div>`).join('')}
-                </div>
-                <div class="popup-feedback" id="popup-feedback"></div>
-            </div>
-        `;
+        popupContainer.innerHTML = `<div class="popup-content"><h4>📌 Quick Question (${Math.floor(timeSec)}s)</h4><div class="question">${qData.text}</div><div class="popup-options" id="popup-options">${qData.options.map((opt, idx) => `<div class="popup-option" data-opt="${idx}">${opt}</div>`).join('')}</div><div class="popup-feedback" id="popup-feedback"></div></div>`;
         container.appendChild(popupContainer);
-        
         const optionsDivs = popupContainer.querySelectorAll('.popup-option');
         const feedbackDiv = popupContainer.querySelector('#popup-feedback');
         optionsDivs.forEach(optDiv => {
@@ -818,10 +894,7 @@
                 if (selected === qData.correct) {
                     feedbackDiv.innerHTML = '✅ Correct! Resuming video...';
                     feedbackDiv.style.color = 'green';
-                    // Close popup and resume video after short delay
-                    setTimeout(() => {
-                        closePopupAndResume();
-                    }, 1000);
+                    setTimeout(() => { closePopupAndResume(); }, 1000);
                 } else {
                     feedbackDiv.innerHTML = '❌ Incorrect. Try again.';
                     feedbackDiv.style.color = 'red';
@@ -829,50 +902,29 @@
             });
         });
     }
-    
     function closePopupAndResume() {
-        if (popupContainer) {
-            popupContainer.remove();
-            popupContainer = null;
-        }
+        if (popupContainer) { popupContainer.remove(); popupContainer = null; }
         popupActive = false;
         player.playVideo();
     }
-    
-    function loadYouTubeAPI() {
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    }
-    
+    function loadYouTubeAPI() { const tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api"; const firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); }
     let theoryPageActive = false;
     const observer = new MutationObserver(() => {
         const theoryPage = document.getElementById('page-theory');
         if (theoryPage && theoryPage.classList.contains('active-page')) {
-            if (!theoryPageActive) {
-                theoryPageActive = true;
-                asked = { 15: false, 30: false, 60: false };
-            }
+            if (!theoryPageActive) { theoryPageActive = true; asked = { 15: false, 30: false, 60: false }; }
         } else {
-            if (theoryPageActive) {
-                theoryPageActive = false;
-                if (timeCheckInterval) clearInterval(timeCheckInterval);
-                if (player && player.pauseVideo) player.pauseVideo();
-                if (popupContainer) closePopupAndResume();
-            }
+            if (theoryPageActive) { theoryPageActive = false; if (timeCheckInterval) clearInterval(timeCheckInterval); if (player && player.pauseVideo) player.pauseVideo(); if (popupContainer) closePopupAndResume(); }
         }
     });
     observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] });
-    
     loadYouTubeAPI();
     window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
 
-    // ========== SIMULATION CODE (unchanged) ==========
+    // ========== SIMULATION CODE (unchanged from previous working version) ==========
     let simComputed = { valid: false, xArr: [], yArr: [], L: 0, sum_y: 0, n: 0, A: [], B: [] };
     function approxEq(a,b){ return Math.abs(a-b)<0.01; }
     function to2Dec(val){ return val.toFixed(2); }
-
     function computeFourierData() {
         const xStr = document.getElementById('simX').value;
         const yStr = document.getElementById('simY').value;
@@ -918,11 +970,10 @@
         document.getElementById('verifySumY').value = '';
         return true;
     }
-
     function attachSingleCheckEvents() {
         const sumYBtn = document.querySelector('#row-sumY .check-single');
         if(sumYBtn){ sumYBtn.removeEventListener('click', handleSingleCheck); sumYBtn.addEventListener('click', handleSingleCheck); }
-        document.querySelectorAll('.check-single').forEach(btn=>{ btn.removeEventListener('click', handleSingleCheck); btn.addEventListener('click', handleSingleCheck); });
+        document.querySelectorAll('.check-single').forEach(btn=>{ if(btn.classList && !btn.classList.contains('check-single-num')) { btn.removeEventListener('click', handleSingleCheck); btn.addEventListener('click', handleSingleCheck); } });
     }
     function handleSingleCheck(e){
         if(!simComputed.valid){ alert("Compute Data first."); return; }
